@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Test from '../imports/ui/test';
+import Navbar from '../imports/ui/Navbar';
+import Carousel from '../imports/ui/Carousel';
 
 Meteor.startup(() => {
-  ReactDOM.render(<h1>Hello World!!</h1>, document.getElementById('app'));
+  ReactDOM.render(<Carousel/>, document.getElementById('app'));
 });
