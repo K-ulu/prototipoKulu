@@ -5,59 +5,65 @@ export default class Navbar extends React.Component {
   render(){
     return (
       <div>
-        <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            {/*<!-- Brand and toggle get grouped for better mobile display -->*/}
-            <div className="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-              </button>
-              <a className="navbar-brand" href="#">Brand</a>
-            </div>
-
-            {/*<!-- Collect the nav links, forms, and other content for toggling -->*/}
-            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul className="nav navbar-nav">
-                <li className="active"><a href="#">Link <span className="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-                <li className="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                  <ul className="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" className="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li role="separator" className="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <form className="navbar-form navbar-left">
-                <div className="form-group">
-                  <input type="text" className="form-control" placeholder="Search"/>
-                </div>
-                <button type="submit" className="btn btn-default">Submit</button>
+        <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
+          <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <a className="navbar-brand ml-sm-2 mr-sm-2" href="/">
+            <img src="images/kulu_logo_160.png" width="160" height="36" className="d-inline-block align-top" alt="logo"/>
+          </a>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div className="col">
+              <form className="form-inline">
+                <input className="form-control ml-sm-4 mr-sm-2 col-sm-9" type="text" placeholder="Search"/>
+                <button className="btn btn-outline-success my-2 my-sm-0 col-sm-2" type="submit">Search</button>
               </form>
-              <ul className="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-                <li className="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                  <ul className="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" className="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                  </ul>
+            </div>
+            <div className="col">
+              <ul className="nav nav-pills justify-content-end">
+                <li className="nav-item">
+                  <a className="nav-link" href="#">K'ulu' PRO</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">Iniciar Sesión</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" href="#">Regístrarse</a>
                 </li>
               </ul>
-            </div>{/*<!-- /.navbar-collapse -->*/}
-          </div>{/*<!-- /.container-fluid -->*/}
+            </div>
+          </div>
         </nav>
+        {/*<nav className="navbar navbar-toggleable-sm navbar-light bg-faded">
+          <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <a className="navbar-brand" href="/">
+            <img src="images/kulu_logo_320.png" width="100" height="30" class="d-inline-block align-top" alt="logo"/>
+          </a>
+
+
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <div className="d-flex flex-row justify-content-center mr-auto ml-auto form-group row">
+
+
+
+              <form className="form-inline my-2 my-lg-0">
+                <input className="form-control mb-2 mr-sm-2 mb-sm-0" type="text" placeholder="Search"/>
+                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+            <ul className="navbar-nav text-center ml-auto mt-2 mt-md-0">
+              <li className="nav-item">
+                <a className="nav-link" href="#">Iniciar Sesión <span className="sr-only">(current)</span></a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">Registrarse</a>
+              </li>
+            </ul>
+          </div>
+        </nav>*/}
       </div>
     );
   }

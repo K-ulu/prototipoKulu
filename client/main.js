@@ -17,5 +17,5 @@ global.Popper = popper;
 bootstrap = require('bootstrap');
 
 Meteor.startup(() => {
-  ReactDOM.render(<Carousel1/>, document.getElementById('app'));
+  ReactDOM.render(<Navbar/>, document.getElementById('app'));
 });
