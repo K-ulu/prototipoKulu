@@ -2,9 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Test from '../imports/ui/test';
-import Navbar from '../imports/ui/Navbar';
-import Carousel from '../imports/ui/Carousel';
-import Carousel1 from '../imports/ui/Carousel1';
+import Home from '../imports/ui/Home';
+import MaestroDashboard from '../imports/ui/MaestroDashboard';
 
 // Import Tether.js - Bootstrap tooltip requires Tether.
 // We also add 'global.Tether' as a workaround for Meteor.
@@ -17,5 +16,5 @@ global.Popper = popper;
 bootstrap = require('bootstrap');
 
 Meteor.startup(() => {
-  ReactDOM.render(<Navbar/>, document.getElementById('app'));
+  ReactDOM.render(<MaestroDashboard/>, document.getElementById('app'));
 });
