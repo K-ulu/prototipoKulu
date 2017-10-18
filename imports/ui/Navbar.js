@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default class Navbar extends React.Component {
   render(){
     return (
-      <div>
+      <div className="border-blue">
         <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
           <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -12,6 +12,16 @@ export default class Navbar extends React.Component {
           <a className="navbar-brand ml-sm-2 mr-sm-2" href="/">
             <img src="images/kulu_logo_160.png" width="160" height="36" className="d-inline-block align-top" alt="logo"/>
           </a>
+          <div className="dropdown ml-sm-4 dropdown-margin">
+            <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Recursos
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a className="dropdown-item" href="#">Libros</a>
+              <a className="dropdown-item" href="#">Contenido Multimedia</a>
+              <a className="dropdown-item" href="#">Blog</a>
+            </div>
+          </div>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <div className="col">
               <form className="form-inline">
