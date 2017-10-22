@@ -24,7 +24,7 @@ export default class Carousel extends React.Component {
               <img className="d-block img-fluid" src="/images/solosegunda.png" alt="Second slide"/>
               <div className="carousel-caption d-none d-md-block">
                 <h2>Únete a K'ulu'</h2>
-                <p className="lead">Crea una cuenta y empieza a disfrutar de las sorpresas que tenemos para ti.</p>
+                <p className="lead">Crea una cuenta y empieza a disfrutar de <br/> las sorpresas que tenemos para ti.</p>
                 <a className="btn btn-large btn-primary" href="#">Regístrate</a>
               </div>
             </div>

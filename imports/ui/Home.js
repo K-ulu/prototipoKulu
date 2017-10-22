@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Navbar from './Navbar';
-import Carousel from './Carousel';
-import CardDeck from './CardDeck';
-import Footer from './Footer';
+import Navbar from './components/Navbar';
+import Carousel from './components/Carousel';
+import CardDeck from './components/CardDeck';
+import Footer from './components/Footer';
 
 export default class Home extends React.Component {
   render () {

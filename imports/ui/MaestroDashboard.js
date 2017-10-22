@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Navbar from './Navbar';
-import NavbarMaestro from './NavbarMaestro';
-import MaestroNuevaSesion from './MaestroNuevaSesion';
-import CarouselItems from './CarouselItems';
-import Footer from './Footer';
+import Navbar from './components/Navbar';
+import NavbarMaestro from './components/NavbarMaestro';
+import MaestroNuevaSesion from './components/MaestroNuevaSesion';
+import CarouselItems from './components/CarouselItems';
+import Footer from './components/Footer';
 
 
 export default class MaestroDashboard extends React.Component{

@@ -40,7 +40,7 @@ export default class Navbar extends React.Component {
                   <a className="nav-link" href="#myModal" data-toggle="modal">Iniciar Sesión</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="#">Regístrarse</a>
+                  <a className="nav-link active" href="/signup">Regístrarse</a>
                 </li>
               </ul>
             </div>
