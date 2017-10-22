@@ -5,9 +5,9 @@ export default class Test extends React.Component {
   render(){
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        {/*<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#myModal">
           Launch demo modal
-        </button>
+        </button>*/}
 
         <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog" role="document">

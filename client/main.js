@@ -15,6 +15,9 @@ global.Popper = popper;
 // Import Bootstrap js npm module.cmd
 bootstrap = require('bootstrap');
 
+
+
 Meteor.startup(() => {
   ReactDOM.render(<MaestroDashboard/>, document.getElementById('app'));
+
 });

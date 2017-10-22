@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Test from './test';
+
 export default class Navbar extends React.Component {
   render(){
     return (
@@ -35,7 +37,7 @@ export default class Navbar extends React.Component {
                   <a className="nav-link" href="#">K'ulu' PRO</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Iniciar Sesión</a>
+                  <a className="nav-link" href="#myModal" data-toggle="modal">Iniciar Sesión</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link active" href="#">Regístrarse</a>
@@ -44,6 +46,7 @@ export default class Navbar extends React.Component {
             </div>
           </div>
         </nav>
+        <Test/>
       </div>
     );
   }

@@ -6,8 +6,6 @@ export default class CarouselItems extends React.Component {
     return (
       <div className="container margin-block">
         <h2>{this.props.name}</h2>
-        meteor add udondan:slick
-
       </div>
     );
   }
