@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Test from './test';
+import { Link } from 'react-router-dom';
+
 
 export default class Navbar extends React.Component {
   render(){
@@ -37,7 +38,7 @@ export default class Navbar extends React.Component {
                   <a className="nav-link" href="#">K'ulu' PRO</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#myModal" data-toggle="modal">Iniciar Sesión</a>
+                  <a className="nav-link" href="/login">Iniciar Sesión</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link active" href="/signup">Regístrarse</a>
@@ -46,7 +47,6 @@ export default class Navbar extends React.Component {
             </div>
           </div>
         </nav>
-        <Test/>
       </div>
     );
   }
