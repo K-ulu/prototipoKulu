@@ -1,0 +1,88 @@
+
+//estilos de componentes del home */
+.carousel-inner{
+  width:100%;
+  max-height: 450px !important;
+}
+
+.carousel-caption h2,
+.carousel-caption .lead {
+  margin: 0;
+  line-height: 1.25;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
+.carousel-caption .btn {
+  margin-top: 20px;
+}
+
+.carousel-caption {
+  margin-bottom: 60px;
+}
+
+.carousel-caption h2 {
+  font-size: 80px;
+}
+
+.carousel-caption .lead {
+  font-size: 30px;
+}
+
+/*dropdowb home margin bottom */
+.dropdown-margin {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+
+/*Card deck */
+.card-deck {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.card-img-top {
+  text-align: center;
+  width: 100%;
+  height: 220px;
+}
+
+//estilos  en parte del dashboard del maestro
+/*border top  franja azul de arriba*/
+.border-blue {
+  border-bottom: 4px solid #337ab7;
+}
+
+/*margin para primera imagen del maestro */
+.margin-img {
+  margin-top: 8px;
+}
+
+/*margin right para los iconos que están en la barra del maestro*/
+.icon {
+  margin-right: 10px;
+}
+
+/*clase para margenes de un bloque (div)*/
+.margin-block {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+//estilos para login
+.card-body div, .card-body button  {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.row-login{
+  display: flex;
+  justify-content: center;
+}
+
+
+
+@import './about';
+@import './business';
+@import './contacto';
+@import './soporte';
