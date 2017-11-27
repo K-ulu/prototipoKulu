@@ -2,9 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
+import { Accounts } from 'meteor/accounts-base';
 
 
-export default class Navbar extends React.Component {
+export default class NavbarUser extends React.Component {
+  onLogout(){
+    Accounts.logout();
+  }
   render(){
     return (
       <div className="border-blue">
@@ -36,12 +40,12 @@ export default class Navbar extends React.Component {
               <ul className="nav nav-pills justify-content-end">
                 <li className="nav-item">
                   <a className="nav-link" href="#">K'ulu' PRO</a>
-                </li>                
-                <li className="nav-item">
-                  <a className="nav-link" href="/login">Iniciar Sesión</a>
                 </li>
+                {/*<li className="nav-item">
+                  <a className="nav-link" href="/login">Iniciar Sesión</a>
+                </li>*/}
                 <li className="nav-item">
-                  <a className="nav-link active" href="/signup">Regístrarse</a>
+                  <a onClick={this.onLogout.bind(this)} className="nav-link active" href="/signup">Cerrar Sesión</a>
                 </li>
 
 

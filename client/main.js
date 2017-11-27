@@ -1,19 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import ReactDOM from 'react-dom';
-//import '../imports/compatibility/bootstrap.js';
-import { routes } from '../imports/routes/routes';
+import { Tracker } from 'meteor/tracker';
+import { routes, onAuthChange} from '../imports/routes/routes';
 
-// Import Tether.js - Bootstrap tooltip requires Tether.
-// We also add 'global.Tether' as a workaround for Meteor.
-//import tether from 'tether';
-//global.Tether = tether;
-
-//import popper from 'popper.js';
-//global.Popper = popper;
-// Import Bootstrap js npm module.cmd
-//bootstrap = require('bootstrap');
+/*Tracker.autorun(() => {
+  const isAuthenticated = !!Meteor.userId(); //verifica que tenga un contenido y nos regresa true si hay algo false si no hay nada
+  onAuthChange(isAuthenticated);
+  console.log('isAuthenticated', isAuthenticated);
+});*/
 
 Meteor.startup(() => {
   ReactDOM.render(routes, document.getElementById('app'));
-
 });
