@@ -35,7 +35,7 @@ export default class Navbar extends React.Component {
                   </div>
                 </div>
                 {/*Buscador..*/}
-                <div className="col-12 col-sm-6 col-md-12 col-lg-4 mb-3 mb-lg-0">
+                <div className="col-12 col-md-12 col-lg-4 mb-3 mb-lg-0">
                   <form className="form-inline">
                     <input className="form-control ml-sm-4 mr-sm-2 ml-lg-2 col-sm-9 col-lg-8" type="text" placeholder="Buscar..."/>
                     <button className="btn btn-outline-success my-2 my-sm-0 col-sm-2 col-lg-3" type="submit">Buscar</button>
