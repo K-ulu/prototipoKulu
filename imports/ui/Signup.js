@@ -27,15 +27,31 @@ class Signup extends React.Component {
 
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
-
-    Accounts.createUser({email, password}, (err) => {
+    //var index = event.nativeEvent.target.selectedIndex;
+    //let tipo = event.nativeEvent.target[index].text
+    //let tipo = this.refs.opcion[this.refs.opcion.value].text;
+    //let tipo = this.refs.opcion.selectVal.value;
+    //let tipo = thhis.refs.opcion.select.selectVal.value;
+    //let tipo = this.setState({selectValue: e.target.value});
+    /*Corregir esta parte */
+    let opcion = this.selectVal.value;
+    console.log(opcion);
+    /*Accounts.createUser({email, password, opcion}, (err) => {
       console.log('signup callback', err);
-    });
-
-    /*this.setState({
-      error: 'Something went wrong'
     });*/
+    Accounts.createUser({ username: "admin",
+            email: email,
+            password: password,
+            tipo: tipo
+          }, function (err, res) {
+            if(err) {
+                console.log("ERR: "+err)
+            }
+          });
   }
+
+  
+
   render () {
     return (
       <div>
@@ -66,6 +82,16 @@ class Signup extends React.Component {
                                           <span className="input-group-addon"><i className="fa fa-lock fa-fw"></i></span>
                                           <input type="password" ref="password" name="password" className="form-control form-control rounded" placeholder="Constraseña"/>
                                       </div>
+
+                                      <div className = "input-group margin-bottom-sm col-sm-12 col-md-12 col-lg-12">
+                                      <span className="input-group-addon"><i className="fa fa-user fa-fw"></i></span>
+                                      <select className="form-control form-control rounded" ref={(input) => this.selectVal = input} name ="opcion">
+                                        <option>Alumno</option>
+                                        <option>Docente</option>
+                                        <option>Usuario</option>
+                                      </select>
+                                      </div>
+
                                       <div className="text-center">
                                         <a href="recuperar.html">¿Olvidaste tu contraseña?</a> ó <a href="/login">¿Ya tienes una cuenta?</a>
 
