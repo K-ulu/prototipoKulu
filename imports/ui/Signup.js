@@ -27,33 +27,27 @@ class Signup extends React.Component {
 
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
-    let opcion = this.selectVal.value;
+    let opcion = this.refs.tipo.value;
     console.log(opcion);
-    Accounts.createUser({email, password, opcion}, (err) => {
+
+    /*Accounts.createUser({email, password}, (err) => {
       console.log('signup callback', err);
     });
-    function (err, res) {
-      if(err) {
-          console.log("ERR: "+err)
-      }
-    }
-    /*const Posts = new Mongo.Collection("posts");
 
-    Posts.insert({
-            email: email,
-            password: password,
-            opcion: opcion
-    }/*, function (err, res) {
-            if(err) {
-                console.log("ERR: "+err)
-            }
-          }*/
-        //);
-    //assert (Posts.find (). count () === 1 );
-    //const Posts = new Mongo.Collection('posts');
-    //Posts.insert({ title: 'Hello world', body: 'First post' });
-    
-    // Changes are visible immediately—no waiting for a round trip to the server.
+   //Este es original
+    /*this.setState({
+      error: 'Something went wrong'
+    });*/
+
+    var datos = {
+      email: email,
+      password: password,
+      profile: {
+      },
+      tipoUsuario: opcion
+    };
+  
+    var userId = Accounts.createUser(datos);
   }
 
   
@@ -91,10 +85,10 @@ class Signup extends React.Component {
 
                                       <div className = "input-group margin-bottom-sm col-sm-12 col-md-12 col-lg-12">
                                       <span className="input-group-addon"><i className="fa fa-user fa-fw"></i></span>
-                                      <select className="form-control form-control rounded" ref={(input) => this.selectVal = input} name ="opcion">
-                                        <option>Alumno</option>
-                                        <option>Docente</option>
-                                        <option>Usuario</option>
+                                      <select className="form-control form-control rounded" ref="tipo" name ="opcion">
+                                        <option value="Alumno">Alumno</option>
+                                        <option value ="Docente">Docente</option>
+                                        <option value="Usuario">Usuario</option>
                                         <option selected>Seleccione</option>
                                       </select>
                                       </div>
