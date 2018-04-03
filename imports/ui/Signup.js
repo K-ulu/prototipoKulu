@@ -27,19 +27,17 @@ class Signup extends React.Component {
 
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
-    //var index = event.nativeEvent.target.selectedIndex;
-    //let tipo = event.nativeEvent.target[index].text
-    //let tipo = this.refs.opcion[this.refs.opcion.value].text;
-    //let tipo = this.refs.opcion.selectVal.value;
-    //let tipo = thhis.refs.opcion.select.selectVal.value;
-    //let tipo = this.setState({selectValue: e.target.value});
-    /*Corregir esta parte */
     let opcion = this.selectVal.value;
     console.log(opcion);
-    /*Accounts.createUser({email, password, opcion}, (err) => {
+    Accounts.createUser({email, password, opcion}, (err) => {
       console.log('signup callback', err);
-    });*/
-    const Posts = new Mongo.Collection('posts');
+    });
+    function (err, res) {
+      if(err) {
+          console.log("ERR: "+err)
+      }
+    }
+    /*const Posts = new Mongo.Collection("posts");
 
     Posts.insert({
             email: email,
@@ -49,8 +47,13 @@ class Signup extends React.Component {
             if(err) {
                 console.log("ERR: "+err)
             }
-          }*/);
-    assert (Posts.find (). count () === 1 );
+          }*/
+        //);
+    //assert (Posts.find (). count () === 1 );
+    //const Posts = new Mongo.Collection('posts');
+    //Posts.insert({ title: 'Hello world', body: 'First post' });
+    
+    // Changes are visible immediately—no waiting for a round trip to the server.
   }
 
   
