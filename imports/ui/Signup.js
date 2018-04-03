@@ -39,15 +39,18 @@ class Signup extends React.Component {
     /*Accounts.createUser({email, password, opcion}, (err) => {
       console.log('signup callback', err);
     });*/
-    Accounts.createUser({ username: "admin",
+    const Posts = new Mongo.Collection('posts');
+
+    Posts.insert({
             email: email,
             password: password,
-            tipo: tipo
-          }, function (err, res) {
+            opcion: opcion
+    }/*, function (err, res) {
             if(err) {
                 console.log("ERR: "+err)
             }
-          });
+          }*/);
+    assert (Posts.find (). count () === 1 );
   }
 
   
@@ -89,6 +92,7 @@ class Signup extends React.Component {
                                         <option>Alumno</option>
                                         <option>Docente</option>
                                         <option>Usuario</option>
+                                        <option selected>Seleccione</option>
                                       </select>
                                       </div>
 
