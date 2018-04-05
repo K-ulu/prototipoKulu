@@ -1,0 +1,91 @@
+/*estilos carousel */
+.carousel-inner{
+    width: 100%;
+    max-height: 500px !important;
+}
+  
+.carousel-caption h2,
+.carousel-caption .lead {
+    margin: 0;
+    line-height: 1.25;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,.4);
+  }
+  
+.carousel-caption {
+    margin-bottom: 50px;
+}  
+
+.carousel-caption h2 {
+    font-size: 80px;
+}
+  
+.carousel-caption .lead {
+    font-size: 30px;
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 399.98px) { 
+    .carousel-caption h2 {
+        font-size: 20px;
+    }
+
+    .carousel-caption {
+        margin-bottom: 0px;
+    } 
+
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (min-width: 400px) and (max-width: 575.98px) { 
+    .carousel-caption h2 {
+        font-size: 35px;
+    }
+    .carousel-caption {
+        margin-bottom: 0px;
+    } 
+
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .carousel-caption h2 {
+        font-size: 40px;
+    }
+      
+    .carousel-caption .lead {
+        font-size: 20px;
+    }
+
+    .carousel-caption {
+        margin-bottom: 0;
+    } 
+
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    .carousel-caption h2 {
+        font-size: 50px;
+    }
+      
+    .carousel-caption .lead {
+        font-size: 25px;
+    }
+
+    .carousel-caption {
+        margin-bottom: 20px;
+    } 
+ 
+}
+
+// Large devices (desktops, 992px and up)
+// @media (min-width: 992px) and (max-width: 1199.98px) {
+
+// }
+
+// // Extra large devices (large desktops, 1200px and up)
+// @media (min-width: 1200px) {
+
+// }
+

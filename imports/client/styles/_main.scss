@@ -1,33 +1,5 @@
 
 //estilos de componentes del home */
-.carousel-inner{
-  width:100%;
-  max-height: 450px !important;
-}
-
-.carousel-caption h2,
-.carousel-caption .lead {
-  margin: 0;
-  line-height: 1.25;
-  color: #fff;
-  text-shadow: 0 1px 1px rgba(0,0,0,.4);
-}
-.carousel-caption .btn {
-  margin-top: 20px;
-}
-
-.carousel-caption {
-  margin-bottom: 60px;
-}
-
-.carousel-caption h2 {
-  font-size: 80px;
-}
-
-.carousel-caption .lead {
-  font-size: 30px;
-}
-
 /*dropdowb home margin bottom */
 .dropdown-margin {
   margin-top: 6px;
@@ -80,8 +52,10 @@
   justify-content: center;
 }
 
+/* importando componentnes */
+@import './components/_carousel';
 
-
+/*importando estilos de paginas principales*/
 @import './about';
 @import './business';
 @import './contacto';
