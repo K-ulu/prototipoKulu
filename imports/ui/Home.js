@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Navbar from './components/Navbar';
 import NavbarUser from './components/NavbarUser';
 import Carousel from './components/Carousel';
+import HomeBand from './components/HomeBand';
 import CardDeck from './components/CardDeck';
 import Footer from './components/Footer';
 
@@ -21,6 +22,7 @@ export default class Home extends React.Component {
       <div>
         { navbar }
         <Carousel/>
+        <HomeBand/>
         <CardDeck/>
         <Footer/>
       </div>

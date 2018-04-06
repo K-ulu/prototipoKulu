@@ -1,0 +1,23 @@
+/* estilos cinta de presentacion */
+
+/*background de la cinta*/
+.bg-home-band {
+  // background-color: #337ab7;
+  background: linear-gradient(-90deg, #337ab7, #303F9F);
+  padding: 20px 15px;
+}
+
+/*tamano imagen*/
+.img-home-band {
+  width: 60%;
+}
+
+/*color de textos*/
+#text-home-band > h5, #text-home-band > h5 > small {
+  color: white;
+}
+
+/*display block para los textos secundarios*/
+#text-home-band > h5 > small {
+  display: block;
+}
