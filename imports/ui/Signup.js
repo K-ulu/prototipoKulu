@@ -26,13 +26,9 @@ class Signup extends React.Component {
 
 
     let email = this.refs.email.value.trim();
-<<<<<<< HEAD
-    let password = this.refs.password.value.trim();    
-=======
     let password = this.refs.password.value.trim();
     let opcion = this.refs.tipo.value;
     console.log(opcion);
->>>>>>> Caro
 
     /*Accounts.createUser({email, password}, (err) => {
       console.log('signup callback', err);
@@ -52,6 +48,18 @@ class Signup extends React.Component {
     };
   
     var userId = Accounts.createUser(datos);
+
+    let nombre= "Eugenio";
+    let ApPaterno = "Diaz";
+
+    Meteor.call('docente.insert', nombre, ApPaterno, (err, res) => {
+      if (!err) {
+        this.handleModalClose();
+      } else {
+        this.setState({ error: err.reason });
+      }
+    });
+
   }
 
   
