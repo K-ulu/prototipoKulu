@@ -26,16 +26,36 @@ class Signup extends React.Component {
 
 
     let email = this.refs.email.value.trim();
+<<<<<<< HEAD
     let password = this.refs.password.value.trim();    
+=======
+    let password = this.refs.password.value.trim();
+    let opcion = this.refs.tipo.value;
+    console.log(opcion);
+>>>>>>> Caro
 
-    Accounts.createUser({email, password}, (err) => {
+    /*Accounts.createUser({email, password}, (err) => {
       console.log('signup callback', err);
     });
 
+   //Este es original
     /*this.setState({
       error: 'Something went wrong'
     });*/
+
+    var datos = {
+      email: email,
+      password: password,
+      profile: {
+      },
+      tipoUsuario: opcion
+    };
+  
+    var userId = Accounts.createUser(datos);
   }
+
+  
+
   render () {
     return (
       <div>
@@ -66,6 +86,17 @@ class Signup extends React.Component {
                                           <span className="input-group-addon"><i className="fa fa-lock fa-fw"></i></span>
                                           <input type="password" ref="password" name="password" className="form-control form-control rounded" placeholder="Constraseña"/>
                                       </div>
+
+                                      <div className = "input-group margin-bottom-sm col-sm-12 col-md-12 col-lg-12">
+                                      <span className="input-group-addon"><i className="fa fa-user fa-fw"></i></span>
+                                      <select className="form-control form-control rounded" ref="tipo" name ="opcion">
+                                        <option value="Alumno">Alumno</option>
+                                        <option value ="Docente">Docente</option>
+                                        <option value="Usuario">Usuario</option>
+                                        <option selected>Seleccione</option>
+                                      </select>
+                                      </div>
+
                                       <div className="text-center">
                                         <a href="recuperar.html">¿Olvidaste tu contraseña?</a> ó <a href="/login">¿Ya tienes una cuenta?</a>
 
