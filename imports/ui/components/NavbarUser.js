@@ -12,46 +12,52 @@ export default class NavbarUser extends React.Component {
   render(){
     return (
       <div className="border-blue">
-        <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
-          <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <a className="navbar-brand ml-sm-2 mr-sm-2" href="/">
+      <nav className="navbar navbar-expand-lg navbar-light">          
+          <a href="/" className="navbar-brand ml-sm-2 mr-sm-2 order-md-first order-0" href="/">
             <img src="images/kulu_logo_160.png" width="160" height="36" className="d-inline-block align-top" alt="logo"/>
           </a>
-          <div className="dropdown ml-sm-4 dropdown-margin">
-            <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Recursos
-            </button>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href="#">Libros</a>
-              <a className="dropdown-item" href="#">Contenido Multimedia</a>
-              <a className="dropdown-item" href="#">Blog</a>
-            </div>
-          </div>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <div className="col">
-              <form className="form-inline">
-                <input className="form-control ml-sm-4 mr-sm-2 col-sm-9" type="text" placeholder="Search"/>
-                <button className="btn btn-outline-success my-2 my-sm-0 col-sm-2" type="submit">Search</button>
-              </form>
-            </div>
-            <div className="col">
-              <ul className="nav nav-pills justify-content-end">
-                <li className="nav-item">
-                  <a className="nav-link" href="#">K'ulu' PRO</a>
-                </li>
-                {/*<li className="nav-item">
-                  <a className="nav-link" href="/login">Iniciar Sesión</a>
-                </li>*/}
-                <li className="nav-item">
-                  <a onClick={this.onLogout.bind(this)} className="nav-link active" href="/signup">Cerrar Sesión</a>
-                </li>
-
-
-
-              </ul>
-            </div>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="navbar-collapse collapse" id="mainNav">
+            <div className="container">
+              <div className="row align-items-center justify-content-start">
+                {/*Dropdown de recursos*/}
+                <div className="col-12 col-lg-2 mb-3 mb-lg-0 mt-3 mt-lg-0">
+                  <div className="dropdown ml-sm-4 dropdown-margin">
+                    <button className="btn btn-primary dropdown-toggle btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Recursos
+                    </button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a className="dropdown-item" href="#">Libros</a>
+                      <a className="dropdown-item" href="#">Contenido Multimedia</a>
+                      <a className="dropdown-item" href="#">Blog</a>
+                      <a className="dropdown-item" href="#">Documentos</a>
+                      <a className="dropdown-item" href="#">Elementos de Objetos de Aprendizajes</a>
+                      <a className="dropdown-item" href="#">Objetos de Aprendizajes</a>
+                    </div>
+                  </div>
+                </div>
+                {/*Buscador..*/}
+                <div className="col-12 col-md-12 col-lg-6 mb-3 mb-lg-0">
+                  <form className="form-inline">
+                    <input className="form-control ml-sm-4 mr-sm-2 ml-lg-2 col-sm-9 col-lg-8" type="text" placeholder="Buscar..."/>
+                    <button className="btn btn-outline-success my-2 my-sm-0 col-sm-2 col-lg-3" type="submit">Buscar</button>
+                  </form>                  
+                </div>
+                {/*Botones de acceso a cuentas*/}
+                <div className="col-12 col-lg-4">
+                  <ul className="nav nav-pills justify-content-end">
+                    <li className="nav-item col-12 col-lg-6 text-center">
+                      <a className="nav-link" href="#">K'ulu' PRO</a>
+                    </li>
+                    <li className="nav-item col-12 col-lg-6 text-center">
+                      <a onClick={this.onLogout.bind(this)} className="nav-link active" href="/signup">Cerrar Sesión</a>
+                    </li>                 
+                  </ul>
+                </div>
+              </div>
+            </div>           
           </div>
         </nav>
       </div>
