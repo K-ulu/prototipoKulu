@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {withRouter} from "react-router-dom";
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
-//import {Docente} from '../api/Docente';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -12,33 +11,39 @@ class Signup extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      error: ''
+      error: '', //almacena el error
+      value: '' //almacena valor del tipo de usuario
     };
+
+    //contexto de navegador para nuestras funciones
+    this.handleChange = this.handleChange.bind(this);    
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
+  //acciones a realizar antes que se monte el componente
   componentWillMount(){
     const isLoggedIn = this.props.isAuthenticated;
     if (isLoggedIn) {
+      //TODO: Actualizar para determinar a pagina vamos a mandar a el usuario 
       this.props.history.push('/teachers');
     }
   }
 
+  //evento que administra el cambio de datos en el select
+  handleChange(event){
+    this.setState({value: event.target.value});
+  }
+
+  //evento al mandar los datos del formulario
   onSubmit(e){
     e.preventDefault();
+    //TODO:solicitar datos faltantes (actualizar formulario) datos a pedir: nombreUsuario, nombre, correo, password
+    // confirmar password, tipo usuario
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
-    let opcion = this.refs.tipo.value;
-    console.log(opcion);
+    let opcion = this.state.value;    
 
-    /*Accounts.createUser({email, password}, (err) => {
-      console.log('signup callback', err);
-    });
-
-   //Este es original
-    /*this.setState({
-      error: 'Something went wrong'
-    });*/
-
+    //creando nuestro objeto con los datos del usuario
     var datos = {
       email: email,
       password: password,
@@ -49,30 +54,24 @@ class Signup extends React.Component {
   
     var userId = Accounts.createUser(datos);
 
-    var nombre= "Eugenio";
-    var ApPaterno = "Diaz";
+    var nombre= "Gerardo";
+    var ApPaterno = "Vazquez";
 
-    Meteor.call('docente.insert', nombre, ApPaterno, (err, res) => {
-      if (!err) {
-        this.handleModalClose();
-      } else {
-        this.setState({ error: err.reason });
-      }
-    });
+    //insertamos los datos de acuerdo al tipo de usuario
+    if(opcion == 'docente'){
+      Meteor.call('docente.insert', nombre, ApPaterno, (err, res) => {
+        if (!err) {
+          // this.handleModalClose();
+          alert("insertado");
+        } else {
+          // this.setState({ error: err.reason });
+          alert("ocurrió un error al insertar");
+        }
+      });
 
-    /*
-    const { url } = "prueba_Hola";
+    }
 
-    e.preventDefault();
-
-    Meteor.call('links.insert', url, (err, res) => {
-      if (!err) {
-        this.handleModalClose();
-      } else {
-        this.setState({ error: err.reason });
-      }
-    });
-    */
+    
   }
   
 
@@ -97,7 +96,7 @@ class Signup extends React.Component {
                                   <h3 className="mb-0 text-center">Regístrate</h3>
                               </div>
                               <div className="card-body mt-4">
-                                  <form onSubmit={this.onSubmit.bind(this)} className="form" role="form" autoComplete="off" id="formLogin">
+                                  <form onSubmit={this.onSubmit} className="form" role="form" autoComplete="off" id="formLogin">
                                       <div className="input-group margin-bottom-sm col-sm-12 col-md-12 col-lg-12">
                                           <span className="input-group-addon"><i className="fa fa-user fa-fw"></i></span>
                                           <input type="email" ref="email" name="email" className="form-control form-control rounded" placeholder="Correo electrónico"/>
@@ -108,13 +107,12 @@ class Signup extends React.Component {
                                       </div>
 
                                       <div className = "input-group margin-bottom-sm col-sm-12 col-md-12 col-lg-12">
-                                      <span className="input-group-addon"><i className="fa fa-user fa-fw"></i></span>
-                                      <select className="form-control form-control rounded" ref="tipo" name ="opcion">
-                                        <option value="Alumno">Alumno</option>
-                                        <option value ="Docente">Docente</option>
-                                        <option value="Usuario">Usuario</option>
-                                        <option selected>Seleccione</option>
-                                      </select>
+                                        <span className="input-group-addon"><i className="fa fa-user fa-fw"></i></span>
+                                        <select value={this.state.value} onChange={this.handleChange} className="form-control form-control rounded">
+                                          <option value ="seleccione">Seleccione</option>
+                                          <option value="alumno">Alumno</option>
+                                          <option value ="docente">Docente</option>                                      
+                                        </select>
                                       </div>
 
                                       <div className="text-center">
