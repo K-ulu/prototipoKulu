@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from "react-router-dom";
 import { Accounts } from 'meteor/accounts-base';
+import { Meteor } from 'meteor/meteor';
+//import {Docente} from '../api/Docente';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -23,19 +25,57 @@ class Signup extends React.Component {
 
   onSubmit(e){
     e.preventDefault();
-
-
     let email = this.refs.email.value.trim();
-    let password = this.refs.password.value.trim();    
+    let password = this.refs.password.value.trim();
+    let opcion = this.refs.tipo.value;
+    console.log(opcion);
 
-    Accounts.createUser({email, password}, (err) => {
+    /*Accounts.createUser({email, password}, (err) => {
       console.log('signup callback', err);
     });
 
+   //Este es original
     /*this.setState({
       error: 'Something went wrong'
     });*/
+
+    var datos = {
+      email: email,
+      password: password,
+      profile: {
+      },
+      tipoUsuario: opcion
+    };
+  
+    var userId = Accounts.createUser(datos);
+
+    var nombre= "Eugenio";
+    var ApPaterno = "Diaz";
+
+    Meteor.call('docente.insert', nombre, ApPaterno, (err, res) => {
+      if (!err) {
+        this.handleModalClose();
+      } else {
+        this.setState({ error: err.reason });
+      }
+    });
+
+    /*
+    const { url } = "prueba_Hola";
+
+    e.preventDefault();
+
+    Meteor.call('links.insert', url, (err, res) => {
+      if (!err) {
+        this.handleModalClose();
+      } else {
+        this.setState({ error: err.reason });
+      }
+    });
+    */
   }
+  
+
   render () {
     return (
       <div>
@@ -66,6 +106,17 @@ class Signup extends React.Component {
                                           <span className="input-group-addon"><i className="fa fa-lock fa-fw"></i></span>
                                           <input type="password" ref="password" name="password" className="form-control form-control rounded" placeholder="Constraseña"/>
                                       </div>
+
+                                      <div className = "input-group margin-bottom-sm col-sm-12 col-md-12 col-lg-12">
+                                      <span className="input-group-addon"><i className="fa fa-user fa-fw"></i></span>
+                                      <select className="form-control form-control rounded" ref="tipo" name ="opcion">
+                                        <option value="Alumno">Alumno</option>
+                                        <option value ="Docente">Docente</option>
+                                        <option value="Usuario">Usuario</option>
+                                        <option selected>Seleccione</option>
+                                      </select>
+                                      </div>
+
                                       <div className="text-center">
                                         <a href="recuperar.html">¿Olvidaste tu contraseña?</a> ó <a href="/login">¿Ya tienes una cuenta?</a>
 
