@@ -84,7 +84,7 @@ class Signup extends React.Component {
               <div className="col-md-12">
                   <h2 className="text-center mb-4"></h2>
                   <div className="row">
-                      <div className="col-md-5 mx-auto">
+                      <div className="col-md-6 mx-auto">
                           <span className="anchor" id="formLogin"></span>
 
                           {/*<!-- form card login -->*/}
@@ -95,33 +95,58 @@ class Signup extends React.Component {
                               <div className="card-header">
                                   <h3 className="mb-0 text-center">Regístrate</h3>
                               </div>
-                              <div className="card-body mt-4">
+                              <div className="card-body mt-2">
                                   <form onSubmit={this.onSubmit} className="form" role="form" autoComplete="off" id="formLogin">
-                                      <div className="input-group margin-bottom-sm col-sm-12 col-md-12 col-lg-12">
-                                          <span className="input-group-addon"><i className="fa fa-user fa-fw"></i></span>
+                                    <div className="row">
+                                      <div className="col-6">
+                                        <div className="input-group-prepend">
+                                          <span className="input-group-text"><i className="fa fa-user-circle-o"></i></span>
+                                          <input type="text" ref="username" name="username" className="form-control form-control rounded" placeholder="Usuario"/>
+                                        </div>                                          
+                                      </div>
+                                      <div className="col-6">
+                                        <div className="input-group-prepend">
+                                          <span className="input-group-text"><i className="fa fa-user fa-fw"></i></span>
+                                          <input type="text" ref="name" name="name" className="form-control form-control rounded" placeholder="Nombre"/>
+                                        </div>                                                                          
+                                      </div>  
+                                      <div className="col-12">                                        
+                                        <div className="input-group-prepend">
+                                          <span className="input-group-text"><i className="fa fa-envelope"></i></span>
                                           <input type="email" ref="email" name="email" className="form-control form-control rounded" placeholder="Correo electrónico"/>
-                                      </div>
-                                      <div className="input-group margin-bottom-sm col-sm-12 col-md-12 col-lg-12">
-                                          <span className="input-group-addon"><i className="fa fa-lock fa-fw"></i></span>
+                                        </div>                                         
+                                      </div>  
+                                      <div className="col-12">                                        
+                                        <div className="input-group-prepend">
+                                          <span className="input-group-text"><i className="fa fa-envelope"></i></span>
                                           <input type="password" ref="password" name="password" className="form-control form-control rounded" placeholder="Constraseña"/>
-                                      </div>
+                                        </div>                                         
+                                      </div> 
+                                      <div className="col-12">                                        
+                                        <div className="input-group-prepend">
+                                          <span className="input-group-text"><i className="fa fa-envelope"></i></span>
+                                          <input type="password" ref="confirmPassword" name="confirmPassword" className="form-control form-control rouded" placeholder="Confirmar Constraseña"/>
+                                        </div>                                         
+                                      </div> 
+                                      <div className="col-12">  
+                                        <div className="input-group-prepend">     
+                                            <span className="input-group-text"><i className="fa fa-info-circle"></i></span>
+                                            <select value={this.state.value} onChange={this.handleChange} className="form-control form-control rounded">
+                                              <option value ="seleccione">Seleccione tipo de usuario</option>
+                                              <option value="alumno">Alumno</option>
+                                              <option value ="docente">Docente</option>                                      
+                                            </select>                         
+                                        </div>                                                                       
+                                      </div>                                    
+                                    </div>
 
-                                      <div className = "input-group margin-bottom-sm col-sm-12 col-md-12 col-lg-12">
-                                        <span className="input-group-addon"><i className="fa fa-user fa-fw"></i></span>
-                                        <select value={this.state.value} onChange={this.handleChange} className="form-control form-control rounded">
-                                          <option value ="seleccione">Seleccione</option>
-                                          <option value="alumno">Alumno</option>
-                                          <option value ="docente">Docente</option>                                      
-                                        </select>
-                                      </div>
+                                    <div className="text-center">
+                                      <a href="recuperar.html">¿Olvidaste tu contraseña?</a> ó <a href="/login">¿Ya tienes una cuenta?</a>
 
-                                      <div className="text-center">
-                                        <a href="recuperar.html">¿Olvidaste tu contraseña?</a> ó <a href="/login">¿Ya tienes una cuenta?</a>
-
-                                      </div>
-                                      <div className="row-login">
-                                        <button type="submit" className="btn btn-primary btn-lg text-center">Regístrarse</button>
-                                      </div>
+                                    </div>
+                                    <div className="row-login">
+                                      <button type="submit" className="btn btn-primary btn-lg text-center">Regístrarse</button>
+                                    </div>
 
                                   </form>
                               </div>
