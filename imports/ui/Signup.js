@@ -43,35 +43,57 @@ class Signup extends React.Component {
     let password = this.refs.password.value.trim();
     let opcion = this.state.value;    
 
+    let nombre = this.refs.name.value.trim();
+    let apellidoP = 'Miranda';
+    let apellidoM = 'Rosanda';
+    let nickname = this.refs.username.value.trim();
+    let curp = 'abcdefgsdfsdf';
+
     //creando nuestro objeto con los datos del usuario
     var datos = {
       email: email,
       password: password,
       profile: {
+        nombre: nombre,
+        apellidoP: apellidoP,
+        apellidoM: apellidoM,
+        nickname: nickname,
+        curp: curp
       },
       tipoUsuario: opcion
     };
   
     var userId = Accounts.createUser(datos);
-
-    var nombre= "Gerardo";
-    var ApPaterno = "Vazquez";
-
-    //insertamos los datos de acuerdo al tipo de usuario
+    
     if(opcion == 'docente'){
-      Meteor.call('docente.insert', nombre, ApPaterno, (err, res) => {
+      var claveDocente= "abcdef789t";
+        var claveEscuela = "abcdef123t";
+        var rfc = "aaaaaaa"
+        Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
+          if (!err) {
+            // this.handleModalClose();
+            alert("insertado");
+          } else {
+            // this.setState({ error: err.reason });
+            alert("ocurrió un error al insertar");
+            alert(err.reason);
+          }
+        });
+    }
+    else if (opcion == 'alumno'){
+      var matricula = "aaaaaaaaaaa";
+      var claveEscuela = 'bbbbbbbbbb';
+      Meteor.call('alumno.insert', matricula, claveEscuela, (err, res) => {
         if (!err) {
           // this.handleModalClose();
           alert("insertado");
         } else {
           // this.setState({ error: err.reason });
           alert("ocurrió un error al insertar");
+          alert(err.reason);
         }
       });
-
-    }
-
-    
+    }    
   }
   
 
