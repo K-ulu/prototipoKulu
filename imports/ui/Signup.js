@@ -38,9 +38,10 @@ class Signup extends React.Component {
   //evento al mandar los datos del formulario
   onSubmit(e){
     e.preventDefault();
-    //TODO:verificar contraseña
+    //verifica contraseña
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
+    let confirmPassword = this.refs.confirmPassword.value.trim();
     let opcion = this.state.value;    
 
     let nombre = this.refs.name.value.trim();
@@ -50,57 +51,62 @@ class Signup extends React.Component {
     let curp = '';
 
     //creando nuestro objeto con los datos del usuario
-    var datos = {
-      email: email,
-      password: password,
-      profile: {
-        nombre: nombre,
-        apellidoP: apellidoP,
-        apellidoM: apellidoM,
-        nickname: nickname,
-        curp: curp
-      },
-      tipoUsuario: opcion
-    };
-  
-    var userId = Accounts.createUser(datos, (err) => {
-      if(err){
-        this.setState({error: err.reason});
-        
-      } else {
-        this.setState({error: ''});
-      }
-    });
+    if (password == confirmPassword){
+      var datos = {
+        email: email,
+        password: password,
+        profile: {
+          nombre: nombre,
+          apellidoP: apellidoP,
+          apellidoM: apellidoM,
+          nickname: nickname,
+          curp: curp
+        },
+        tipoUsuario: opcion
+      };
+    
+      var userId = Accounts.createUser(datos, (err) => {
+        if(err){
+          this.setState({error: err.reason});
+          
+        } else {
+          this.setState({error: ''});
+        }
+      });
 
-    //insertamos los datos de acuerdo al tipo de usuario
-    if(opcion == 'docente'){
-      var claveDocente= '';
-      var claveEscuela = '';
-      var rfc = '';
-      Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
-        if (!err) {
-          // this.handleModalClose();
-          alert("insertado");
-        } else {
-          // this.setState({ error: err.reason });
-          alert("ocurrió un error al insertar");
-          alert(err.reason);
-        }
-      });
+      //insertamos los datos de acuerdo al tipo de usuario
+      if(opcion == 'docente'){
+        var claveDocente= '';
+        var claveEscuela = '';
+        var rfc = '';
+        Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
+          if (!err) {
+            // this.handleModalClose();
+            alert("insertado");
+          } else {
+            // this.setState({ error: err.reason });
+            alert("ocurrió un error al insertar");
+            alert(err.reason);
+          }
+        });
+      }
+      else if (opcion == 'alumno'){
+        var matricula = "";
+        var claveEscuela = '';
+        Meteor.call('alumno.insert', matricula, claveEscuela, (err, res) => {
+          if (!err) {
+            // this.handleModalClose();
+            alert("insertado");
+          } else {
+            // this.setState({ error: err.reason });
+            alert("ocurrió un error al insertar");
+            alert(err.reason);
+          }
+        });
+      }
     }
-    else if (opcion == 'alumno'){
-      var matricula = "";
-      var claveEscuela = '';
-      Meteor.call('alumno.insert', matricula, claveEscuela, (err, res) => {
-        if (!err) {
-          // this.handleModalClose();
-          alert("insertado");
-        } else {
-          // this.setState({ error: err.reason });
-          alert("ocurrió un error al insertar");
-          alert(err.reason);
-        }
-      });
+    else{
+      alert("Contrasenias desiguales");
     }    
   }
   
