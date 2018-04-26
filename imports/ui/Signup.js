@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Error from './components/Error'
 
 class Signup extends React.Component {
   constructor(props){
@@ -52,7 +53,14 @@ class Signup extends React.Component {
       tipoUsuario: opcion
     };
   
-    var userId = Accounts.createUser(datos);
+    var userId = Accounts.createUser(datos, (err) => {
+      if(err){
+        this.setState({error: err.reason});
+        
+      } else {
+        this.setState({error: ''});
+      }
+    });
 
     var nombre= "Gerardo";
     var ApPaterno = "Vazquez";
@@ -76,6 +84,13 @@ class Signup extends React.Component {
   
 
   render () {
+    let errorMessage = null, error;
+    errorMessage = (this.state.error) ? this.state.error : undefined;
+    if(errorMessage === undefined){
+      error = null;
+    } else {
+      error = <Error errorMessage={errorMessage}/>;
+    }
     return (
       <div>
         <Navbar/>
@@ -88,9 +103,11 @@ class Signup extends React.Component {
                           <span className="anchor" id="formLogin"></span>
 
                           {/*<!-- form card login -->*/}
-                          <div className="alert alert-danger" role="alert">
+                          
+                          {/*<div className="alert alert-danger" role="alert">
                             {this.state.error ? <p>{this.state.error}</p> : undefined}
-                          </div>
+    </div> */}
+                          { error }
                           <div className="card rounded">
                               <div className="card-header">
                                   <h3 className="mb-0 text-center">Regístrate</h3>
