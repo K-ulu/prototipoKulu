@@ -3,7 +3,7 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import shortid from 'shortid';
 
-export const Docente = new Mongo.Collection('docente');
+export const Docente = new Mongo.Collection('docentes');
 
 if (Meteor.isServer) {
   Meteor.publish('docente', function () {
