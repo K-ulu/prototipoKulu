@@ -38,17 +38,16 @@ class Signup extends React.Component {
   //evento al mandar los datos del formulario
   onSubmit(e){
     e.preventDefault();
-    //TODO:solicitar datos faltantes (actualizar formulario) datos a pedir: nombreUsuario, nombre, correo, password
-    // confirmar password, tipo usuario
+    //TODO:verificar contraseña
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
     let opcion = this.state.value;    
 
     let nombre = this.refs.name.value.trim();
-    let apellidoP = 'Miranda';
-    let apellidoM = 'Rosanda';
+    let apellidoP = '';
+    let apellidoM = '';
     let nickname = this.refs.username.value.trim();
-    let curp = 'abcdefgsdfsdf';
+    let curp = '';
 
     //creando nuestro objeto con los datos del usuario
     var datos = {
@@ -75,23 +74,23 @@ class Signup extends React.Component {
 
     //insertamos los datos de acuerdo al tipo de usuario
     if(opcion == 'docente'){
-      var claveDocente= "abcdef789t";
-        var claveEscuela = "abcdef123t";
-        var rfc = "aaaaaaa"
-        Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
-          if (!err) {
-            // this.handleModalClose();
-            alert("insertado");
-          } else {
-            // this.setState({ error: err.reason });
-            alert("ocurrió un error al insertar");
-            alert(err.reason);
-          }
-        });
+      var claveDocente= "";
+      var claveEscuela = "";
+      var rfc = ""
+      Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
+        if (!err) {
+          // this.handleModalClose();
+          alert("insertado");
+        } else {
+          // this.setState({ error: err.reason });
+          alert("ocurrió un error al insertar");
+          alert(err.reason);
+        }
+      });
     }
     else if (opcion == 'alumno'){
-      var matricula = "aaaaaaaaaaa";
-      var claveEscuela = 'bbbbbbbbbb';
+      var matricula = "";
+      var claveEscuela = '';
       Meteor.call('alumno.insert', matricula, claveEscuela, (err, res) => {
         if (!err) {
           // this.handleModalClose();

@@ -36,10 +36,7 @@ Meteor.methods({
       claveDocente,
       claveEscuela,
       rfc,
-      userId: this.userId,
-      visible: true,
-      //visitedCount: 0,
-      //lastVisitedAt: null
+      userId: this.userId
     });
   }
 });

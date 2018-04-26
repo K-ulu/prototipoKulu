@@ -34,10 +34,7 @@ Meteor.methods({
       _id: shortid.generate(),
       matricula,
       claveEscuela,
-      userId: this.userId,
-      visible: true,
-      //visitedCount: 0,
-      //lastVisitedAt: null
+      userId: this.userId
     });
   }
 });
