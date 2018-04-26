@@ -74,9 +74,9 @@ class Signup extends React.Component {
 
     //insertamos los datos de acuerdo al tipo de usuario
     if(opcion == 'docente'){
-      var claveDocente= "";
-      var claveEscuela = "";
-      var rfc = ""
+      var claveDocente= '';
+      var claveEscuela = '';
+      var rfc = '';
       Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
         if (!err) {
           // this.handleModalClose();
