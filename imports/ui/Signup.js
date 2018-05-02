@@ -121,14 +121,14 @@ class Signup extends React.Component {
               <div className="col-md-12">
                   <h2 className="text-center mb-4"></h2>
                   <div className="row">
-                      <div className="col-md-6 mx-auto">
+                      <div className="col-md-9 col-lg-6 mx-auto">
                           <span className="anchor" id="formLogin"></span>
 
                           {/*<!-- form card login -->*/}
                           
                           {/*<div className="alert alert-danger" role="alert">
                             {this.state.error ? <p>{this.state.error}</p> : undefined}
-    </div> */}
+                          </div> */}
                           { error }
                           <div className="card rounded">
                               <div className="card-header">
@@ -137,13 +137,13 @@ class Signup extends React.Component {
                               <div className="card-body mt-2">
                                   <form onSubmit={this.onSubmit} className="form" role="form" autoComplete="off" id="formLogin">
                                     <div className="row">
-                                      <div className="col-6">
+                                      <div className="col-12 col-sm-6">
                                         <div className="input-group-prepend">
                                           <span className="input-group-text"><i className="fa fa-user-circle-o"></i></span>
                                           <input type="text" ref="username" name="username" className="form-control form-control rounded" placeholder="Usuario"/>
                                         </div>                                          
                                       </div>
-                                      <div className="col-6">
+                                      <div className="col-12 col-sm-6">
                                         <div className="input-group-prepend">
                                           <span className="input-group-text"><i className="fa fa-user fa-fw"></i></span>
                                           <input type="text" ref="name" name="name" className="form-control form-control rounded" placeholder="Nombre"/>
@@ -184,7 +184,7 @@ class Signup extends React.Component {
 
                                     </div>
                                     <div className="row-login">
-                                      <button type="submit" className="btn btn-primary btn-lg text-center">Regístrarse</button>
+                                      <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Regístrarse</button>
                                     </div>
 
                                   </form>
