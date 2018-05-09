@@ -25,6 +25,22 @@ export default class Caro extends React.Component {
             console.log(err.reason);
           }
         });
+
+        id = '5xABqhmqiBwAyTdwn';
+        var matricula='ccc';
+        var claveEscuela = 'bbb'; 
+
+        Meteor.call('alumnos.update', id,matricula,claveEscuela, (err, res) => {
+          if (!err) {
+            // this.handleModalClose();
+            alert("actualizado");
+          } else {
+            // this.setState({ error: err.reason });
+            alert("ocurrió un error al editar");
+            alert(err.reason);
+            console.log(err.reason);
+          }
+        });
     }
 
 

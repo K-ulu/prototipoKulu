@@ -36,5 +36,16 @@ Meteor.methods({
       claveEscuela,
       userId: this.userId
     });
+  },
+
+  'alumnos.update'( miId, matricula,claveEscuela){
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+    Alumnos.update({
+      userId: miId
+    }, {
+      $set: { matricula, claveEscuela}
+    });
   }
 });
