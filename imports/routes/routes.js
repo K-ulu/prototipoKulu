@@ -16,6 +16,9 @@ import Business from '../ui/Business';
 import Contact from '../ui/Contact';
 import Support from '../ui/Support';
 import NotFound from '../ui/NotFound';
+import Caro from '../ui/Caro';
+
+
 
 import MaestroDashboard from '../ui/MaestroDashboard';
 
@@ -63,6 +66,7 @@ export const routes = (
       <Route path="/contact" component={()=>(<Contact isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/support" component={()=>(<Support isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/caro" component={()=>(<Caro/>)}/>      
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
   </Router>

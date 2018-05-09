@@ -79,7 +79,7 @@ class Signup extends React.Component {
         var claveDocente= '';
         var claveEscuela = '';
         var rfc = '';
-        Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
+        Meteor.call('docentes.insert', claveDocente, claveEscuela,rfc, (err, res) => {
           if (!err) {
             // this.handleModalClose();
             alert("insertado");
@@ -93,7 +93,7 @@ class Signup extends React.Component {
       else if (opcion == 'alumno'){
         var matricula = "";
         var claveEscuela = '';
-        Meteor.call('alumno.insert', matricula, claveEscuela, (err, res) => {
+        Meteor.call('alumnos.insert', matricula, claveEscuela, (err, res) => {
           if (!err) {
             // this.handleModalClose();
             alert("insertado");

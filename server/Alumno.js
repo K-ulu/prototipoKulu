@@ -3,16 +3,16 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import shortid from 'shortid';
 
-export const Alumno = new Mongo.Collection('alumnos');
+export const Alumnos = new Mongo.Collection('alumnos');
 
 if (Meteor.isServer) {
   Meteor.publish('alumno', function () {
-    return Alumno.find({ userId: this.userId });
+    return Alumnos.find({ userId: this.userId });
   });
 }
 
 Meteor.methods({
-  'alumno.insert'(matricula, claveEscuela) {
+  'alumnos.insert'(matricula, claveEscuela) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -30,7 +30,7 @@ Meteor.methods({
     //   }
     // }).validate({ nombre, ApPaterno });
   
-    Alumno.insert({
+    Alumnos.insert({
       _id: shortid.generate(),
       matricula,
       claveEscuela,

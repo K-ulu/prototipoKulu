@@ -3,17 +3,17 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import shortid from 'shortid';
 
-export const Docente = new Mongo.Collection('docentes');
+export const Docentes = new Mongo.Collection('docentes');
 
 if (Meteor.isServer) {
-  Meteor.publish('docente', function () {
+  Meteor.publish('docentes', function () {
     alert("Es servidor");
     return Docente.find({ userId: this.userId });
   });
 }
 
 Meteor.methods({
-  'docente.insert'(claveDocente, claveEscuela, rfc) {
+  'docentes.insert'(claveDocente, claveEscuela, rfc) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -31,7 +31,7 @@ Meteor.methods({
     //   }
     // }).validate({ nombre, ApPaterno });
   
-    Docente.insert({
+    Docentes.insert({
       _id: shortid.generate(),
       claveDocente,
       claveEscuela,
