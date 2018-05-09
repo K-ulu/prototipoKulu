@@ -38,5 +38,16 @@ Meteor.methods({
       rfc,
       userId: this.userId
     });
+  },
+
+  'docentes.update'( miId, rfc, claveDocente, claveEscuela,){
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+    Docentes.update({
+      userId: miId
+    }, {
+      $set: { rfc, claveDocente,  claveEscuela}
+    });
   }
 });
