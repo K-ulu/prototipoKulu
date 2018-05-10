@@ -8,7 +8,8 @@ export default class Caro extends React.Component {
           error: '', //almacena el error
           value: '' //almacena valor del tipo de usuario
         };
-
+      /******************************************Edición************************************************** */
+        //Docentes.
         var id = 'cBTB28hDKwCNCwNvK';
         var rfc = 'ccc';
         var claveDocente='aaa';
@@ -25,7 +26,7 @@ export default class Caro extends React.Component {
             console.log(err.reason);
           }
         });
-
+      //Alumnos
         id = '5xABqhmqiBwAyTdwn';
         var matricula='ccc';
         var claveEscuela = 'bbb'; 
@@ -41,6 +42,37 @@ export default class Caro extends React.Component {
             console.log(err.reason);
           }
         });
+
+        /******************************************Eliminar campos*******************************************/
+        //Alumnos
+        // id = 'Sy-sqTgRM'; //Llave primaria
+        // Meteor.call('alumnos.remove', id, (err, res) => {
+        //   if (!err) {
+        //     // this.handleModalClose();
+        //     alert("eliminado");
+        //   } else {
+        //     // this.setState({ error: err.reason });
+        //     alert("ocurrió un error al eliminar");
+        //     alert(err.reason);
+        //     console.log(err.reason);
+        //   }
+        // });
+      //Docentes
+      id = 'r1r6e3x0G'; //Llave primaria
+      Meteor.call('docentes.remove', id, (err, res) => {
+        if (!err) {
+          // this.handleModalClose();
+          alert("eliminado");
+        } else {
+          // this.setState({ error: err.reason });
+          alert("ocurrió un error al eliminar");
+          alert(err.reason);
+          console.log(err.reason);
+        }
+      });
+
+      /*****************************************Visualización de campos************************************ */
+    
     }
 
 

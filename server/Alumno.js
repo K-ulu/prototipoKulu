@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import shortid from 'shortid';
+import { check } from 'meteor/check';
 
 export const Alumnos = new Mongo.Collection('alumnos');
 
@@ -47,5 +48,10 @@ Meteor.methods({
     }, {
       $set: { matricula, claveEscuela}
     });
+  },
+  'alumnos.remove'(id) {
+    check(id, String);
+ 
+    Alumnos.remove(id);
   }
 });
