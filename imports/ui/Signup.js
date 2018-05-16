@@ -74,8 +74,6 @@ class Signup extends React.Component {
         }
       });
 
-      console.log(userId);
-      alert(userId);
       //insertamos los datos de acuerdo al tipo de usuario
       if(opcion == 'docente'){
         var claveDocente= '';
