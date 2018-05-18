@@ -51,9 +51,13 @@ Meteor.methods({
       $set: { rfc, claveDocente,  claveEscuela}
     });
   },
+
   'docentes.remove'(id) {
     check(id, String);
  
     Docentes.remove(id);
+  },
+  'docentes.findAll'(){
+    return Docentes.find();
   }
 });

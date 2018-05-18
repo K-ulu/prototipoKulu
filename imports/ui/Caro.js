@@ -1,5 +1,6 @@
 import React from 'react';
 import {Docentes} from '../api/Docente.js';
+import {Alumnos} from '../api/Alumno.js';
 
 export default class Caro extends React.Component {
     constructor(props){
@@ -77,15 +78,20 @@ export default class Caro extends React.Component {
       
       //var resul = Meteor.call('docentes.get',id, {});
       //console.log(resul);
+      const myMessages = Docentes.find({ userId: Meteor.userId() }).fetch();
     }
 
+    /* Usan Templates
+    {{#each Docentes}}
+                  <td>{{claveDocente}}</td>
+            {{/each}} */
 
     render(){
         return (
             <div>
-            <p>hola caro</p>
-            </div>
-            
+              <p>hola caro</p>
+              <div>{ myMessages }</div>
+            </div>          
         );
     }
 }
