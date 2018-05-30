@@ -37,7 +37,7 @@ export default class MaestroDashboard extends React.Component{
           <div className="headerbar-left">
             <a href="index.html" className="logo">
               <img alt="Logo" src="images/kulu_logo_160.png" />
-              <span>Admin</span>
+              <span>Maestros</span>
             </a>
           </div>
 
@@ -50,14 +50,14 @@ export default class MaestroDashboard extends React.Component{
               </a>
               <div className="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-arrow-success dropdown-lg">
                 {/*item*/}
-                <div className="dropdown-item noti-title">
+                <div className="dropdown-item-dash noti-title">
                   <h5>
                     <small>Help and Support</small>
                   </h5>
                 </div>
 
                 {/*item*/}
-                <a target="_blank" href="https://www.pikeadmin.com" className="dropdown-item notify-item">
+                <a target="_blank" href="https://www.pikeadmin.com" className="dropdown-item-dash notify-item">
                   <p className="notify-details ml-0">
                     <b>Do you want custom development to integrate this theme?</b>
                     <span>Contact Us</span>
@@ -65,7 +65,7 @@ export default class MaestroDashboard extends React.Component{
                 </a>
 
                 {/*item*/}
-                <a target="_blank" href="https://www.pikeadmin.com/pike-admin-pro" className="dropdown-item notify-item">
+                <a target="_blank" href="https://www.pikeadmin.com/pike-admin-pro" className="dropdown-item-dash notify-item">
                   <p className="notify-details ml-0">
                     <b>Do you want PHP version of the theme that save dozens of hours of work?</b>
                     <span>Try Pike Admin PRO</span>
@@ -73,7 +73,7 @@ export default class MaestroDashboard extends React.Component{
                 </a>
 
                 {/*All*/}
-                <a title="Clcik to visit Pike Admin Website" target="_blank" href="https://www.pikeadmin.com" className="dropdown-item notify-item notify-all">
+                <a title="Clcik to visit Pike Admin Website" target="_blank" href="https://www.pikeadmin.com" className="dropdown-item-dash notify-item notify-all">
                   <i className="fa fa-link"></i> Visit Pike Admin Website
                 </a>
 
@@ -87,7 +87,7 @@ export default class MaestroDashboard extends React.Component{
               </a>
               <div className="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-arrow-success dropdown-lg">
                 {/*item*/}
-                <div className="dropdown-item noti-title">
+                <div className="dropdown-item-dash noti-title">
                   <h5>
                     <small>
                       <span className="label label-danger pull-xs-right">12</span>Contact Messages</small>
@@ -95,7 +95,7 @@ export default class MaestroDashboard extends React.Component{
                 </div>
 
                 {/*item*/}
-                <a href="#" className="dropdown-item notify-item">
+                <a href="#" className="dropdown-item-dash notify-item">
                   <p className="notify-details ml-0">
                     <b>Jokn Doe</b>
                     <span>New message received</span>
@@ -104,7 +104,7 @@ export default class MaestroDashboard extends React.Component{
                 </a>
 
                 {/*item*/}
-                <a href="#" className="dropdown-item notify-item">
+                <a href="#" className="dropdown-item-dash notify-item">
                   <p className="notify-details ml-0">
                     <b>Michael Jackson</b>
                     <span>New message received</span>
@@ -113,7 +113,7 @@ export default class MaestroDashboard extends React.Component{
                 </a>
 
                 {/*item*/}
-                <a href="#" className="dropdown-item notify-item">
+                <a href="#" className="dropdown-item-dash notify-item">
                   <p className="notify-details ml-0">
                     <b>Foxy Johnes</b>
                     <span>New message received</span>
@@ -122,7 +122,7 @@ export default class MaestroDashboard extends React.Component{
                 </a>
 
                 {/*All*/}
-                <a href="#" className="dropdown-item notify-item notify-all">
+                <a href="#" className="dropdown-item-dash notify-item notify-all">
                   View All
                 </a>
 
@@ -136,7 +136,7 @@ export default class MaestroDashboard extends React.Component{
               </a>
               <div className="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-lg">
                 {/*item*/}
-                <div className="dropdown-item noti-title">
+                <div className="dropdown-item-dash noti-title">
                   <h5>
                     <small>
                       <span className="label label-danger pull-xs-right">5</span>Allerts</small>
@@ -144,7 +144,7 @@ export default class MaestroDashboard extends React.Component{
                 </div>
 
                 {/*item*/}
-                <a href="#" className="dropdown-item notify-item">
+                <a href="#" className="dropdown-item-dash notify-item">
                   <div className="notify-icon bg-faded">
                     <img src="assets/images/avatars/avatar2.png" alt="img" className="rounded-circle img-fluid"/>
                   </div>
@@ -156,7 +156,7 @@ export default class MaestroDashboard extends React.Component{
                 </a>
 
                 {/*item*/}
-                <a href="#" className="dropdown-item notify-item">
+                <a href="#" className="dropdown-item-dash notify-item">
                   <div className="notify-icon bg-faded">
                     <img src="assets/images/avatars/avatar3.png" alt="img" className="rounded-circle img-fluid"/>
                   </div>
@@ -168,7 +168,7 @@ export default class MaestroDashboard extends React.Component{
                 </a>
 
                 {/*item*/}
-                <a href="#" className="dropdown-item notify-item">
+                <a href="#" className="dropdown-item-dash notify-item">
                   <div className="notify-icon bg-faded">
                     <img src="assets/images/avatars/avatar4.png" alt="img" className="rounded-circle img-fluid"/>
                   </div>
@@ -180,7 +180,7 @@ export default class MaestroDashboard extends React.Component{
                 </a>
 
                 {/*item*/}
-                <a href="#" className="dropdown-item notify-item notify-all">
+                <a href="#" className="dropdown-item-dash notify-item notify-all">
                   View All Allerts
                 </a>
 
@@ -193,26 +193,26 @@ export default class MaestroDashboard extends React.Component{
               </a>
               <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
                 {/*item*/}
-                <div className="dropdown-item noti-title">
+                <div className="dropdown-item-dash noti-title">
                   <h5 className="text-overflow">
                     <small>Hello, admin</small>
                   </h5>
                 </div>
 
                 {/*item*/}
-                <a href="pro-profile.html" className="dropdown-item notify-item">
+                <a href="pro-profile.html" className="dropdown-item-dash notify-item">
                   <i className="fa fa-user"></i>
                   <span>Profile</span>
                 </a>
 
                 {/*item*/}
-                <a href="#" className="dropdown-item notify-item">
+                <a href="#" className="dropdown-item-dash notify-item">
                   <i className="fa fa-power-off"></i>
                   <span>Logout</span>
                 </a>
 
                 {/*item*/}
-                <a target="_blank" href="https://www.pikeadmin.com" className="dropdown-item notify-item">
+                <a target="_blank" href="https://www.pikeadmin.com" className="dropdown-item-dash notify-item">
                   <i className="fa fa-external-link"></i>
                   <span>Pike Admin</span>
                 </a>
@@ -251,14 +251,14 @@ export default class MaestroDashboard extends React.Component{
                   <li className="submenu">
                     <a href="charts.html">
                       <i className="fa fa-fw fa-area-chart"></i>
-                      <span> Charts </span>
+                      <span> Alumnos </span>
                     </a>
                   </li>
       
                   <li className="submenu">
                     <a href="#">
                       <i className="fa fa-fw fa-table"></i>
-                      <span> Tables </span>
+                      <span> Grupos </span>
                       <span className="menu-arrow"></span>
                     </a>
                     <ul className="list-unstyled">
@@ -274,7 +274,7 @@ export default class MaestroDashboard extends React.Component{
                   <li className="submenu">
                     <a href="#">
                       <i className="fa fa-fw fa-tv"></i>
-                      <span> User Interface </span>
+                      <span> Sesiones de Aprendizajes </span>
                       <span className="menu-arrow"></span>
                     </a>
                     <ul className="list-unstyled">
@@ -308,7 +308,7 @@ export default class MaestroDashboard extends React.Component{
                   <li className="submenu">
                     <a href="#">
                       <i className="fa fa-fw fa-file-text-o"></i>
-                      <span> Forms </span>
+                      <span> Mi Contenido Multimedia </span>
                       <span className="menu-arrow"></span>
                     </a>
                     <ul className="list-unstyled">
@@ -339,7 +339,7 @@ export default class MaestroDashboard extends React.Component{
                   <li className="submenu">
                     <a href="#">
                       <i className="fa fa-fw fa-th"></i>
-                      <span> Plugins </span>
+                      <span> Mis Documentos </span>
                       <span className="menu-arrow"></span>
                     </a>
                     <ul className="list-unstyled">
@@ -370,7 +370,7 @@ export default class MaestroDashboard extends React.Component{
                   <li className="submenu">
                     <a href="#">
                       <i className="fa fa-fw fa-image"></i>
-                      <span> Images and Galleries </span>
+                      <span> Objetos de Aprendizaje </span>
                       <span className="menu-arrow"></span>
                     </a>
                     <ul className="list-unstyled">
@@ -394,7 +394,7 @@ export default class MaestroDashboard extends React.Component{
                     </ul>
                   </li>
       
-                  <li className="submenu">
+                  {/*<li className="submenu">
                     <a href="#">
                       <span className="label radius-circle bg-danger float-right">20</span>
                       <i className="fa fa-fw fa-copy"></i>
@@ -450,9 +450,44 @@ export default class MaestroDashboard extends React.Component{
                         </ul>
                       </li>
                     </ul>
-                  </li>
+                  </li>*/}
       
-                  
+                  {/*<li className="submenu">
+                    <a className="pro" href="#">
+                      <i className="fa fa-fw fa-star"></i>
+                      <span> Pike Admin PRO </span>
+                      <span className="menu-arrow"></span>
+                    </a>
+                    <ul className="list-unstyled">
+                      <li>
+                        <a target="_blank" href="https://www.pikeadmin.com/pike-admin-pro">Admin PRO features</a>
+                      </li>
+                      <li>
+                        <a href="pro-settings.html">Settings</a>
+                      </li>
+                      <li>
+                        <a href="pro-profile.html">My Profile</a>
+                      </li>
+                      <li>
+                        <a href="pro-users.html">Users</a>
+                      </li>
+                      <li>
+                        <a href="pro-articles.html">Articles</a>
+                      </li>
+                      <li>
+                        <a href="pro-categories.html">Categories</a>
+                      </li>
+                      <li>
+                        <a href="pro-pages.html">Pages</a>
+                      </li>
+                      <li>
+                        <a href="pro-contact-messages.html">Contact Messages</a>
+                      </li>
+                      <li>
+                        <a href="pro-slider.html">Slider</a>
+                      </li>
+                    </ul>
+                </li>*/}
       
                 </ul>
                 <div className="clearfix"></div>
@@ -493,36 +528,36 @@ export default class MaestroDashboard extends React.Component{
                   <div className="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                     <div className="card-box noradius noborder bg-default">
                       <i className="fa fa-file-text-o float-right text-white"></i>
-                      <h6 className="text-white text-uppercase m-b-20">Orders</h6>
+                      <h6 className="text-white text-uppercase m-b-20">Documentos</h6>
                       <h1 className="m-b-20 text-white counter">1,587</h1>
-                      <span className="text-white">15 New Orders</span>
+                      <span className="text-white">15 Nuevos Docs</span>
                     </div>
                   </div>
 
                   <div className="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                     <div className="card-box noradius noborder bg-warning">
                       <i className="fa fa-bar-chart float-right text-white"></i>
-                      <h6 className="text-white text-uppercase m-b-20">Visitors</h6>
-                      <h1 className="m-b-20 text-white counter">250</h1>
-                      <span className="text-white">Bounce rate: 25%</span>
+                      <h6 className="text-white text-uppercase m-b-20">Historial</h6>
+                      <h1 className="m-b-20 text-white counter">32</h1>
+                      <span className="text-white">Crea una nueva</span>
                     </div>
                   </div>
 
                   <div className="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                     <div className="card-box noradius noborder bg-info">
                       <i className="fa fa-user-o float-right text-white"></i>
-                      <h6 className="text-white text-uppercase m-b-20">Users</h6>
-                      <h1 className="m-b-20 text-white counter">120</h1>
-                      <span className="text-white">25 New Users</span>
+                      <h6 className="text-white text-uppercase m-b-20">Alumnos</h6>
+                      <h1 className="m-b-20 text-white counter">32</h1>
+                      <span className="text-white">25 Nuevos Alumnos</span>
                     </div>
                   </div>
 
                   <div className="col-xs-12 col-md-6 col-lg-6 col-xl-3">
                     <div className="card-box noradius noborder bg-danger">
                       <i className="fa fa-bell-o float-right text-white"></i>
-                      <h6 className="text-white text-uppercase m-b-20">Alerts</h6>
-                      <h1 className="m-b-20 text-white counter">58</h1>
-                      <span className="text-white">5 New Alerts</span>
+                      <h6 className="text-white text-uppercase m-b-20">Urgente</h6>
+                      <h1 className="m-b-20 text-white counter">7</h1>
+                      <span className="text-white">5 Nuevas Alertas</span>
                     </div>
                   </div>
                 </div>
@@ -846,17 +881,17 @@ export default class MaestroDashboard extends React.Component{
               
           </div>
           {/*End content-page*/} 
-          <footer className="footer">
+          <footer className="footer-dash">
             <span className="text-right">
               Copyright
-              <a target="_blank" href="#">Your Website</a>
+              <a target="_blank" href="#">  K'ulu'</a>
             </span>
-            <span className="float-right">
+            {/*<span className="float-right">
               Powered by
               <a target="_blank" href="https://www.pikeadmin.com">
                 <b>Pike Admin</b>
               </a>
-            </span>
+              </span>*/}
           </footer>
 
         
