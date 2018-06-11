@@ -51,46 +51,43 @@ class Signup extends React.Component {
     let curp = '';
 
     //creando nuestro objeto con los datos del usuario
-    if (password == confirmPassword){
-      var datos = {
-        email: email,
-        password: password,
-        profile: {
-          nombre: nombre,
-          apellidoP: apellidoP,
-          apellidoM: apellidoM,
-          nickname: nickname,
-          curp: curp
-        },
-        tipoUsuario: opcion
-      };
-    
-      var userId = Accounts.createUser(datos, (err) => {
-        if(err){
-          this.setState({error: err.reason});
-          
+    var datos = {
+      email: email,
+      password: password,
+      profile: {
+        nombre: nombre,
+        apellidoP: apellidoP,
+        apellidoM: apellidoM,
+        nickname: nickname,
+        curp: curp
+      },
+      tipoUsuario: opcion
+    };
+  
+    var userId = Accounts.createUser(datos, (err) => {
+      if(err){
+        this.setState({error: err.reason});
+        
+      } else {
+        this.setState({error: ''});
+      }
+    });
+
+    //insertamos los datos de acuerdo al tipo de usuario
+    if(opcion == 'docente'){
+      var claveDocente= '';
+      var claveEscuela = '';
+      var rfc = '';
+      Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
+        if (!err) {
+          // this.handleModalClose();
+          alert("insertado");
         } else {
           this.setState({error: ''});
         }
       });
-
-      //insertamos los datos de acuerdo al tipo de usuario
-      if(opcion == 'docente'){
-        var claveDocente= '';
-        var claveEscuela = '';
-        var rfc = '';
-        Meteor.call('docentes.insert', claveDocente, claveEscuela,rfc, (err, res) => {
-          if (!err) {
-            // this.handleModalClose();
-            alert("insertado");
-          } else {
-            // this.setState({ error: err.reason });
-            alert("ocurrió un error al insertar");
-            alert(err.reason);
-          }
-        });
-      }
-      else if (opcion == 'alumno'){
+    }
+    else if (opcion == 'alumno'){
         var matricula = "";
         var claveEscuela = '';
         Meteor.call('alumnos.insert', matricula, claveEscuela, (err, res) => {
@@ -103,7 +100,6 @@ class Signup extends React.Component {
             alert(err.reason);
           }
         });
-      }
     }
     else{
       alert("Contrasenias desiguales");
@@ -124,85 +120,83 @@ class Signup extends React.Component {
         <Navbar/>
         <div className="container py-5">
           <div className="row">
-              <div className="col-md-12">
-                  <h2 className="text-center mb-4"></h2>
-                  <div className="row">
-                      <div className="col-md-6 mx-auto">
-                          <span className="anchor" id="formLogin"></span>
+            <div className="col-md-12">
+              <h2 className="text-center mb-4"></h2>
+              <div className="row">
+                <div className="col-md-9 col-lg-6 mx-auto">
+                  <span className="anchor" id="formLogin"></span>
 
-                          {/*<!-- form card login -->*/}
-                          
-                          {/*<div className="alert alert-danger" role="alert">
-                            {this.state.error ? <p>{this.state.error}</p> : undefined}
-    </div> */}
-                          { error }
-                          <div className="card rounded">
-                              <div className="card-header">
-                                  <h3 className="mb-0 text-center">Regístrate</h3>
-                              </div>
-                              <div className="card-body mt-2">
-                                  <form onSubmit={this.onSubmit} className="form" role="form" autoComplete="off" id="formLogin">
-                                    <div className="row">
-                                      <div className="col-6">
-                                        <div className="input-group-prepend">
-                                          <span className="input-group-text"><i className="fa fa-user-circle-o"></i></span>
-                                          <input type="text" ref="username" name="username" className="form-control form-control rounded" placeholder="Usuario"/>
-                                        </div>                                          
-                                      </div>
-                                      <div className="col-6">
-                                        <div className="input-group-prepend">
-                                          <span className="input-group-text"><i className="fa fa-user fa-fw"></i></span>
-                                          <input type="text" ref="name" name="name" className="form-control form-control rounded" placeholder="Nombre"/>
-                                        </div>                                                                          
-                                      </div>  
-                                      <div className="col-12">                                        
-                                        <div className="input-group-prepend">
-                                          <span className="input-group-text"><i className="fa fa-envelope"></i></span>
-                                          <input type="email" ref="email" name="email" className="form-control form-control rounded" placeholder="Correo electrónico"/>
-                                        </div>                                         
-                                      </div>  
-                                      <div className="col-12">                                        
-                                        <div className="input-group-prepend">
-                                          <span className="input-group-text"><i className="fa fa-envelope"></i></span>
-                                          <input type="password" ref="password" name="password" className="form-control form-control rounded" placeholder="Constraseña"/>
-                                        </div>                                         
-                                      </div> 
-                                      <div className="col-12">                                        
-                                        <div className="input-group-prepend">
-                                          <span className="input-group-text"><i className="fa fa-envelope"></i></span>
-                                          <input type="password" ref="confirmPassword" name="confirmPassword" className="form-control form-control rouded" placeholder="Confirmar Constraseña"/>
-                                        </div>                                         
-                                      </div> 
-                                      <div className="col-12">  
-                                        <div className="input-group-prepend">     
-                                            <span className="input-group-text"><i className="fa fa-info-circle"></i></span>
-                                            <select value={this.state.value} onChange={this.handleChange} className="form-control form-control rounded">
-                                              <option value ="seleccione">Seleccione tipo de usuario</option>
-                                              <option value="alumno">Alumno</option>
-                                              <option value ="docente">Docente</option>                                      
-                                            </select>                         
-                                        </div>                                                                       
-                                      </div>                                    
-                                    </div>
-
-                                    <div className="text-center">
-                                      <a href="recuperar.html">¿Olvidaste tu contraseña?</a> ó <a href="/login">¿Ya tienes una cuenta?</a>
-
-                                    </div>
-                                    <div className="row-login">
-                                      <button type="submit" className="btn btn-primary btn-lg text-center">Regístrarse</button>
-                                    </div>
-
-                                  </form>
-                              </div>
-                              {/*<!--/card-block-->*/}
+                  {/*<!-- form card login -->*/}
+                  
+                  {/*<div className="alert alert-danger" role="alert">
+                    {this.state.error ? <p>{this.state.error}</p> : undefined}
+                  </div> */}
+                  { error }
+                  <div className="card rounded">
+                    <div className="card-header">
+                      <h3 className="mb-0 text-center">Regístrate</h3>
+                    </div>
+                      <div className="card-body mt-2">
+                        <form onSubmit={this.onSubmit} className="form" role="form" autoComplete="off" id="formLogin">
+                          <div className="row">
+                            <div className="col-12 col-sm-6">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-user-circle-o"></i></span>
+                                <input type="text" ref="username" name="username" className="form-control form-control rounded" placeholder="Usuario"/>
+                              </div>                                          
+                            </div>
+                            <div className="col-12 col-sm-6">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-user fa-fw"></i></span>
+                                <input type="text" ref="name" name="name" className="form-control form-control rounded" placeholder="Nombre"/>
+                              </div>                                                                          
+                            </div>  
+                            <div className="col-12">                                        
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-envelope"></i></span>
+                                <input type="email" ref="email" name="email" className="form-control form-control rounded" placeholder="Correo electrónico"/>
+                              </div>                                         
+                            </div>  
+                            <div className="col-12">                                        
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-envelope"></i></span>
+                                <input type="password" ref="password" name="password" className="form-control form-control rounded" placeholder="Constraseña"/>
+                              </div>                                         
+                            </div> 
+                            <div className="col-12">                                        
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-envelope"></i></span>
+                                <input type="password" ref="confirmPassword" name="confirmPassword" className="form-control form-control rouded" placeholder="Confirmar Constraseña"/>
+                              </div>                                         
+                            </div> 
+                            <div className="col-12">  
+                              <div className="input-group-prepend">     
+                                  <span className="input-group-text"><i className="fa fa-info-circle"></i></span>
+                                  <select value={this.state.value} onChange={this.handleChange} className="form-control form-control rounded">
+                                    <option value ="seleccione">Seleccione tipo de usuario</option>
+                                    <option value="alumno">Alumno</option>
+                                    <option value ="docente">Docente</option>                                      
+                                  </select>                         
+                              </div>                                                                       
+                            </div>                                    
                           </div>
-                          {/*<!-- /form card login -->*/}
+
+                          <div className="text-center">
+                            <a href="recuperar.html">¿Olvidaste tu contraseña?</a> ó <a href="/login">¿Ya tienes una cuenta?</a>
+                          </div>
+                          <div className="row-login">
+                            <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Regístrarse</button>
+                          </div>
+                        </form>
                       </div>
+                      {/*<!--/card-block-->*/}
                   </div>
-                  {/*<!--/row-->*/}
+                  {/*<!-- /form card login -->*/}
+                </div>
               </div>
-              {/*<!--/col-->*/}
+              {/*<!--/row-->*/}
+            </div>
+            {/*<!--/col-->*/}
           </div>
           {/*<!--/row-->*/}
         </div>

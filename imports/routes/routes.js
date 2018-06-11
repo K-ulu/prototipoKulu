@@ -21,6 +21,7 @@ import Caro from '../ui/Caro';
 
 
 import MaestroDashboard from '../ui/MaestroDashboard';
+import UsuarioDashboard from '../ui/UsuarioDashboard';
 
 let isAuthenticated;
 Tracker.autorun(() => {
@@ -67,6 +68,7 @@ export const routes = (
       <Route path="/support" component={()=>(<Support isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/caro" component={()=>(<Caro/>)}/>      
+      <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
   </Router>
