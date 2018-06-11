@@ -19,7 +19,7 @@ import NotFound from '../ui/NotFound';
 import Caro from '../ui/Caro';
 
 
-
+import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
 import UsuarioDashboard from '../ui/UsuarioDashboard';
 
@@ -69,6 +69,7 @@ export const routes = (
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/caro" component={()=>(<Caro/>)}/>      
       <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/dashboard" component={()=>(<Dashboard isAuthenticated={isAuthenticated}/>)}/>
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
   </Router>

@@ -8,7 +8,6 @@ import MaestroNuevaSesion from './components/MaestroNuevaSesion';
 import CarouselItems from './components/CarouselItems';
 import Footer from './components/Footer';
 
-
 export default class UsuarioDashboard extends React.Component {
 
   toggleSidebar(){
