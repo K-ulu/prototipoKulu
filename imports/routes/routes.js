@@ -59,6 +59,7 @@ const onEnterPrivatePage = () => { //si un usuario no esta logueado lo regresamo
 export const routes = (
   <Router>
     <Switch>
+      <Route exact path="/links" component={()=>(<Link isAuthenticated={isAuthenticated}/>)}/>  
       <Route exact path="/" component={()=>(<Home isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/login" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/signup" component={()=>(<Signup isAuthenticated={isAuthenticated}/>)}/>
