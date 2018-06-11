@@ -9,7 +9,7 @@ import CarouselItems from './components/CarouselItems';
 import Footer from './components/Footer';
 
 
-export default class MaestroDashboard extends React.Component {
+export default class UsuarioDashboard extends React.Component {
 
   toggleSidebar(){
     location.href='#menu-toggle';
@@ -208,7 +208,7 @@ export default class MaestroDashboard extends React.Component {
                   {/*<!-- item-->*/}
                   <div className="dropdown-item noti-title">
                     <h5 className="text-overflow">
-                      <small>Hello, admin</small>
+                      <small>Hello, user</small>
                     </h5>
                   </div>
     
@@ -265,7 +265,7 @@ export default class MaestroDashboard extends React.Component {
             <li className="submenu">
               <a className="nuevaSesion" href="#">
                 <i className="fa fa-fw fa-play"></i>
-                <span> Nueva Sesión </span>
+                <span> Nueva Mini Sesión </span>
               </a>
             </li>
 
@@ -315,20 +315,6 @@ export default class MaestroDashboard extends React.Component {
                 </li>         
               </ul>
             </li> 
-
-            <li className="submenu">
-              <a href="#">
-                <i className="fa fa-fw fa-user"></i>
-                <span> Mis Alumnos </span>
-              </a>
-            </li>            
-
-            <li className="submenu">
-              <a href="#">
-                <i className="fa fa-fw fa-users"></i>
-                <span> Mis Grupos </span>
-              </a>
-            </li>
 
             <li className="submenu">
               <a href="#">
@@ -402,42 +388,7 @@ export default class MaestroDashboard extends React.Component {
               </ul>
             </li>*/}
 
-            <li className="submenu">
-              <a className="pro" href="#">
-                <i className="fa fa-fw fa-star"></i>
-                <span> K'ulu' PRO </span>
-                <span className="menu-arrow"></span>
-              </a>
-              <ul className="list-unstyled">
-                <li>
-                  <a target="_blank" href="https://www.pikeadmin.com/pike-admin-pro">Admin PRO features</a>
-                </li>
-                <li>
-                  <a href="pro-settings.html">Settings</a>
-                </li>
-                <li>
-                  <a href="pro-profile.html">My Profile</a>
-                </li>
-                <li>
-                  <a href="pro-users.html">Users</a>
-                </li>
-                <li>
-                  <a href="pro-articles.html">Articles</a>
-                </li>
-                <li>
-                  <a href="pro-categories.html">Categories</a>
-                </li>
-                <li>
-                  <a href="pro-pages.html">Pages</a>
-                </li>
-                <li>
-                  <a href="pro-contact-messages.html">Contact Messages</a>
-                </li>
-                <li>
-                  <a href="pro-slider.html">Slider</a>
-                </li>
-              </ul>
-            </li>
+            
 
 
             
@@ -448,7 +399,7 @@ export default class MaestroDashboard extends React.Component {
         {/*Content*/}
         <div id="page-content-wrapper">
             <div className="container-fluid">
-                <h1>Maestro Dashboard - Simple Sidebar</h1>
+                <h1>Usuario Dashboard - Simple Sidebar</h1>
                 <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
                 <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
                 {/*<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>*/}

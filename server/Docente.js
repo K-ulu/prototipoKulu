@@ -8,6 +8,7 @@ export const Docente = new Mongo.Collection('docentes');
 if (Meteor.isServer) {
   Meteor.publish('docente', function () {
     alert("Es servidor");
+    console.log(Docente.find({ userId: this.userId }));
     return Docente.find({ userId: this.userId });
   });
 }
