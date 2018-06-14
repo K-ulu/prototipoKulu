@@ -1,7 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import {Docentes} from '../imports/api/Docente.js';
-import {Alumnos} from '../imports/api/Alumno.js';
+import {Docentes} from '../imports/api/docentes.js';
+import {Alumnos} from '../imports/api/alumnos.js';
+import {Libros} from '../imports/api/libros.js';
+import {Articulos} from '../imports/api/articulos.js';
+import {ObjetosAprendizaje} from '../imports/api/objetosAprendizaje.js';
+import {ElementosObjetosAprendizaje} from '../imports/api/elementosObjetosAprendizaje.js';
+import {Documentos} from '../imports/api/documentos.js';
+import {ContenidosMultimedia } from '../api/contenidosMultimedia.js';
 
 Meteor.startup(() => {
   // code to run on server at startup
