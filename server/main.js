@@ -17,6 +17,9 @@ import {Bloques} from '../imports/api/bloques.js';
 import {Materias} from '../imports/api/materias.js';
 import {Escuelas} from '../imports/api/escuelas.js';
 
+import '../imports/api/links';
+import '../imports/api/users';
+
 Meteor.startup(() => {
   // code to run on server at startup
   Accounts.onCreateUser(function(datos, user) {
@@ -28,4 +31,10 @@ Meteor.startup(() => {
 
       return user;
   });
+
+
+  
+
+
+
 });

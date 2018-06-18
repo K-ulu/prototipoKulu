@@ -9,6 +9,13 @@ import { routes, onAuthChange} from '../imports/routes/routes';
   console.log('isAuthenticated', isAuthenticated);
 });*/
 
+
 Meteor.startup(() => {
   ReactDOM.render(routes, document.getElementById('app'));
+
+
+  Meteor.call('greetUser', (err, res) => {
+    //console.log('Greet User Arguments', err, res)
+
+  });
 });

@@ -1,41 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Navbar from './components/Navbar';
-import NavbarUser from './components/NavbarUser';
-import NavbarMaestro from './components/NavbarMaestro';
-import MaestroNuevaSesion from './components/MaestroNuevaSesion';
-import CarouselItems from './components/CarouselItems';
-import Footer from './components/Footer';
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
+import { withRouter } from "react-router-dom";
 
 import MaestroDashboard from './MaestroDashboard';
 import UsuarioDashboard from './UsuarioDashboard';
 
-import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
+class Dashboard extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+        user: { }
+    };
+  }
 
-export default class Dashboard extends React.Component {
+  //actualizamos props y guardamos datos del usuario
+  componentWillReceiveProps(nextProps) {
+    this.props = nextProps;
+    this.setState({ user: this.props.user});
+  }
 
   render () {
     const isLoggedIn = this.props.isAuthenticated;
-    const tipoUsuario = "alumno";
+    let tipoUsuario, dashboard;
+    
+    //cargamos el tipo de usuario una vez que se carguen los datos
+    if( this.state.user !== undefined && this.state.user.tipoUsuario !== undefined){
+      tipoUsuario = this.state.user.tipoUsuario;
 
-    let navbar = null;
-    if (isLoggedIn) {
-        if (tipoUsuario == "docente"){
-            navbar = <MaestroDashboard/>;
-        }  
-        else{
-            navbar = <UsuarioDashboard/>; 
-        }  
-    } else {
-      navbar = <Navbar/>;
+      //determinamos el dashboard a cargar
+      if (tipoUsuario == "docente"){
+        dashboard = <MaestroDashboard user={this.state.user}/>;
+      }  
+      else{
+        dashboard = <UsuarioDashboard user={this.state.user}/>; 
+      }
+
+      //creamos sesion con los datos del usuario logueado
+      Session.set('user', this.state.user);
+      
     }
+
     return (
     <div>
-        { navbar }
+        { dashboard }       
     </div>
     );
   }
 }
+
+export default withRouter(Dashboard);

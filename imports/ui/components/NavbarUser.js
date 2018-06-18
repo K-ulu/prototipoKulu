@@ -52,7 +52,7 @@ export default class NavbarUser extends React.Component {
                       <a className="nav-link" href="#">K'ulu' PRO</a>
                     </li>
                     <li className="nav-item col-12 col-lg-6 text-center">
-                      <a onClick={this.onLogout.bind(this)} className="nav-link active" href="/signup">Cerrar Sesión</a>
+                      <a onClick={this.onLogout.bind(this)} className="nav-link active" href="/">Cerrar Sesión</a>
                     </li>                 
                   </ul>
                 </div>
