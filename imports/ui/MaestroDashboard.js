@@ -1,21 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Accounts } from 'meteor/accounts-base';
+import { withRouter } from "react-router-dom";
+import { Session } from 'meteor/session';
 
-import Navbar from './components/Navbar';
-import NavbarUser from './components/NavbarUser';
-import NavbarMaestro from './components/NavbarMaestro';
-import MaestroNuevaSesion from './components/MaestroNuevaSesion';
-import CarouselItems from './components/CarouselItems';
-import Footer from './components/Footer';
-
-
-export default class MaestroDashboard extends React.Component {
-
-  toggleSidebar(){
-    location.href='#menu-toggle';
-  }
+class MaestroDashboard extends React.Component {
 
   componentDidMount(){
+    /*INICIO codigo para comportamiento del componente */
     $("#menu-toggle").click(function(e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
@@ -27,21 +19,25 @@ export default class MaestroDashboard extends React.Component {
       });
     
     });
-
     $("#wrapper").toggleClass("toggled");
+    /*FIND codigo para comportamiento del componente */
+
     
-    
+    console.log(' didMount', this.props);   
+  }
+
+  //funcion para cerrar sesion
+  onLogout(){    
+    Accounts.logout();
+    this.props.history.replace('/');
+    Session.set('user', undefined); //borramos de la sesion los datos del usuario
+  }
+
+  toggleSidebar(){
+    location.href='#menu-toggle';
   }
 
   render () {
-    const isLoggedIn = this.props.isAuthenticated;
-
-    let navbar = null;
-    if (isLoggedIn) {
-      navbar = <NavbarUser/>;
-    } else {
-      navbar = <Navbar/>;
-    }
     return (
       <div id="main" className="enlarged">
 
@@ -151,8 +147,7 @@ export default class MaestroDashboard extends React.Component {
                   {/*<!-- item-->*/}
                   <div className="dropdown-item noti-title">
                     <h5>
-                      <small>
-                        <span className="label label-danger pull-xs-right">5</span>Allerts</small>
+                      <small><span className="label label-danger pull-xs-right">5</span>Allerts</small>
                     </h5>
                   </div>
     
@@ -208,7 +203,7 @@ export default class MaestroDashboard extends React.Component {
                   {/*<!-- item-->*/}
                   <div className="dropdown-item noti-title">
                     <h5 className="text-overflow">
-                      <small>Hello, admin</small>
+                      <small>Hello, { Session.get('user').profile.nickname } </small>
                     </h5>
                   </div>
     
@@ -216,13 +211,13 @@ export default class MaestroDashboard extends React.Component {
                   <a href="pro-profile.html" className="dropdown-item notify-item">
                     <i className="fa fa-user"></i>
                     <span>Profile</span>
-                  </a>
-    
+                  </a>    
+                  
                   {/*<!-- item-->*/}
-                  <a href="#" className="dropdown-item notify-item">
+                  <button onClick={this.onLogout.bind(this)} className="dropdown-item notify-item">
                     <i className="fa fa-power-off"></i>
                     <span>Logout</span>
-                  </a>
+                  </button>
     
                   {/*<!-- item-->*/}
                   <a target="_blank" href="https://www.pikeadmin.com" className="dropdown-item notify-item">
@@ -244,7 +239,7 @@ export default class MaestroDashboard extends React.Component {
     
           </nav>
   
-      </div>
+        </div>
       {/*<!-- End Navigation-->*/}
 
       {/*Wrapper*/}
@@ -342,65 +337,7 @@ export default class MaestroDashboard extends React.Component {
                 <i className="fa fa-fw fa-file-text-o"></i>
                 <span> Mis Documentos </span>
               </a>
-            </li>
-
-            {/*<li className="submenu">
-              <a href="#">
-                <span className="label radius-circle bg-danger float-right">20</span>
-                <i className="fa fa-fw fa-copy"></i>
-                <span> Example Pages </span>
-              </a>
-              <ul className="list-unstyled">
-                <li>
-                  <a href="page-pricing-tables.html">Pricing Tables</a>
-                </li>
-                <li>
-                  <a target="_blank" href="page-coming-soon.html">Countdown</a>
-                </li>
-                <li>
-                  <a href="page-invoice.html">Invoice</a>
-                </li>
-                <li>
-                  <a href="page-login.html">Login / Register</a>
-                </li>
-                <li>
-                  <a href="page-blank.html">Blank Page</a>
-                </li>
-              </ul>
-            </li>
-
-            <li className="submenu">
-              <a href="#">
-                <span className="label radius-circle bg-primary float-right">9</span>
-                <i className="fa fa-fw fa-indent"></i>
-                <span> Menu Levels </span>
-              </a>
-              <ul>
-                <li>
-                  <a href="#">
-                    <span>Second Level</span>
-                  </a>
-                </li>
-                <li className="submenu">
-                  <a href="#">
-                    <span>Third Level</span>
-                    <span className="menu-arrow"></span>
-                  </a>
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <span>Third Level Item</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span>Third Level Item</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>*/}
+            </li>            
 
             <li className="submenu">
               <a className="pro" href="#">
@@ -451,6 +388,7 @@ export default class MaestroDashboard extends React.Component {
                 <h1>Maestro Dashboard - Simple Sidebar</h1>
                 <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
                 <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                
                 {/*<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>*/}
             </div>
         </div>
@@ -461,16 +399,9 @@ export default class MaestroDashboard extends React.Component {
       {/*End Wrapper*/}
 
 
-        {/*
-        { navbar }
-        <NavbarMaestro/>
-        <MaestroNuevaSesion/>
-        <CarouselItems name="Materias"/>
-        <CarouselItems name="Bloques"/>
-        <CarouselItems name="Articulos Destacados"/>
-        <CarouselItems name="Documentos Recientes"/>
-        <Footer/>*/}
       </div>
     );
   }
 }
+
+export default withRouter(MaestroDashboard);

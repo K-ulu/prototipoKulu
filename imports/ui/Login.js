@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { Meteor } from 'meteor/meteor';
 
 import Navbar from './components/Navbar';
@@ -19,7 +19,8 @@ class Login extends React.Component {
   componentWillMount(){
     const isLoggedIn = this.props.isAuthenticated;
     if (isLoggedIn) {
-      this.props.history.push('/teachers');
+      //redireccionamos al dashboard
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -33,9 +34,10 @@ class Login extends React.Component {
       console.log('login callback', err);
       if(err){
         this.setState({error: err.reason});
-        
       } else {
         this.setState({error: ''});
+        //redireccionamos al dashboard
+        this.props.history.push('/dashboard');
       }
     });
 

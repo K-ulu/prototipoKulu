@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
+import { withRouter } from "react-router-dom";
 
 import Navbar from './components/Navbar';
 import NavbarUser from './components/NavbarUser';
@@ -8,14 +11,15 @@ import HomeBand from './components/HomeBand';
 import CardDeck from './components/CardDeck';
 import Footer from './components/Footer';
 
-export default class Home extends React.Component {
-  render () {
-    const isLoggedIn = this.props.isAuthenticated;
+class Home extends React.Component {
 
+  render () {
+    //mostrarmos la navbar de acuerdo si existe usuario logueado
     let navbar = null;
-    if (isLoggedIn) {
+    //hay usuario logueado
+    if(Session.get('user') !== undefined){ 
       navbar = <NavbarUser/>;
-    } else {
+    } else { //no hay usuario logueado
       navbar = <Navbar/>;
     }
     return (
@@ -29,3 +33,5 @@ export default class Home extends React.Component {
     );
   }
 }
+
+export default withRouter(Home);

@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import {  BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import {  BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //import {  Router, Route, Switch, Link, Redirect  } from 'react-router';
-import createBrowserHistory from 'history/createBrowserHistory'
-const history = createBrowserHistory();
+//import createBrowserHistory from 'history/createBrowserHistory'
+//const history = createBrowserHistory();
 
 
 import { Tracker } from 'meteor/tracker';
@@ -22,8 +22,14 @@ import Caro from '../ui/Caro';
 import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
 import UsuarioDashboard from '../ui/UsuarioDashboard';
+import Link from '../ui/Link';
+
+import MaestroDashboardContainer from '../ui/MaestroDashboardContainer';
+import DashboardContainer from '../ui/DashboardContainer';
+import { withTracker } from 'meteor/react-meteor-data';
 
 let isAuthenticated;
+let user;
 Tracker.autorun(() => {
   isAuthenticated = !!Meteor.userId(); //doble negacion dice si la cadena esta vacia o no
   //onAuthChange(isAuthenticated);
@@ -59,7 +65,8 @@ const onEnterPrivatePage = () => { //si un usuario no esta logueado lo regresamo
 export const routes = (
   <Router>
     <Switch>
-      <Route exact path="/links" component={()=>(<Link isAuthenticated={isAuthenticated}/>)}/>  
+      <Route path="/links" component={()=>(<Link/>)}/>  
+      <Route exact path="/dashboard/elementos" component={()=>(<Link/>)}/>  
       <Route exact path="/" component={()=>(<Home isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/login" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/signup" component={()=>(<Signup isAuthenticated={isAuthenticated}/>)}/>
@@ -69,8 +76,8 @@ export const routes = (
       <Route path="/support" component={()=>(<Support isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/caro" component={()=>(<Caro/>)}/>      
-      <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>
-      <Route path="/dashboard" component={()=>(<Dashboard isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>      
+      <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
   </Router>
