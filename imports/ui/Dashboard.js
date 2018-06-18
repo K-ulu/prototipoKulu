@@ -21,12 +21,6 @@ export default class Dashboard extends React.Component {
     const isLoggedIn = this.props.isAuthenticated;
     const tipoUsuario = "alumno";
 
-    const userId = Accounts.userId();
-    var user=Meteor.users.findOne(userId);
-    console.log(this.props.currentUser);
-    console.log(userId);
-    console.log(user);
-
     let navbar = null;
     if (isLoggedIn) {
         if (tipoUsuario == "docente"){
@@ -35,14 +29,12 @@ export default class Dashboard extends React.Component {
         else{
             navbar = <UsuarioDashboard/>; 
         }  
-      navbar = <NavbarUser/>;
     } else {
       navbar = <Navbar/>;
     }
     return (
     <div>
         { navbar }
-        <p>Hola! <strong>{this.props.currentUser}</strong>, bienvenido a tuTwitter en miTwitter!</p>
     </div>
     );
   }
