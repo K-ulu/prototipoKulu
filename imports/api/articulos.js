@@ -38,6 +38,7 @@ Meteor.methods({
       $set: { titulo, cuerpo,descripcionArticulo,fechaSubida}
     });
   },
+  
   'articulos.remove'(id) {
     check(id, String);
  
