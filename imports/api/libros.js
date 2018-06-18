@@ -35,9 +35,10 @@ Meteor.methods({
     Libros.update({
         _id: miId
     }, {
-      $set: { miId, nombreLibro,tamanio,fechaCarga,descripcionLibros}
+      $set: { nombreLibro,tamanio,fechaCarga,descripcionLibros}
     });
   },
+  
   'libros.remove'(id) {
     check(id, String);
     Libros.remove(id);

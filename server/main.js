@@ -7,7 +7,15 @@ import {Articulos} from '../imports/api/articulos.js';
 import {ObjetosAprendizaje} from '../imports/api/objetosAprendizaje.js';
 import {ElementosObjetosAprendizaje} from '../imports/api/elementosObjetosAprendizaje.js';
 import {Documentos} from '../imports/api/documentos.js';
-import {ContenidosMultimedia } from '../api/contenidosMultimedia.js';
+import {ContenidosMultimedia } from '../imports/api/contenidosMultimedia.js';
+import {AdministradorSistemas} from '../imports/api/administradorSistema.js';
+import {AdministradorContenidos} from '../imports/api/administradorContenidos.js';
+import {Temas} from '../imports/api/temas.js';
+import {Notificaciones} from '../imports/api/notificaciones.js';
+import {Lobby} from '../imports/api/lobby.js';
+import {Bloques} from '../imports/api/bloques.js';
+import {Materias} from '../imports/api/materias.js';
+import {Escuelas} from '../imports/api/escuelas.js';
 
 Meteor.startup(() => {
   // code to run on server at startup
