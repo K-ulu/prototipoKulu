@@ -17,6 +17,7 @@ import Contact from '../ui/Contact';
 import Support from '../ui/Support';
 import NotFound from '../ui/NotFound';
 import Caro from '../ui/Caro';
+import Pruebas from '../ui/Pruebas';
 
 
 import Dashboard from '../ui/Dashboard';
@@ -76,6 +77,7 @@ export const routes = (
       <Route path="/support" component={()=>(<Support isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/caro" component={()=>(<Caro/>)}/>      
+      <Route path="/pruebas" component={()=>(<Pruebas/>)}/>  
       <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>      
       <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
