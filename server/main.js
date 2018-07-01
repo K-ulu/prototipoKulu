@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import {Docentes} from '../imports/api/docentes.js';
+import { Docentes } from '../imports/api/docentes.js';
 import {Alumnos} from '../imports/api/alumnos.js';
 import {Libros} from '../imports/api/libros.js';
 import {Articulos} from '../imports/api/articulos.js';
