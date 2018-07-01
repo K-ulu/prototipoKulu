@@ -3,7 +3,7 @@ import { Mongo } from 'meteor/mongo';
 import shortid from 'shortid';
 import { check } from 'meteor/check';
 
-export const Articulos = new Mongo.Collection('articulos');
+export const Imagenes = new Mongo.Collection('iamgenes');
 
 if (Meteor.isServer) {
   Meteor.publish('articulo', function () {

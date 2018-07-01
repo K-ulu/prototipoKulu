@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import {Docentes} from '../api/docentes.js';
 import {Alumnos} from '../api/alumnos.js';
 
