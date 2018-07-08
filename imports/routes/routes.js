@@ -18,6 +18,7 @@ import Support from '../ui/Support';
 import NotFound from '../ui/NotFound';
 import Caro from '../ui/Caro';
 import SaveImages from '../ui/SaveImages.js';
+import Images from '../ui/Imagenes.js';
 
 
 import Dashboard from '../ui/Dashboard';
@@ -78,6 +79,7 @@ export const routes = (
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/caro" component={()=>(<Caro/>)}/> 
       <Route path="/saveImages" component={()=>(<SaveImages/>)}/>   
+      <Route path="/imagenes" component={()=>(<Images/>)}/> 
       <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>      
       <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
