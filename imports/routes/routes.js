@@ -4,7 +4,7 @@ import {  BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //import {  Router, Route, Switch, Link, Redirect  } from 'react-router';
 //import createBrowserHistory from 'history/createBrowserHistory'
 //const history = createBrowserHistory();
-
+//hola no funcionó mi parte para guardar imagenes :c
 
 import { Tracker } from 'meteor/tracker';
 
@@ -20,7 +20,6 @@ import Caro from '../ui/Caro';
 import SaveImages from '../ui/SaveImages.js';
 import Images from '../ui/Imagenes.js';
 
-
 import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
 import MaestroElementos from '../ui/MaestroElementos';
@@ -30,6 +29,9 @@ import Link from '../ui/Link';
 import MaestroDashboardContainer from '../ui/MaestroDashboardContainer';
 import DashboardContainer from '../ui/DashboardContainer';
 import { withTracker } from 'meteor/react-meteor-data';
+
+//importacion de la clase maestroAlumnos
+import MaestroAlumnos from '../ui/MaestroAlumnos.js';
 
 let isAuthenticated;
 let user;
@@ -70,6 +72,7 @@ export const routes = (
     <Switch>
       <Route path="/links" component={()=>(<Link/>)}/>  
       <Route exact path="/dashboard/elementos" component={ ()=>(<MaestroElementos isAuthenticated={isAuthenticated}/>)}/>  
+      <Route exact path="/dashboard/alumnos" component={ ()=>(<MaestroAlumnos isAuthenticated={isAuthenticated}/>)}/>  
       <Route exact path="/" component={()=>(<Home isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/login" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/signup" component={()=>(<Signup isAuthenticated={isAuthenticated}/>)}/>
