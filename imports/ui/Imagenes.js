@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import IndividualFile from './FileIndividualFile.js';
+import {UserFiles} from '../api/images.js';
 
 const debug = require('debug')('demo:file');
 

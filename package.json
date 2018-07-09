@@ -9,6 +9,7 @@
     "babel-runtime": "^6.20.0",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
+    "express": "^4.16.3",
     "gridfs-stream": "^1.1.1",
     "history": "^4.7.2",
     "meteor-node-stubs": "~0.2.4",

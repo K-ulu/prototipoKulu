@@ -13,7 +13,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'alumnos.insert'(matricula, claveEscuela) {
+  'alumnos.insert'(matricula, claveEscuela, idDocente) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -35,7 +35,8 @@ Meteor.methods({
       _id: shortid.generate(),
       matricula,
       claveEscuela,
-      userId: this.userId
+      userId: this.userId,
+      idDocente
     });
   },
 
