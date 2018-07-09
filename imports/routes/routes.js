@@ -23,6 +23,7 @@ import Images from '../ui/Imagenes.js';
 
 import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
+import MaestroElementos from '../ui/MaestroElementos';
 import UsuarioDashboard from '../ui/UsuarioDashboard';
 import Link from '../ui/Link';
 
@@ -68,7 +69,7 @@ export const routes = (
   <Router>
     <Switch>
       <Route path="/links" component={()=>(<Link/>)}/>  
-      <Route exact path="/dashboard/elementos" component={()=>(<Link/>)}/>  
+      <Route exact path="/dashboard/elementos" component={ ()=>(<MaestroElementos isAuthenticated={isAuthenticated}/>)}/>  
       <Route exact path="/" component={()=>(<Home isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/login" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/signup" component={()=>(<Signup isAuthenticated={isAuthenticated}/>)}/>
