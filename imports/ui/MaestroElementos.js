@@ -4,7 +4,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
 
-class MaestroDashboard extends React.Component {
+class MaestroElementos extends React.Component {
 
   componentDidMount(){
     /*INICIO codigo para comportamiento del componente */
@@ -35,6 +35,29 @@ class MaestroDashboard extends React.Component {
 
   toggleSidebar(){
     location.href='#menu-toggle';
+  }
+
+  quadFilter(){    
+    //verificamos la clase para determinar el tipo de vista
+    // si tiene la clase list cambiamos a quad
+    if($('.section-cards').hasClass('list')){ 
+      alert('es lista');
+    } else {
+      alert('ya es quad');
+    }
+    /*let cards = $('.section-cards .card'); //obtenemos las tarjeta
+    console.log(cards);*/
+
+
+
+
+    /*if($('.section-cards').has)
+    $('.section-cards').toggleClass("col-12");
+    $('.section-cards').addClass("col-6");*/
+  }
+
+  listFilter(){
+    alert('lista');
   }
 
   render () {
@@ -203,7 +226,7 @@ class MaestroDashboard extends React.Component {
                   {/*<!-- item-->*/}
                   <div className="dropdown-item noti-title">
                     <h5 className="text-overflow">
-                      <small>Hello, { Session.get('user').profile.nickname } </small>
+                      <small>Hello, usuario  </small>
                     </h5>
                   </div>
     
@@ -390,7 +413,7 @@ class MaestroDashboard extends React.Component {
               <div className="row">
                 <div className="col-xl-12">
                   <div className="breadcrumb-holder">
-                    <h1 className="main-title float-left">Dashboard</h1>
+                    <h1 className="main-title float-left">Dashboard - Elementos</h1>
                     <ol className="breadcrumb float-right">
                       <li className="breadcrumb-item">Home</li>
                       <li className="breadcrumb-item active">Dashboard</li>
@@ -402,97 +425,205 @@ class MaestroDashboard extends React.Component {
 
 
 
-              <div className="row">
-                <div className="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-                  <div className="card-box noradius noborder bg-default">
-                    <i className="fa fa-file-text-o float-right text-white"></i>
-                    <h6 className="text-white text-uppercase m-b-20">Orders</h6>
-                    <h1 className="m-b-20 text-white counter">1,587</h1>
-                    <span className="text-white">15 New Orders</span>
-                  </div>
-                </div>
-
-                <div className="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-                  <div className="card-box noradius noborder bg-warning">
-                    <i className="fa fa-bar-chart float-right text-white"></i>
-                    <h6 className="text-white text-uppercase m-b-20">Visitors</h6>
-                    <h1 className="m-b-20 text-white counter">250</h1>
-                    <span className="text-white">rate: 25%</span>
-                  </div>
-                </div>
-
-                <div className="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-                  <div className="card-box noradius noborder bg-info">
-                    <i className="fa fa-user-o float-right text-white"></i>
-                    <h6 className="text-white text-uppercase m-b-20">Users</h6>
-                    <h1 className="m-b-20 text-white counter">120</h1>
-                    <span className="text-white">25 New Users</span>
-                  </div>
-                </div>
-
-                <div className="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-                  <div className="card-box noradius noborder bg-danger">
-                    <i className="fa fa-bell-o float-right text-white"></i>
-                    <h6 className="text-white text-uppercase m-b-20">Alerts</h6>
-                    <h1 className="m-b-20 text-white counter">58</h1>
-                    <span className="text-white">5 New Alerts</span>
-                  </div>
-                </div>
-              </div>
-
-
-
+              
 
 
               <div className="row">
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
-                  <div className="card mb-3">
-                    <div className="card-header">
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div className="card noborder mb-3">
+                    {/*<div className="card-header">
                       <h3>
                         <i className="fa fa-line-chart"></i> Items Sold Amount</h3>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non luctus metus. Vivamus fermentum ultricies orci sit amet
                       sollicitudin.
-                    </div>
+                    </div>*/}
 
                     <div className="card-body">
-                      <canvas id="lineChart"></canvas>
+                      {/*title*/}
+                      <div className="row justify-content-center">
+                        <div className="col-6">
+                          <h1>Mi contenido multimedia</h1>
+                        </div>     
+                      </div>
+
+                      <div className="row justify-content-center">
+                        <div className="col-10">
+
+
+                        {/*buttons and filter options*/}
+                        <div className="row justify-content-between">
+
+                          <div className="col-2">
+                            <button className="btn btn-primary btn-block">Nuevo</button>
+                          </div>
+
+                          <div className="col-2 btn-group" role="group" aria-label="Basic example">
+                            <button onClick={this.quadFilter.bind(this)} type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
+                            <button onClick={this.listFilter.bind(this)} type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
+                          </div> 
+
+                        </div>
+
+
+                        {/*Buscador..*/}
+                        <div className="row justify-content-between">
+                          <div className="col-12">
+                            <form className="form-inline">
+                              <input className="form-control mr-4 col-lg-8" type="text" placeholder="Buscar..."/>
+                              <button className="btn btn-outline-success col-lg-3" type="submit">Buscar</button>
+                            </form>                  
+                          </div>
+                        </div>
+
+
+
+                        {/*Cards 100%..*/}
+                        <div className="row">
+                          <div className="col-12 section-cards list">
+
+                            <div className="card">
+                              <div className="card-body">
+                                <div className="row justify-content-between">
+                                  <div className="col-8">
+                                    <h5 className="card-title">Card title</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">Audio</h6>
+                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>                            
+                                  </div>                          
+                                  <div className="col-2">
+                                    <div className="btn-group" role="group" aria-label="Basic example">                            
+                                      <button type="button" className="btn btn-secondary success-btn"><i className="fa fa-pencil"></i></button>                          
+                                      <button type="button" className="btn btn-secondary danger-btn"><i className="fa fa-trash"></i></button>
+                                    </div>  
+                                  </div> 
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="card">
+                              <div className="card-body">
+                                <div className="row justify-content-between">
+                                  <div className="col-8">
+                                    <h5 className="card-title">Card title</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">Vídeo</h6>
+                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>                            
+                                  </div>                          
+                                  <div className="col-2">
+                                    <div className="btn-group" role="group" aria-label="Basic example">                            
+                                      <button type="button" className="btn btn-secondary success-btn"><i className="fa fa-pencil"></i></button>                          
+                                      <button type="button" className="btn btn-secondary danger-btn"><i className="fa fa-trash"></i></button>
+                                    </div>  
+                                  </div> 
+                                </div>
+                              </div>
+                            </div>
+                          
+                          </div>                        
+                        </div>
+
+                        {/*Cards 50%..*/}
+                        <div className="row">
+                          <div className="col-6">
+                            <div className="card">
+                              <div className="card-body">
+                                <div className="row justify-content-between">
+                                  <div className="col-8">
+                                    <h5 className="card-title">Card title</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>                            
+                                  </div>                          
+                                  <div className="col-3">
+                                    <div className="btn-group" role="group" aria-label="Basic example">                            
+                                      <button type="button" className="btn btn-secondary success-btn"><i className="fa fa-pencil"></i></button>                          
+                                      <button type="button" className="btn btn-secondary danger-btn"><i className="fa fa-trash"></i></button>
+                                    </div>  
+                                  </div> 
+                                </div>
+                              </div>
+                            </div>
+                            <div className="card">
+                              <div className="card-body">
+                                <div className="row justify-content-between">
+                                  <div className="col-8">
+                                    <h5 className="card-title">Card title</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>                            
+                                  </div>                          
+                                  <div className="col-3">
+                                    <div className="btn-group" role="group" aria-label="Basic example">                            
+                                      <button type="button" className="btn btn-secondary success-btn"><i className="fa fa-pencil"></i></button>                          
+                                      <button type="button" className="btn btn-secondary danger-btn"><i className="fa fa-trash"></i></button>
+                                    </div>  
+                                  </div> 
+                                </div>
+                              </div>
+                            </div>   
+                          </div>   
+
+                          <div className="col-6">
+                            <div className="card">
+                              <div className="card-body">
+                                <div className="row justify-content-between">
+                                  <div className="col-8">
+                                    <h5 className="card-title">Card title</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>                            
+                                  </div>                          
+                                  <div className="col-3">
+                                    <div className="btn-group" role="group" aria-label="Basic example">                            
+                                      <button type="button" className="btn btn-secondary success-btn"><i className="fa fa-pencil"></i></button>                          
+                                      <button type="button" className="btn btn-secondary danger-btn"><i className="fa fa-trash"></i></button>
+                                    </div>  
+                                  </div> 
+                                </div>
+                              </div>
+                            </div>
+                            <div className="card">
+                              <div className="card-body">
+                                <div className="row justify-content-between">
+                                  <div className="col-8">
+                                    <h5 className="card-title">Card title</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>                            
+                                  </div>                          
+                                  <div className="col-3">
+                                    <div className="btn-group" role="group" aria-label="Basic example">                            
+                                      <button type="button" className="btn btn-secondary success-btn"><i className="fa fa-pencil"></i></button>                          
+                                      <button type="button" className="btn btn-secondary danger-btn"><i className="fa fa-trash"></i></button>
+                                    </div>  
+                                  </div> 
+                                </div>
+                              </div>
+                            </div>
+                          </div>  
+                        </div>
+
+
+
+
+
+
+                        
+                        </div>
+                      </div>
+
+                      
+
+                      
+
+                      
+
+                      
+
+                      
+
+                                           
                     </div>
-                    <div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                    {/*<div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*/}
                   </div>
                 </div>
 
-                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                  <div className="card mb-3">
-                    <div className="card-header">
-                      <h3>
-                        <i className="fa fa-bar-chart-o"></i> Colour Analytics</h3>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non luctus metus. Vivamus fermentum ultricies orci sit amet
-                      sollicitudin.
-                    </div>
+                
 
-                    <div className="card-body">
-                      <canvas id="pieChart"></canvas>
-                    </div>
-                    <div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                  </div>
-                </div>
-
-                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                  <div className="card mb-3">
-                    <div className="card-header">
-                      <h3>
-                        <i className="fa fa-bar-chart-o"></i> Colour Analytics 2</h3>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non luctus metus. Vivamus fermentum ultricies orci sit amet
-                      sollicitudin.
-                    </div>
-
-                    <div className="card-body">
-                      <canvas id="doughnutChart"></canvas>
-                    </div>
-                    <div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                  </div>
-                  
-                </div>
 
               </div>
 
@@ -507,6 +638,10 @@ class MaestroDashboard extends React.Component {
 
             </div>          
           </div>
+
+
+
+          
             
 
             
@@ -532,4 +667,4 @@ class MaestroDashboard extends React.Component {
   }
 }
 
-export default withRouter(MaestroDashboard);
+export default withRouter(MaestroElementos);

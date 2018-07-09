@@ -7,7 +7,7 @@ html {
 
 body {
   font-size: 0.9rem;
-  background-color: #efefef;
+  // background-color: #efefef;
 }
 
 /*mis estilos */
@@ -53,10 +53,9 @@ body {
 }
 
 #page-content-wrapper {
-  top: 50px;
   width: 100%;
-  position: absolute;
-  padding: 15px;
+  position: absolute;  
+  background-color: #efefef;
 }
 
 #wrapper.toggled #page-content-wrapper {
@@ -273,7 +272,7 @@ ul.sidebar-nav>li>a.active {
     width: 250px;
   }
   #page-content-wrapper {
-    padding: 20px;
+    // padding: 20px;
     position: relative;
   }
   #wrapper.toggled #page-content-wrapper {
@@ -338,6 +337,11 @@ img {
   background-color: #1bb99a !important;
 }
 
+.success-btn {
+  background-color: #1bb99a !important;
+  border: 1px solid #1bb99a;
+}
+
 .bg-info {
   background-color: #3db9dc !important;
 }
@@ -348,6 +352,11 @@ img {
 
 .bg-danger {
   background-color: #ff5d48 !important;
+}
+
+.danger-btn {
+  background-color: #ff5d48 !important;
+  border: 1px solid #ff5d48;
 }
 
 .bg-purple {
@@ -694,15 +703,24 @@ a {
   padding-bottom: 70px;
   position: absolute; }*/
 
-.content-page {
+/*.content-page {
   margin-left: 250px;
   overflow: hidden;
-}
+}*/
 
-.content-page .content {
+#page-content-wrapper .content {
   padding: 0 5px;
   margin-top: 50px;
 }
+
+.content p, .content span, .content li {
+  font-size: 0.9rem;
+}
+
+/*.content-page .content {
+  padding: 0 5px;
+  margin-top: 50px;
+}*/
 
 /*.main-sidebar.left {
   position: absolute; }*/
@@ -1104,9 +1122,7 @@ a {
   .navbar-custom {
     margin-left: 70px !important;
   }
-  .content-page {
-    margin-left: 0 !important;
-  }
+
   .footer {
     left: 0 !important;
   }

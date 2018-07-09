@@ -1,6 +1,6 @@
 import React from 'react';
-import {Docentes} from '../api/Docente.js';
-import {Alumnos} from '../api/Alumno.js';
+import {Docentes} from '../api/docentes.js';
+import {Alumnos} from '../api/alumnos.js';
 
 export default class Caro extends React.Component {
     constructor(props){
