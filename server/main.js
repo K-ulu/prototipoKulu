@@ -38,9 +38,4 @@ Meteor.startup(() => {
       return user;
   });
 
-
-  
-
-
-
 });

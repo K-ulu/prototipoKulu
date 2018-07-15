@@ -26,7 +26,8 @@ class Signup extends React.Component {
     const isLoggedIn = this.props.isAuthenticated;
     if (isLoggedIn) {
       //TODO: Actualizar para determinar a pagina vamos a mandar a el usuario 
-      this.props.history.push('/teachers');
+      //this.props.history.push('/teachers'); //Este era el que se tenia antes
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -86,6 +87,7 @@ class Signup extends React.Component {
           this.setState({error: ''});
         }
       });
+      this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
     }
     else if (opcion == 'alumno'){
         var matricula = "";
@@ -100,6 +102,7 @@ class Signup extends React.Component {
             alert(err.reason);
           }
         });
+        this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
     }
     else{
       alert("Contrasenias desiguales");
