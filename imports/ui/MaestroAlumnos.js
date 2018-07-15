@@ -4,19 +4,12 @@ import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
 // import Select from 'react-select';
-//import {Alumnos} from '../imports/api/alumnos.js';
 import HeaderMaestros from './components/HeaderMaestros';
 import HeaderLeftMaestros from './components/HeaderLeftMaestros';
 
+import {Grupos} from '../api/grupos.js';
+
 class MaestroAlumnos extends React.Component { 
-  constructor(props){
-    super(props);
-    this.state = {
-      error: '', //almacena el error
-      value: '' //almacena valor del tipo de usuario
-    };
-    console.log(props);
-  }
   componentDidMount(){
     /*INICIO codigo para comportamiento del componente */
     $("#menu-toggle").click(function(e) {
@@ -34,7 +27,16 @@ class MaestroAlumnos extends React.Component {
     /*FIND codigo para comportamiento del componente */
     
     console.log(' didMount', this.props);   
+
+    // var options = [];
+    // for (i=0 ; i<this.props.Grupos.length ; i++){
+    //   var name = this.props.Grupos[i].nombreGrupo;
+    //   console.log(name);
+    //   options.push({label:name, value: name});
+    // }
+    // this.setState({options: options});
   }
+
 
   //funcion para cerrar sesion
   onLogout(){    
@@ -159,6 +161,12 @@ class MaestroAlumnos extends React.Component {
                                       <option value ="docente">Grupo B</option>                                      
                                   </select> 
                                   <button className="btn btn-outline-success col-lg-3" type="submit">Buscar</button>
+                                  {/* <Select
+      multi={true}
+      value={this.state.value}
+      placeholder="Select all KeyWord(s)"
+      options={this.state.options}
+      onChange={this.handleSelectChange.bind(this)} /> */}
                               </form>                  
                             </div>
                           </div>

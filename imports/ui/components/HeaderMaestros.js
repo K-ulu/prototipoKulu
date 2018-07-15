@@ -5,7 +5,6 @@ import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
 
 export default class HeaderMaestros extends React.Component {
-
   componentDidMount(){
     /*INICIO codigo para comportamiento del componente */
     $("#menu-toggle").click(function(e) {
@@ -45,7 +44,7 @@ export default class HeaderMaestros extends React.Component {
           {/*<!-- LOGO -->*/}
           <div className="headerbar-left">
             <a href="/" className="logo">
-            <img alt="Logo" src="images/kulu_logo_160.png" />
+            <img alt="Logo" src="/images/kulu_logo_160.png" />
               {/*<span>  Admin</span>*/}
             </a>
           </div>
@@ -196,7 +195,7 @@ export default class HeaderMaestros extends React.Component {
     
               <li className="list-inline-item dropdown notif">
                 <a className="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                  <img src="images/admin.jpg" alt="Profile image" className="avatar-rounded"/>
+                  <img src="/images/admin.jpg" alt="Profile image" className="avatar-rounded"/>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
                   {/*<!-- item-->*/}

@@ -26,14 +26,14 @@ import MaestroElementos from '../ui/MaestroElementos';
 import UsuarioDashboard from '../ui/UsuarioDashboard';
 import Link from '../ui/Link';
 
-import MaestroDashboardContainer from '../ui/MaestroDashboardContainer';
 import DashboardContainer from '../ui/DashboardContainer';
+
 import { withTracker } from 'meteor/react-meteor-data';
 
 //importacion de la clase maestroAlumnos
 import MaestroAlumnos from '../ui/MaestroAlumnos.js';
 
-let isAuthenticated;
+let isAuthenticated, tipo;
 let user;
 Tracker.autorun(() => {
   isAuthenticated = !!Meteor.userId(); //doble negacion dice si la cadena esta vacia o no
@@ -72,7 +72,7 @@ export const routes = (
     <Switch>
       <Route path="/links" component={()=>(<Link/>)}/>  
       <Route exact path="/dashboard/elementos" component={ ()=>(<MaestroElementos isAuthenticated={isAuthenticated}/>)}/>  
-      <Route exact path="/dashboard/alumnos" component={ ()=>(<MaestroAlumnos isAuthenticated={isAuthenticated}/>)}/>  
+      <Route exact path="/dashboard/alumnos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroAlumnos"}/>)}/>  
       <Route exact path="/" component={()=>(<Home isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/login" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/signup" component={()=>(<Signup isAuthenticated={isAuthenticated}/>)}/>
@@ -80,12 +80,13 @@ export const routes = (
       <Route path="/business" component={()=>(<Business isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/contact" component={()=>(<Contact isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/support" component={()=>(<Support isAuthenticated={isAuthenticated}/>)}/>
+      {/* No estoy segura de teachers */}
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/caro" component={()=>(<Caro/>)}/> 
       <Route path="/saveImages" component={()=>(<SaveImages/>)}/>   
       <Route path="/imagenes" component={()=>(<Images/>)}/> 
       <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>      
-      <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
+      <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"dashboard"}/>)}/>      
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
   </Router>
