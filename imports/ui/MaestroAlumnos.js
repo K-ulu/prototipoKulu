@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
-// import Select from 'react-select';
+import Select from 'react-select';
 import HeaderMaestros from './components/HeaderMaestros';
 import HeaderLeftMaestros from './components/HeaderLeftMaestros';
+import TrackerReact from 'meteor/ultimatejs:tracker-react';
 
 import {Grupos} from '../api/grupos.js';
+import {Alumnos} from '../api/alumnos.js';
 
-class MaestroAlumnos extends React.Component { 
+class MaestroAlumnos extends TrackerReact(React.Component) { 
+  resolutions(){
+    console.log(Alumnos.find().fetch());
+    return Alumnos.find().fetch();
+  }
+
   componentDidMount(){
     /*INICIO codigo para comportamiento del componente */
     $("#menu-toggle").click(function(e) {
@@ -25,18 +32,8 @@ class MaestroAlumnos extends React.Component {
     });
     $("#wrapper").toggleClass("toggled");
     /*FIND codigo para comportamiento del componente */
-    
-    console.log(' didMount', this.props);   
-
-    // var options = [];
-    // for (i=0 ; i<this.props.Grupos.length ; i++){
-    //   var name = this.props.Grupos[i].nombreGrupo;
-    //   console.log(name);
-    //   options.push({label:name, value: name});
-    // }
-    // this.setState({options: options});
+    //console.log(' didMount', this.props); 
   }
-
 
   //funcion para cerrar sesion
   onLogout(){    
@@ -59,10 +56,6 @@ class MaestroAlumnos extends React.Component {
     }
     /*let cards = $('.section-cards .card'); //obtenemos las tarjeta
     console.log(cards);*/
-
-
-
-
     /*if($('.section-cards').has)
     $('.section-cards').toggleClass("col-12");
     $('.section-cards').addClass("col-6");*/
@@ -72,7 +65,18 @@ class MaestroAlumnos extends React.Component {
     alert('lista');
   }
 
+  logChange(val) {
+    console.log("Selected: " + val);
+  }
+
   render () {
+    var options = [
+      { value: 'one', label: 'One' },
+      { value: 'two', label: 'Two' }
+    ];
+
+    console.log(this.resolutions());
+    let res = this.resolutions();
     return (
       <div id="main" className="enlarged">
         {/*<!-- top bar navigation -->*/}
@@ -132,41 +136,22 @@ class MaestroAlumnos extends React.Component {
                               <button onClick={this.listFilter.bind(this)} type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
                             </div> 
                           </div>
-                          {/*Buscador..*/}
-                          {/* <div className="row justify-content-between">
-                            <div className="col-12">
-                              <form className="form-inline">
-                                <input className="form-control mr-4 col-lg-8" type="text" placeholder="Buscar..."/>
-                                <button className="btn btn-outline-success col-lg-3" type="submit">Buscar</button>
-                              </form>                  
-                            </div>
-                          </div> */}
                           {/*Buscar alumnos mediante un select*/}
                           <div className="row justify-content-between">
                             <div className="col-12">
                               <form className="form-inline">
-                                  {/* <Select 
-                                      name="form-field-name"
-                                      value={value}
-                                      onChange={this.handleChange}
-                                      options={[
-                                      { value: 'one', label: 'One' },
-                                      { value: 'two', label: 'Two' },
-                                      ]}
-                                  /> */}
-
                                   <select /*value={this.state.value}*/ onChange={this.handleChange} className="form-control mr-4 col-lg-8">
                                       <option value ="seleccione">Seleccione un grupo!</option>
                                       <option value="alumno">Grupo A</option>
                                       <option value ="docente">Grupo B</option>                                      
                                   </select> 
                                   <button className="btn btn-outline-success col-lg-3" type="submit">Buscar</button>
-                                  {/* <Select
-      multi={true}
-      value={this.state.value}
-      placeholder="Select all KeyWord(s)"
-      options={this.state.options}
-      onChange={this.handleSelectChange.bind(this)} /> */}
+                                  <Select
+                                    name="form-field-name"
+                                    value="one"
+                                    options={options}
+                                    onChange={this.logChange}
+                                  />
                               </form>                  
                             </div>
                           </div>
