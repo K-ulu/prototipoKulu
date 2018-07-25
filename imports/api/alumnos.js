@@ -13,7 +13,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'alumnos.insert'(matricula, claveEscuela, idDocente) {
+  'alumnos.insert'(matricula, claveEscuela, correo, idDocente) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -36,18 +36,47 @@ Meteor.methods({
       matricula,
       claveEscuela,
       userId: this.userId,
+      correo,
       idDocente
     });
   },
 
-  'alumnos.update'( miId, matricula,claveEscuela){
+  'alumnos.insert2'(matricula, claveEscuela, userId, correo) {
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+  
+    // new SimpleSchema({
+    //   nombre: {
+    //     type: String,
+    //     label: 'nombre',
+    //     //regEx: SimpleSchema.RegEx.Url
+    //   },
+    //   apPaterno: {
+    //       type: String,
+    //       label: 'Apellido Paterno',
+    //       //regEx: SimpleSchema.RegEx.Url
+    //   }
+    // }).validate({ nombre, ApPaterno });
+  
+    Alumnos.insert({
+      _id: shortid.generate(),
+      matricula,
+      claveEscuela,
+      userId,
+      correo,
+      idDocente: this.userId
+    });
+  },
+
+  'alumnos.update'( miId, matricula,claveEscuela, idDocente){
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     Alumnos.update({
       userId: miId
     }, {
-      $set: { matricula, claveEscuela}
+      $set: { matricula, claveEscuela, idDocente}
     });
   },
   'alumnos.remove'(id) {

@@ -75,11 +75,12 @@ class Signup extends React.Component {
     });
 
     //insertamos los datos de acuerdo al tipo de usuario
+    console.log(opcion);
     if(opcion == 'docente'){
       var claveDocente= '';
       var claveEscuela = '';
       var rfc = '';
-      Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
+      Meteor.call('docentes.insert', claveDocente, claveEscuela,rfc, (err, res) => {
         if (!err) {
           // this.handleModalClose();
           alert("insertado");
@@ -92,7 +93,7 @@ class Signup extends React.Component {
     else if (opcion == 'alumno'){
         var matricula = "";
         var claveEscuela = '';
-        Meteor.call('alumnos.insert', matricula, claveEscuela, (err, res) => {
+        Meteor.call('alumnos.insert', matricula, claveEscuela, email, (err, res) => {
           if (!err) {
             // this.handleModalClose();
             alert("insertado");

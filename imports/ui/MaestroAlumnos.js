@@ -1,3 +1,9 @@
+/* Se debe de guardar la clave del grupo? porque en alumnos no esta.. ahora con el userID no lo tenemos como 
+  lo generamos en la clase alumnos si el usuario en turno es un docente?
+  creo que es todo aunque no se como registrar un alumno con nombre y apellidos si el docente no crea usuario 
+  solo alumnos.
+  Si el docente registra a su alumno pero el alumno aun no ha confirmado siguen siendo sus alumnos?
+*/
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Accounts } from 'meteor/accounts-base';
@@ -10,10 +16,86 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react';
 
 import {Grupos} from '../api/grupos.js';
 import {Alumnos} from '../api/alumnos.js';
+import Modal from 'react-modal';
 
 class MaestroAlumnos extends TrackerReact(React.Component) { 
+  constructor(){
+    super()
+
+    this.state = {
+      isActive:false
+    }
+
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillMount(){
+    Modal.setAppElement('body');
+  }
+
+  toggleModal = () =>{
+    this.setState(
+      {
+        isActive:!this.state.isActive
+      }
+    )
+  }
+
+  //evento al mandar los datos del formulario
+  onSubmit(e){
+    e.preventDefault();
+    //verifica contraseña
+    let nombre = this.refs.nombre.value.trim();
+    let apellidoP = this.refs.apellidoP.value.trim();
+    let email = this.refs.email.value.trim();
+
+    let claveEscuela = this.refs.claveEscuela.value.trim();
+    let matricula = this.refs.matricula.value.trim();
+
+    let grupo = this.state.value;    
+
+    //creando nuestro objeto con los datos del usuario
+    var datos = {
+      email: email,
+      password: "",
+      profile: {
+        nombre: nombre,
+        apellidoP: apellidoP,
+        apellidoM: "",
+        nickname: "",
+        curp: ""
+      },
+      tipoUsuario: "alumno"
+    };
+  
+    /*//Aqui se crea el alumno
+    var userId = Accounts.createUser(datos, (err) => {
+      if(err){
+        this.setState({error: err.reason});
+        
+      } else {
+        this.setState({error: ''});
+      }
+    });
+    */
+
+
+    Meteor.call('alumnos.insert2', matricula, claveEscuela, email, (err, res) => {
+      if (!err) {
+        // this.handleModalClose();
+        alert("insertado");
+      } else {
+        // this.setState({ error: err.reason });
+        alert("ocurrió un error al insertar");
+        alert(err.reason);
+        console.log(err.reason);
+      }
+    });
+    //this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard 
+  }
+
   resolutions(){
-    console.log(Alumnos.find().fetch());
+    //console.log(Docente.find({ userId: this.userId }));
     return Alumnos.find().fetch();
   }
 
@@ -128,7 +210,7 @@ class MaestroAlumnos extends TrackerReact(React.Component) {
                           {/*buttons and filter options*/}
                           <div className="row justify-content-between">
                             <div className="col-2">
-                              <button className="btn btn-primary btn-block">Nuevo</button>
+                              <button onClick={this.toggleModal} className="btn btn-primary btn-block">Nuevo</button>
                             </div>
 
                             <div className="col-2 btn-group" role="group" aria-label="Basic example">
@@ -192,6 +274,93 @@ class MaestroAlumnos extends TrackerReact(React.Component) {
         {/*End Content*/}
       </div>
       {/*End Wrapper*/}
+      
+      <section className="row justify-content-center">
+            <Modal 
+              isOpen={this.state.isActive} 
+              onRequestClose={this.toggleModal}
+              contentLabel="Inline Styles Modal Example"
+           style={{
+              overlay: {
+                //position: absolute,
+                top: 60,
+                left: 250,
+                right: 250,
+                bottom: 40,
+              },
+              content: {
+                color: 'purple'
+              }
+            }}
+            >
+              <div >
+                  <span className="anchor" id="formLogin"></span>
+                  <div className="card rounded">
+                    <div className="card-header mt-2">
+                    <div className="row">
+                      <div className="col-14 col-sm-6">
+                        <h3 className="mb-0 text-center">Agregar Alumno!</h3>
+                      </div>
+                      <div className="col-2 col-sm-2 float:right">
+                        <button onClick={this.toggleModal}>Cerrar!</button>
+                      </div>
+                      </div>
+                    </div>
+                      <div className="card-body mt-2">
+                        <form onSubmit={this.onSubmit} className="form" role="form" autoComplete="off" id="formLogin">
+                          <div className="row">
+                            <div className="col-12 col-sm-6">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-user-circle-o"></i></span>
+                                <input type="text" ref="nombre" name="nombre" className="form-control form-control rounded" placeholder="Nombre"/>
+                              </div>                                          
+                            </div>
+                            <div className="col-12 col-sm-6">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-user fa-fw"></i></span>
+                                <input type="text" ref="apellidoP" name="apellidoP" className="form-control form-control rounded" placeholder="ApellidoP"/>
+                              </div>                                                                          
+                            </div>  
+                            <div className="col-12">                                        
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-envelope"></i></span>
+                                <input type="email" ref="email" name="email" className="form-control form-control rounded" placeholder="Correo"/>
+                              </div>                                         
+                            </div>  
+                            <div className="col-12">                                        
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-envelope"></i></span>
+                                <input type="text" ref="claveEscuela" name="claveEscuela" className="form-control form-control rounded" placeholder="Clave Escuela"/>
+                              </div>                                         
+                            </div> 
+                            <div className="col-12">                                        
+                              <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="fa fa-envelope"></i></span>
+                                <input type="text" ref="matricula" name="matricula" className="form-control form-control rouded" placeholder="Matricula"/>
+                              </div>                                         
+                            </div> 
+                            <div className="col-12">  
+                              <div className="input-group-prepend">     
+                                  <span className="input-group-text"><i className="fa fa-info-circle"></i></span>
+                                  <select value={this.state.value} onChange={this.handleChange} className="form-control form-control rounded">
+                                    <option value ="seleccione">Grupo</option>
+                                    <option value="grupoA">A</option>
+                                    <option value ="grupoB">B</option>                                      
+                                  </select>                         
+                              </div>                                                                       
+                            </div>                                    
+                          </div>
+                          <div className="row-login">
+                            <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Regístrar</button>
+                          </div>
+                        </form>
+                      </div>
+                      {/*<!--/card-block-->*/}
+                  </div>
+                  {/*<!-- /form card login -->*/}
+                </div>
+            </Modal>
+      </section>
     </div>
     );
   }
