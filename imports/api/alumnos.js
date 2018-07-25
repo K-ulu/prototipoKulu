@@ -41,7 +41,7 @@ Meteor.methods({
     });
   },
 
-  'alumnos.insert2'(matricula, claveEscuela, userId, correo) {
+  'alumnos.insert2'(matricula, claveEscuela, correo, userId) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }

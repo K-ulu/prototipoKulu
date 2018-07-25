@@ -13,10 +13,17 @@ import Select from 'react-select';
 import HeaderMaestros from './components/HeaderMaestros';
 import HeaderLeftMaestros from './components/HeaderLeftMaestros';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import {Tracker} from 'meteor/tracker';
 
 import {Grupos} from '../api/grupos.js';
 import {Alumnos} from '../api/alumnos.js';
+
+console.log(Alumnos.find().fetch());
 import Modal from 'react-modal';
+
+Tracker.autorun(function _ddpReady(){
+  console.log('Alumnos: ' + Alumnos.find().fetch());
+});
 
 class MaestroAlumnos extends TrackerReact(React.Component) { 
   constructor(){
