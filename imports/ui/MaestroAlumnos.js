@@ -223,37 +223,18 @@ class MaestroAlumnos extends React.Component {
                                       <option value ="docente">Grupo B</option>                                      
                                   </select> 
                                   <button className="btn btn-outline-success col-lg-3" type="submit">Buscar</button>
-                                  <Select
+                                  {/* <Select
                                     name="form-field-name"
                                     value="one"
                                     options={options}
                                     onChange={this.logChange}
-                                  />
+                                  /> */}
                               </form>                  
                             </div>
                           </div>
                           {/* Aqui inicia para la lista de alumnos */}
-                          {/*Cards 100%..*/}
-                          <div className="row">
-                            <div className="col-12 section-cards list">
-                              <div className="card">
-                                <div className="card-body">
-                                  <div className="row justify-content-between">
-                                    <div className="col-8">
-                                      <h5 className="card-title">Card title</h5>
-                                      <h6 className="card-subtitle mb-2 text-muted">Audio</h6>
-                                      <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>                            
-                                    </div>                          
-                                    <div className="col-2">
-                                      <div className="btn-group" role="group" aria-label="Basic example">                            
-                                        <button type="button" className="btn btn-secondary success-btn"><i className="fa fa-pencil"></i></button>                          
-                                        <button type="button" className="btn btn-secondary danger-btn"><i className="fa fa-trash"></i></button>
-                                      </div>  
-                                    </div> 
-                                  </div>
-                                </div>
-                              </div>                          
-                            </div>                        
+                          <div className = "card-table">
+                            <ListAlumnos handleEdit={this.handleEdit} />
                           </div>
                           {/*Cards 50%..*/}
                         </div>
@@ -356,11 +337,6 @@ class MaestroAlumnos extends React.Component {
                 </div>
             </Modal>
       </section>
-
-      <pre>DB Stuff: {JSON.stringify(this.props, null, ' ')} </pre>
-      <div>
-      <ListAlumnos handleEdit={this.handleEdit} />
-      </div>
     </div>
     );
   }
