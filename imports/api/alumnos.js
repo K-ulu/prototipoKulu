@@ -7,8 +7,8 @@ import { check } from 'meteor/check';
 export const Alumnos = new Mongo.Collection('alumnos');
 
 if (Meteor.isServer) {
-  Meteor.publish('alumno', function () {
-    return Alumnos.find({ userId: this.userId });
+  Meteor.publish('alumnos', function () {
+    return Alumnos.find({ idDocente: this.userId });
   });
 }
 

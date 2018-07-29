@@ -73,6 +73,7 @@ export const routes = (
       <Route path="/links" component={()=>(<Link/>)}/>  
       <Route exact path="/dashboard/elementos" component={ ()=>(<MaestroElementos isAuthenticated={isAuthenticated}/>)}/>  
       <Route exact path="/dashboard/alumnos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroAlumnos"}/>)}/>  
+      <Route exact path="/dashboard/grupos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroGrupos"}/>)}/>  
       <Route exact path="/" component={()=>(<Home isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/login" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/signup" component={()=>(<Signup isAuthenticated={isAuthenticated}/>)}/>

@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import MaestroDashboard from './MaestroDashboard';
 import UsuarioDashboard from './UsuarioDashboard';
 import MaestroAlumnos from './MaestroAlumnos';
+import MaestroGrupos from './MaestroGrupos';
 
 class Dashboard extends React.Component {
 
@@ -33,6 +34,12 @@ class Dashboard extends React.Component {
 
       if (this.props.tipo=="maestroAlumnos"){//Verifica a cual sera redireccionado..
         dashboard = <MaestroAlumnos user={this.state.user}/>; 
+        //creamos sesion con los datos del usuario logueado
+        Session.set('user', this.state.user);
+      }
+
+      else if (this.props.tipo=="maestroGrupos"){//Verifica a cual sera redireccionado..
+        dashboard = <MaestroGrupos user={this.state.user}/>; 
         //creamos sesion con los datos del usuario logueado
         Session.set('user', this.state.user);
       }
