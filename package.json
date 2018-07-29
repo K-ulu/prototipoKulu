@@ -13,6 +13,7 @@
     "express": "^4.16.3",
     "gridfs-stream": "^1.1.1",
     "history": "^4.7.2",
+    "match-sorter": "^2.2.3",
     "material-ui": "^0.20.1",
     "meteor-node-stubs": "^0.2.11",
     "method-override": "^2.3.10",
@@ -31,6 +32,7 @@
     "react-spinners": "^0.3.3",
     "react-table": "^6.8.6",
     "react-tap-event-plugin": "^3.0.3",
+    "semantic-ui-react": "^0.82.1",
     "shortid": "^2.2.12",
     "simpl-schema": "^1.5.3"
   }

@@ -166,12 +166,14 @@ class MaestroGrupos extends React.Component{
                             </div>
                           </div>
                           {/* Aqui inicia para la lista de grupos */}
-                            <div>
+                            <div className = "card-table" >
                                 <ListGrupo handleEdit={this.handleEdit} />
                             </div>             
                         </div>
                       </div>                   
                     </div>
+
+                    
                   </div>
                 </div>
               </div>

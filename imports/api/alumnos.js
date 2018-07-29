@@ -41,7 +41,7 @@ Meteor.methods({
     });
   },
 
-  'alumnos.insert2'(matricula, claveEscuela, correo, userId) {
+  'alumnos.insert2'(nombre, apellidoP, matricula, claveEscuela, correo, userId) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -61,6 +61,8 @@ Meteor.methods({
   
     Alumnos.insert({
       _id: shortid.generate(),
+      nombre,
+      apellidoP,
       matricula,
       claveEscuela,
       userId,
@@ -74,7 +76,7 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
     Alumnos.update({
-      userId: miId
+      _id: miId
     }, {
       $set: { matricula, claveEscuela, idDocente}
     });

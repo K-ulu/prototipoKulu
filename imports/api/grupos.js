@@ -30,11 +30,12 @@ Meteor.methods({
   },
 
   'grupos.update'( miId, nombreGrupo, grado, grupo, claveEscuela, cantidadAlumnos ){
+    console.log(miId, nombreGrupo, grado, grupo, claveEscuela, cantidadAlumnos);
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     Grupos.update({
-      userId: miId
+      _id: miId
     }, {
       $set: { nombreGrupo, grado, grupo, claveEscuela, cantidadAlumnos }
     });

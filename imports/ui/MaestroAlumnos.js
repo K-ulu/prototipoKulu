@@ -3,6 +3,9 @@
   creo que es todo aunque no se como registrar un alumno con nombre y apellidos si el docente no crea usuario 
   solo alumnos.
   Si el docente registra a su alumno pero el alumno aun no ha confirmado siguen siendo sus alumnos?
+
+  Verificar que cosas si se pueden editar pienso que el correo quiza.
+  Porque se tiene que editar el id del docente?
 */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -79,7 +82,7 @@ class MaestroAlumnos extends React.Component {
     */
 
 
-    Meteor.call('alumnos.insert2', matricula, claveEscuela, email, (err, res) => {
+    Meteor.call('alumnos.insert2', nombre, apellidoP, matricula, claveEscuela, email, (err, res) => {
       if (!err) {
         // this.handleModalClose();
         alert("insertado");
