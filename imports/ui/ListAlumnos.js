@@ -168,6 +168,7 @@ class ListAlumnos extends Component {
           this.props.events.length ? 
               <ReactTable
                   data={this.getData()}
+                  
                   filterable
                   defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}

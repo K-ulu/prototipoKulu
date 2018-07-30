@@ -71,14 +71,14 @@ Meteor.methods({
     });
   },
 
-  'alumnos.update'( miId, matricula,claveEscuela, idDocente){
+  'alumnos.update'( miId, matricula,claveEscuela){
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     Alumnos.update({
       _id: miId
     }, {
-      $set: { matricula, claveEscuela, idDocente}
+      $set: { matricula, claveEscuela}
     });
   },
   'alumnos.remove'(id) {
