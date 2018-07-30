@@ -17,7 +17,7 @@ import HeaderMaestros from './components/HeaderMaestros';
 import HeaderLeftMaestros from './components/HeaderLeftMaestros';
 
 import {Grupos} from '../api/grupos.js';
-import ListAlumnos from './ListAlumnos';
+import ListAlumnos from './components/ListAlumnos';
 import Modal from 'react-modal';
 
 class MaestroAlumnos extends React.Component { 

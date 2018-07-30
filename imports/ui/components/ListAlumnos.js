@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Alumnos } from "../api/alumnos";
+import { Alumnos } from "../../api/alumnos";
 import { Session } from 'meteor/session';
 
 import ReactTable from 'react-table'
 import "react-table/react-table.css";
 // import matchSorter from 'match-sorter';
 import Modal from 'react-modal';
+
+// import {Users} from "../../api/users";
 
 const buttonStyle = {
   margin: "10px 15px",
@@ -262,7 +264,9 @@ export default withTracker(() => {
     id = Session.get('user')._id;
     console.log(id);
     Meteor.subscribe("alumnos", id);
+    // Meteor.subscribe("users", id);
+    // console.log(Users.find( { emails : "a@g.com" }));
     return {
-        events: Alumnos.find({}). fetch()
+        events: Alumnos.find({}). fetch()        
     }
 })(ListAlumnos);

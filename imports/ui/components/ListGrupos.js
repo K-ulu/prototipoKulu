@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Grupos } from "../api/grupos";
+import { Grupos } from "../../api/grupos";
 import { Session } from 'meteor/session';
 
 import ReactTable from 'react-table'

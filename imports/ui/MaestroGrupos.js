@@ -6,7 +6,7 @@ import HeaderMaestros from './components/HeaderMaestros';
 import HeaderLeftMaestros from './components/HeaderLeftMaestros';
 import Modal from 'react-modal';
 
-import ListGrupo from './ListGrupos';
+import ListGrupo from './components/ListGrupos';
 
 class MaestroGrupos extends React.Component{
   constructor(){
