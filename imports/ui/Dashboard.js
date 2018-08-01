@@ -36,7 +36,7 @@ class Dashboard extends React.Component {
     if( this.state.user !== undefined && this.state.user.tipoUsuario !== undefined){
       tipoUsuario = this.state.user.tipoUsuario;
 
-      if (this.props.tipo=="maestroAlumnos"){//Verifica a cual sera redireccionado..
+      /*if (this.props.tipo=="maestroAlumnos"){//Verifica a cual sera redireccionado..
         dashboard = <MaestroAlumnos user={this.state.user}/>; 
         //creamos sesion con los datos del usuario logueado
         Session.set('user', this.state.user);
@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
         Session.set('user', this.state.user);
       }
 
-      else if (this.props.tipo=="dashboard"){
+      else if (this.props.tipo=="dashboard"){*/
         //determinamos el dashboard a cargar
         if (tipoUsuario == "docente"){
           dashboard = <MaestroDashboard user={this.state.user}/>;
@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
         else{
           dashboard = <UsuarioDashboard user={this.state.user}/>; 
         }
-      }
+      //}
       //creamos sesion con los datos del usuario logueado
       Session.set('user', this.state.user);
     }

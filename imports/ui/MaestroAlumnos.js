@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
-import Select from 'react-select';
+//import Select from 'react-select';
 import HeaderMaestros from './components/HeaderMaestros';
 import HeaderLeftMaestros from './components/HeaderLeftMaestros';
 
