@@ -77,7 +77,7 @@ class ListAlumnos extends Component {
       {
         Header: 'Opciones', // Custom header components!
         accessor: 'id',
-        maxWidth: 300,
+        maxWidth: 310,
         filterMethod: (filter, rows) =>
             matchSorter(rows, filter.value, { keys: ["id"] }),
               
@@ -179,7 +179,8 @@ class ListAlumnos extends Component {
                   columns={this.getColumns()}
                   defaultPageSize={5}
                   className="-striped -highlight"
-              />
+                    maxWidth="800"
+                />
 
           :
               <div className="no-events text-center" style={{ padding: "100px 0" }}>NO TIENE ALUMNOS REGISTRADOS!!!</div>
@@ -266,7 +267,7 @@ export default withTracker(() => {
     console.log(id);
     Meteor.subscribe("alumnos", id);
     // Meteor.subscribe("users", id);
-    //console.log(Alumnos.find( { correo : "a@g.com" }));
+    console.log(Alumnos.find( { correo : "a@g.com" }));
     return {
         events: Alumnos.find({}). fetch()        
     }

@@ -116,7 +116,7 @@ class MaestroAlumnos extends React.Component {
                           {/*title*/}
                           <div className="row justify-content-center">
                               <div className="col-6">
-                                  <h1>Mi Lista de Grupos</h1>
+                                  <h1>Mi Lista de Alumnos!</h1>
                               </div>     
                           </div>
 
