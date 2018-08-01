@@ -4,7 +4,7 @@ import {  BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //import {  Router, Route, Switch, Link, Redirect  } from 'react-router';
 //import createBrowserHistory from 'history/createBrowserHistory'
 //const history = createBrowserHistory();
-
+//hola no funcionó mi parte para guardar imagenes :c
 
 import { Tracker } from 'meteor/tracker';
 
@@ -18,7 +18,7 @@ import Support from '../ui/Support';
 import NotFound from '../ui/NotFound';
 import Caro from '../ui/Caro';
 import SaveImages from '../ui/SaveImages.js';
-
+import Images from '../ui/Imagenes.js';
 
 import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
@@ -28,11 +28,14 @@ import UsuarioDashboard from '../ui/UsuarioDashboard';
 import Link from '../ui/Link';
 import Chat from '../ui/Chat';
 
-import MaestroDashboardContainer from '../ui/MaestroDashboardContainer';
 import DashboardContainer from '../ui/DashboardContainer';
+
 import { withTracker } from 'meteor/react-meteor-data';
 
-let isAuthenticated;
+//importacion de la clase maestroAlumnos
+import MaestroAlumnos from '../ui/MaestroAlumnos.js';
+
+let isAuthenticated, tipo;
 let user;
 Tracker.autorun(() => {
   isAuthenticated = !!Meteor.userId(); //doble negacion dice si la cadena esta vacia o no
@@ -69,10 +72,7 @@ const onEnterPrivatePage = () => { //si un usuario no esta logueado lo regresamo
 export const routes = (
   <Router>
     <Switch>
-      <Route path="/links" component={()=>(<Link/>)}/>  
-      
-      <Route exact path="/dashboard/elementos/nuevo" component={ ()=>(<MaestroElementosNuevo isAuthenticated={isAuthenticated}/>)}/>  
-      <Route exact path="/dashboard/chat" component={ ()=>(<Chat isAuthenticated={isAuthenticated}/>)}/>  
+      <Route path="/links" component={()=>(<Link/>)}/>               
       <Route exact path="/" component={()=>(<Home isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/login" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/signup" component={()=>(<Signup isAuthenticated={isAuthenticated}/>)}/>
@@ -80,10 +80,12 @@ export const routes = (
       <Route path="/business" component={()=>(<Business isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/contact" component={()=>(<Contact isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/support" component={()=>(<Support isAuthenticated={isAuthenticated}/>)}/>
+      {/* No estoy segura de teachers */}
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/caro" component={()=>(<Caro/>)}/> 
       <Route path="/saveImages" component={()=>(<SaveImages/>)}/>   
-      <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>      
+      <Route path="/imagenes" component={()=>(<Images/>)}/> 
+      <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>    
       <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/> 
       <Route path="/dashboard/explora" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>       
       <Route path="/dashboard/biblioteca" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
@@ -92,8 +94,11 @@ export const routes = (
       <Route path="/dashboard/biblioteca/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/biblioteca/objetos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/biblioteca/elementos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
+      <Route exact path="/dashboard/alumnos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroAlumnos"}/>)}/>  
+      <Route exact path="/dashboard/grupos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroGrupos"}/>)}/> 
       <Route path="/dashboard/multimedia" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
-      <Route path="/dashboard/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/dashboard/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
+      
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
   </Router>

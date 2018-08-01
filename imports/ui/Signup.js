@@ -26,7 +26,8 @@ class Signup extends React.Component {
     const isLoggedIn = this.props.isAuthenticated;
     if (isLoggedIn) {
       //TODO: Actualizar para determinar a pagina vamos a mandar a el usuario 
-      this.props.history.push('/teachers');
+      //this.props.history.push('/teachers'); //Este era el que se tenia antes
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -74,11 +75,12 @@ class Signup extends React.Component {
     });
 
     //insertamos los datos de acuerdo al tipo de usuario
+    console.log(opcion);
     if(opcion == 'docente'){
       var claveDocente= '';
       var claveEscuela = '';
       var rfc = '';
-      Meteor.call('docente.insert', claveDocente, claveEscuela,rfc, (err, res) => {
+      Meteor.call('docentes.insert', claveDocente, claveEscuela,rfc, (err, res) => {
         if (!err) {
           // this.handleModalClose();
           alert("insertado");
@@ -86,11 +88,12 @@ class Signup extends React.Component {
           this.setState({error: ''});
         }
       });
+      this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
     }
     else if (opcion == 'alumno'){
         var matricula = "";
         var claveEscuela = '';
-        Meteor.call('alumnos.insert', matricula, claveEscuela, (err, res) => {
+        Meteor.call('alumnos.insert', matricula, claveEscuela, email, (err, res) => {
           if (!err) {
             // this.handleModalClose();
             alert("insertado");
@@ -100,6 +103,7 @@ class Signup extends React.Component {
             alert(err.reason);
           }
         });
+        this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
     }
     else{
       alert("Contrasenias desiguales");

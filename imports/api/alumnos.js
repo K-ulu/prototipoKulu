@@ -7,13 +7,13 @@ import { check } from 'meteor/check';
 export const Alumnos = new Mongo.Collection('alumnos');
 
 if (Meteor.isServer) {
-  Meteor.publish('alumno', function () {
-    return Alumnos.find({ userId: this.userId });
+  Meteor.publish('alumnos', function () {
+    return Alumnos.find({ idDocente: this.userId });
   });
 }
 
 Meteor.methods({
-  'alumnos.insert'(matricula, claveEscuela) {
+  'alumnos.insert'(matricula, claveEscuela, correo, idDocente) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -35,7 +35,39 @@ Meteor.methods({
       _id: shortid.generate(),
       matricula,
       claveEscuela,
-      userId: this.userId
+      userId: this.userId,
+      correo,
+      idDocente
+    });
+  },
+
+  'alumnos.insert2'(nombre, apellidoP, matricula, claveEscuela, correo, userId) {
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+  
+    // new SimpleSchema({
+    //   nombre: {
+    //     type: String,
+    //     label: 'nombre',
+    //     //regEx: SimpleSchema.RegEx.Url
+    //   },
+    //   apPaterno: {
+    //       type: String,
+    //       label: 'Apellido Paterno',
+    //       //regEx: SimpleSchema.RegEx.Url
+    //   }
+    // }).validate({ nombre, ApPaterno });
+  
+    Alumnos.insert({
+      _id: shortid.generate(),
+      nombre,
+      apellidoP,
+      matricula,
+      claveEscuela,
+      userId,
+      correo,
+      idDocente: this.userId
     });
   },
 
@@ -44,7 +76,7 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
     Alumnos.update({
-      userId: miId
+      _id: miId
     }, {
       $set: { matricula, claveEscuela}
     });

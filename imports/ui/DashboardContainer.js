@@ -3,7 +3,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import Dashboard from './Dashboard';
 
 export default DashboardContainer = withTracker(({id}) => {
-    
     Meteor.subscribe("users", id);
     let user;
     if(Meteor.user()){

@@ -8,12 +8,12 @@ export const Grupos = new Mongo.Collection('grupos');
 
 if (Meteor.isServer) {
   Meteor.publish('grupos', function () {
-    return Grupos.find({ userId: this.userId });
+    return Grupos.find({ claveDocente: this.userId });
   });
 }
 
 Meteor.methods({
-  'grupos.insert'(nombreGrupo, grado, grupo, cantidadAlumnos, claveEscuela ) {
+  'grupos.insert'(nombreGrupo, grado, grupo,claveEscuela, cantidadAlumnos) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -23,20 +23,21 @@ Meteor.methods({
       nombreGrupo,
       grado,
       grupo,
-      cantidadAlumnos,
       claveEscuela,
+      cantidadAlumnos,
       claveDocente: this.userId
     });
   },
 
-  'grupos.update'( miId, nombreGrupo, grado, grupo, cantidadAlumnos, claveEscuela ){
+  'grupos.update'( miId, nombreGrupo, grado, grupo, claveEscuela, cantidadAlumnos ){
+    console.log(miId, nombreGrupo, grado, grupo, claveEscuela, cantidadAlumnos);
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     Grupos.update({
-      userId: miId
+      _id: miId
     }, {
-      $set: { nombreGrupo, grado, grupo, cantidadAlumnos, claveEscuela }
+      $set: { nombreGrupo, grado, grupo, claveEscuela, cantidadAlumnos }
     });
   },
 

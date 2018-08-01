@@ -4,8 +4,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
 
-class UsuarioDashboard extends React.Component {
-
+export default class HeaderMaestros extends React.Component {
   componentDidMount(){
     /*INICIO codigo para comportamiento del componente */
     $("#menu-toggle").click(function(e) {
@@ -19,10 +18,10 @@ class UsuarioDashboard extends React.Component {
       });
     
     });
-    $("#wrapper").toggleClass("toggled");  
-    /*FIND codigo para comportamiento del componente */    
+    $("#wrapper").toggleClass("toggled");
+    /*FIND codigo para comportamiento del componente */
+    console.log(' didMount', this.props);   
   }
-
 
   //funcion para cerrar sesion
   onLogout(){    
@@ -38,14 +37,14 @@ class UsuarioDashboard extends React.Component {
   render () {
     //const isLoggedIn = this.props.isAuthenticated;
     return (
-      <div id="main" className="enlarged">
+      <div>
 
         {/*<!-- top bar navigation -->*/}
         <div className="headerbar">    
           {/*<!-- LOGO -->*/}
           <div className="headerbar-left">
             <a href="/" className="logo">
-            <img alt="Logo" src="images/kulu_logo_160.png" />
+            <img alt="Logo" src="/images/kulu_logo_160.png" />
               {/*<span>  Admin</span>*/}
             </a>
           </div>
@@ -146,8 +145,7 @@ class UsuarioDashboard extends React.Component {
                   {/*<!-- item-->*/}
                   <div className="dropdown-item noti-title">
                     <h5>
-                      <small>
-                        <span className="label label-danger pull-xs-right">5</span>Allerts</small>
+                      <small><span className="label label-danger pull-xs-right">5</span>Allerts</small>
                     </h5>
                   </div>
     
@@ -197,13 +195,13 @@ class UsuarioDashboard extends React.Component {
     
               <li className="list-inline-item dropdown notif">
                 <a className="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                  <img src="images/admin.jpg" alt="Profile image" className="avatar-rounded"/>
+                  <img src="/images/admin.jpg" alt="Profile image" className="avatar-rounded"/>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
                   {/*<!-- item-->*/}
                   <div className="dropdown-item noti-title">
                     <h5 className="text-overflow">
-                      <small>Hello alumno, { Session.get('user').profile.nickname } </small>
+                      <small>Hello, { Session.get('user').profile.nickname } </small>
                     </h5>
                   </div>
     
@@ -211,8 +209,8 @@ class UsuarioDashboard extends React.Component {
                   <a href="pro-profile.html" className="dropdown-item notify-item">
                     <i className="fa fa-user"></i>
                     <span>Profile</span>
-                  </a>
-    
+                  </a>    
+                  
                   {/*<!-- item-->*/}
                   <button onClick={this.onLogout.bind(this)} className="dropdown-item notify-item">
                     <i className="fa fa-power-off"></i>
@@ -239,114 +237,9 @@ class UsuarioDashboard extends React.Component {
     
           </nav>
   
-      </div>
+        </div>
       {/*<!-- End Navigation-->*/}
-
-      {/*Wrapper*/}
-      <div id="wrapper">
-
-        {/*Left Sidebar*/}
-        <div id="sidebar-wrapper">
-
-          <ul className="sidebar-nav">
-
-            <li className="submenu">
-              <a className="active" href="/teachers">
-                <i className="fa fa-fw fa-bars"></i>
-                <span> Dashboard </span>
-              </a>
-            </li>
-
-            <li className="submenu">
-              <a className="nuevaSesion" href="#">
-                <i className="fa fa-fw fa-play"></i>
-                <span> Nueva Mini Sesión </span>
-              </a>
-            </li>
-
-            <li className="submenu">
-              <a href="#">
-                <i className="fa fa-fw fa-eye"></i>
-                <span> Explorar </span>
-              </a>
-            </li>
-
-            <li className="submenu">
-              <a href="#">
-                <i className="fa fa-fw fa-book"></i>
-                <span> Biblioteca </span>
-                <span className="menu-arrow"></span>
-              </a>
-              <ul className="list-unstyled">
-                <li>
-                  <a href="forms-general.html">
-                    <i className="fa fa-fw fa-copy"></i>
-                    <span> Libros </span>
-                  </a>
-                </li>
-                <li>
-                  <a href="forms-select2.html">
-                    <i className="fa fa-fw fa-headphones"></i>
-                    <span> Cont. Mult. </span>
-                  </a>
-                </li>   
-                <li>
-                  <a href="forms-select2.html">
-                    <i className="fa fa-fw fa-file-text-o"></i>
-                    <span> Documentos </span>
-                  </a>
-                </li>    
-                <li>
-                  <a href="forms-select2.html">
-                    <i className="fa fa-fw fa-address-book"></i>
-                    <span> Obj. de Aprend. </span>
-                  </a>
-                </li>      
-                <li>
-                  <a href="forms-select2.html">
-                    <i className="fa fa-fw fa-cogs"></i>
-                    <span> Elem. de Aprend. </span>
-                  </a>
-                </li>         
-              </ul>
-            </li> 
-
-            <li className="submenu">
-              <a href="#">
-                <i className="fa fa-fw fa-headphones"></i>
-                <span> Mi Cont. Mult. </span>
-              </a>
-            </li>
-
-            <li className="submenu">
-              <a href="#">
-                <i className="fa fa-fw fa-file-text-o"></i>
-                <span> Mis Documentos </span>
-              </a>
-            </li>
-            
-          </ul>
-        </div>
-        {/*End Left Sidebar*/}
-
-        {/*Content*/}
-        <div id="page-content-wrapper">
-            <div className="container-fluid">
-                <h1>Usuario Dashboard - Simple Sidebar</h1>
-                <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                {/*<a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>*/}
-            </div>
-        </div>
-        {/*End Content*/}
-
-      
-      </div>
-      {/*End Wrapper*/}
-
       </div>
     );
   }
 }
-
-export default withRouter(UsuarioDashboard);
