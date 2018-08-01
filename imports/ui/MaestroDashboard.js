@@ -18,6 +18,7 @@ class MaestroDashboard extends React.Component {
     //variable que almacena el contenido segun la url visitada
     let contenido = null;
     let pathname = this.props.history.location.pathname;
+    
     if(pathname == '/dashboard' || pathname == '/dashboard/'){
       contenido = <ContenidoPrincipal/>
     } else if(pathname == '/dashboard/multimedia' || pathname == '/dashboard/multimedia/'){

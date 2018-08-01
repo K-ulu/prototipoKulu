@@ -2,8 +2,6 @@ import React from 'react';
 import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
-import HeaderMaestros from './components/HeaderMaestros';
-import HeaderLeftMaestros from './components/HeaderLeftMaestros';
 import Modal from 'react-modal';
 
 import ListGrupo from './components/ListGrupos';
@@ -11,8 +9,9 @@ import ListGrupo from './components/ListGrupos';
 class MaestroGrupos extends React.Component{
   constructor(){
     super()
+
     this.state = {
-      isActive:false,
+      isActive:false
     }
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -51,139 +50,80 @@ class MaestroGrupos extends React.Component{
     });
   }
 
-  componentDidMount(){
-    /*INICIO codigo para comportamiento del componente */
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-
-    $( document ).ready(function() {
-      $('ul.sidebar-nav > li a').click(function() {
-        $(this).parent().find('ul').toggle();
-      });
-    
-    });
-    $("#wrapper").toggleClass("toggled");
-    /*FIND codigo para comportamiento del componente */
-    //console.log(' didMount', this.props); 
-  }
-
-  //funcion para cerrar sesion
-  onLogout(){    
-    Accounts.logout();
-    this.props.history.replace('/');
-    Session.set('user', undefined); //borramos de la sesion los datos del usuario
-  }
-
-  toggleSidebar(){
-    location.href='#menu-toggle';
-  }
-
-  quadFilter(){    
-    //verificamos la clase para determinar el tipo de vista
-    // si tiene la clase list cambiamos a quad
-    if($('.section-cards').hasClass('list')){ 
-      alert('es lista');
-    } else {
-      alert('ya es quad');
-    }
-    /*let cards = $('.section-cards .card'); //obtenemos las tarjeta
-    console.log(cards);*/
-    /*if($('.section-cards').has)
-    $('.section-cards').toggleClass("col-12");
-    $('.section-cards').addClass("col-6");*/
-  }
-
-  listFilter(){
-    alert('lista');
-  }
-
   logChange(val) {
     console.log("Selected: " + val);
   }
 
   render () {
     return (
-      <div id="main" className="enlarged">
-        {/*<!-- top bar navigation -->*/}
-        <HeaderMaestros/>
+      <div>
+      {/*Inicio componente */}
 
-        {/*Wrapper*/}
-        <div id="wrapper">
+          {/*Inicio row */}
+          <div className="row">
+              <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
-        {/*Left Sidebar*/}
-        <HeaderLeftMaestros/>
-        {/*Content*/}
-        <div id="page-content-wrapper">
-          <div className="content">
-            <div className="container-fluid">
-
-              <div className="row">
-                <div className="col-xl-12">
-                  <div className="breadcrumb-holder">
-                    <h1 className="main-title float-left">Dashboard - Grupos</h1>
-                    <ol className="breadcrumb float-right">
-                      <li className="breadcrumb-item">Home</li>
-                      <li className="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                    <div className="clearfix"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                   <div className="card noborder mb-3">
-                    <div className="card-body">
-                      {/*title*/}
-                      <div className="row justify-content-center">
-                        <div className="col-6">
-                          <h1>Mi Lista de Grupos</h1>
-                        </div>     
-                      </div>
+                      <div className="card-body">
+                          {/*title*/}
+                          <div className="row justify-content-center">
+                              <div className="col-6">
+                                  <h1>Mi Lista de Grupos</h1>
+                              </div>     
+                          </div>
 
                       <div className="row justify-content-center">
-                        <div className="col-10">
+                          <div className="col-10">
+
+
                           {/*buttons and filter options*/}
                           <div className="row justify-content-between">
-                            <div className="col-2">
-                              <button onClick={this.toggleModal} className="btn btn-primary btn-block">Nuevo</button>
-                            </div>
 
-                            <div className="col-2 btn-group" role="group" aria-label="Basic example">
-                              <button onClick={this.quadFilter.bind(this)} type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
-                              <button onClick={this.listFilter.bind(this)} type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
-                            </div> 
+                          <div className="col-2">
+                            <button onClick={this.toggleModal} className="btn btn-primary btn-block">Nuevo</button>
                           </div>
-                          {/*Buscar grupo mediante un buscardo*/}
+
+                          <div className="col-2 btn-group" role="group" aria-label="Basic example">
+                              <button  type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
+                              <button  type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
+                          </div> 
+
+                          </div>
+
+
+                          {/*Buscador..*/}
                           <div className="row justify-content-between">
                             <div className="col-12">
                                 <form className="form-inline">
                                 <input className="form-control mr-4 col-lg-8" type="text" placeholder="Buscar..."/>
-                                <button className="btn btn-outline-success col-lg-3" type="submit">Buscar</button>
+                                <button className="btn btn-outline-success ml-4 col-lg-3" type="submit">Buscar</button>
                                 </form>                  
                             </div>
                           </div>
-                          {/* Aqui inicia para la lista de grupos */}
-                            <div className = "card-table" >
-                                <ListGrupo handleEdit={this.handleEdit} />
-                            </div>             
-                        </div>
-                      </div>                   
-                    </div>
 
-                    
+
+
+                          {/*Aqui inicia para la lista de grupos..*/}
+                          <div className = "card-table" >
+                                <ListGrupo handleEdit={this.handleEdit} />
+                            </div>                         
+                          
+                          </div>
+                      </div>
+
+                                          
+                      </div>
+                      {/*<div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*/}
                   </div>
-                </div>
               </div>
-            </div>          
+
+
           </div>
-        </div>
-        {/*End Content*/}
-      </div>
-      {/*End Wrapper*/}
+          {/*Fin row */}
+
+
       
+      {/*Modal de inseerción */}
       <section className="row justify-content-center">
             <Modal 
               isOpen={this.state.isActive} 
@@ -254,9 +194,9 @@ class MaestroGrupos extends React.Component{
                 </div>
             </Modal>
       </section>
-    </div>
-    );
+      </div>
+  );
   }
 }
- 
+
 export default withRouter(MaestroGrupos);

@@ -74,6 +74,7 @@ class ListGrupo extends Component {
           {
             Header: 'Opciones', // Custom header components!
             accessor: 'id',
+            maxWidth: 300,
             filterMethod: (filter, rows) =>
                 matchSorter(rows, filter.value, { keys: ["id"] }),
                   
