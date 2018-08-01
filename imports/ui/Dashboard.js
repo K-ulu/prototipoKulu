@@ -16,6 +16,10 @@ class Dashboard extends React.Component {
     };
   }
 
+  componentDidMount(){
+    console.log('url ', this.props.history.location.pathname);
+  }
+
   //actualizamos props y guardamos datos del usuario
   componentWillReceiveProps(nextProps) {
     this.props = nextProps;

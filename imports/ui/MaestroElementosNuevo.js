@@ -4,7 +4,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
 
-class MaestroElementos extends React.Component {
+class MaestroElementosNuevo extends React.Component {
 
   componentDidMount(){
     /*INICIO codigo para comportamiento del componente */
@@ -24,6 +24,7 @@ class MaestroElementos extends React.Component {
 
     
     console.log(' didMount', this.props);   
+    console.log('url ', this.props.history.location.pathname);
   }
 
   //funcion para cerrar sesion
@@ -37,39 +38,7 @@ class MaestroElementos extends React.Component {
     location.href='#menu-toggle';
   }
 
-  quadFilter(){    
-    //verificamos la clase para determinar el tipo de vista
-    // si tiene la clase list cambiamos a quad
-    /*if($('.section-cards').hasClass('list')){ 
-      //recuperamos todos los cards
-      let cards = $('.section-cards div .card');         
-      //limpiamos el div que contiene los cards
-      $(".section-cards" ).empty();
-      //asigamos clase de bandera para señalar el tipo de vista
-      $( ".section-cards" ).removeClass( "list" ).addClass( "quad" );
-      //agregamos las 2 columnas de tamano col-6
-      $('div.section-cards').append('<div class="col-6"></div>.'); 
-      $('div.section-cards').append('<div class="col-6"></div>.');       
-
-      /*let izquierda = true;
-      for(let i = 0; i < cards.length; i++){        
-        cards[i].children[0].children[0].children[1].className = 'col-3';
-        if(izquierda){          
-          $('div.section-cards').children('div')[0].append(cards[i]);  
-          izquierda = false;  
-        } else {
-          $('div.section-cards').children('div')[1].append(cards[i]);
-          izquierda = true;
-        }
-      } 
-    } else {
-      alert('ya es quad');
-    }*/
-  }
-
-  listFilter(){
-    //alert('lista');
-  }
+  
 
   render () {
     return (
@@ -439,7 +408,41 @@ class MaestroElementos extends React.Component {
               
 
 
-              
+              <div className="row">
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div className="card noborder mb-3">
+
+                    <div className="card-body">
+                      {/*title*/}
+                      <div className="row justify-content-center">
+                        <div className="col-10">
+                          <h1 className="text-center">Nuevo Contenido Multimedia</h1>
+                          <p className="mt-5">Est dolore eiusmod Lorem Lorem Est dolore eiusmod Lorem Lorem Est dolore eiusmod Lorem Lorem Est dolore eiusmod Lorem Lorem Est dolore eiusmod Lorem Lorem Est dolore eiusmod Lorem Lorem Est dolore eiusmod Lorem Lorem Est dolore eiusmod Lorem Lorem.</p>
+                        </div>     
+                      </div>
+
+                      <div className="row justify-content-center">
+                        <div className="col-10">
+                        <form action="/file-upload" className="dropzone" id="my-awesome-dropzone">        
+                          <div className="dz-message needsclick">
+                            Arrastra para agregar nuevos archivos o haz clic aquí.<br />
+                            <span className="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                          </div>                
+                        </form>
+
+
+
+                        </div>
+                      </div>
+
+                                           
+                    </div>
+                    {/*<div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*/}
+                  </div>
+                </div>
+
+
+              </div>
 
 
 
@@ -460,4 +463,4 @@ class MaestroElementos extends React.Component {
   }
 }
 
-export default withRouter(MaestroElementos);
+export default withRouter(MaestroElementosNuevo);

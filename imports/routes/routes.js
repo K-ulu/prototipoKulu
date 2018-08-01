@@ -23,8 +23,10 @@ import SaveImages from '../ui/SaveImages.js';
 import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
 import MaestroElementos from '../ui/MaestroElementos';
+import MaestroElementosNuevo from '../ui/MaestroElementosNuevo';
 import UsuarioDashboard from '../ui/UsuarioDashboard';
 import Link from '../ui/Link';
+import Chat from '../ui/Chat';
 
 import MaestroDashboardContainer from '../ui/MaestroDashboardContainer';
 import DashboardContainer from '../ui/DashboardContainer';
@@ -68,7 +70,9 @@ export const routes = (
   <Router>
     <Switch>
       <Route path="/links" component={()=>(<Link/>)}/>  
-      <Route exact path="/dashboard/elementos" component={ ()=>(<MaestroElementos isAuthenticated={isAuthenticated}/>)}/>  
+      
+      <Route exact path="/dashboard/elementos/nuevo" component={ ()=>(<MaestroElementosNuevo isAuthenticated={isAuthenticated}/>)}/>  
+      <Route exact path="/dashboard/chat" component={ ()=>(<Chat isAuthenticated={isAuthenticated}/>)}/>  
       <Route exact path="/" component={()=>(<Home isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/login" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/signup" component={()=>(<Signup isAuthenticated={isAuthenticated}/>)}/>
@@ -80,7 +84,16 @@ export const routes = (
       <Route path="/caro" component={()=>(<Caro/>)}/> 
       <Route path="/saveImages" component={()=>(<SaveImages/>)}/>   
       <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>      
-      <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
+      <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/> 
+      <Route path="/dashboard/explora" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>       
+      <Route path="/dashboard/biblioteca" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/dashboard/biblioteca/libros" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/dashboard/biblioteca/multimedia" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/dashboard/biblioteca/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/dashboard/biblioteca/objetos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/dashboard/biblioteca/elementos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/dashboard/multimedia" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/dashboard/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
   </Router>
