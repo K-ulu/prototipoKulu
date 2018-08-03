@@ -9,21 +9,21 @@ export default class LeftSidebar extends React.Component {
 				<ul className="sidebar-nav">
 
 					<li className="submenu">
-						<a className="active" href="/teachers">
+						<a className="active" href="/dashboard">
 							<i className="fa fa-fw fa-bars"></i>
 							<span> Dashboard </span>
 						</a>
 					</li>
 
 					<li className="submenu">
-						<a className="nuevaSesion" href="#">
+						<a className="nuevaSesion" href="/dashboard/nueva-sesion">
 							<i className="fa fa-fw fa-play"></i>
 							<span> Nueva Sesión </span>
 						</a>
 					</li>
 
 					<li className="submenu">
-						<a href="#">
+						<a href="/dashboard/explora">
 							<i className="fa fa-fw fa-eye"></i>
 							<span> Explorar </span>
 						</a>
@@ -37,31 +37,31 @@ export default class LeftSidebar extends React.Component {
 						</a>
 						<ul className="list-unstyled">
 							<li>
-								<a href="forms-general.html">
+								<a href="/dashboard/biblioteca/libros">
 									<i className="fa fa-fw fa-copy"></i>
 									<span> Libros </span>
 								</a>
 							</li>
 							<li>
-								<a href="forms-select2.html">
+								<a href="/dashboard/biblioteca/multimedia">
 									<i className="fa fa-fw fa-headphones"></i>
 									<span> Cont. Mult. </span>
 								</a>
 							</li>   
 							<li>
-								<a href="forms-select2.html">
+								<a href="/dashboard/biblioteca/documentos">
 									<i className="fa fa-fw fa-file-text-o"></i>
 									<span> Documentos </span>
 								</a>
 							</li>    
 							<li>
-								<a href="forms-select2.html">
+								<a href="/dashboard/biblioteca/objetos">
 									<i className="fa fa-fw fa-address-book"></i>
 									<span> Obj. de Aprend. </span>
 								</a>
 							</li>      
 							<li>
-								<a href="forms-select2.html">
+								<a href="/dashboard/biblioteca/elementos">
 									<i className="fa fa-fw fa-cogs"></i>
 									<span> Elem. de Aprend. </span>
 								</a>
@@ -70,28 +70,28 @@ export default class LeftSidebar extends React.Component {
 					</li> 
 
 					<li className="submenu">
-						<a href="#">
+						<a href="/dashboard/alumnos">
 							<i className="fa fa-fw fa-user"></i>
 							<span> Mis Alumnos </span>
 						</a>
 					</li>            
 
 					<li className="submenu">
-						<a href="#">
+						<a href="/dashboard/grupos">
 							<i className="fa fa-fw fa-users"></i>
 							<span> Mis Grupos </span>
 						</a>
 					</li>
 
 					<li className="submenu">
-						<a href="#">
+						<a href="/dashboard/multimedia">
 							<i className="fa fa-fw fa-headphones"></i>
 							<span> Mi Cont. Mult. </span>
 						</a>
 					</li>
 
 					<li className="submenu">
-						<a href="#">
+						<a href="/dashboard/documentos">
 							<i className="fa fa-fw fa-file-text-o"></i>
 							<span> Mis Documentos </span>
 						</a>
