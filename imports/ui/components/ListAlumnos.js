@@ -267,7 +267,8 @@ export default withTracker(() => {
     console.log(id);
     Meteor.subscribe("alumnos", id);
     // Meteor.subscribe("users", id);
-    console.log(Alumnos.find( { correo : "a@g.com" }));
+    console.log(Alumnos.findOne( { correo : "a@g.com" }));
+    console.log(Meteor.users.findOne({ emails : "a@g.com" }));
     return {
         events: Alumnos.find({}). fetch()        
     }
