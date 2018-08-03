@@ -48,6 +48,7 @@ class MaestroGrupos extends React.Component{
         console.log(err.reason);
       }
     });
+    this.toggleModal();
   }
 
   logChange(val) {

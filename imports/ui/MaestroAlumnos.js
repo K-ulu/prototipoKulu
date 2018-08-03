@@ -90,7 +90,7 @@ class MaestroAlumnos extends React.Component {
         console.log(err.reason);
       }
     });
-    //this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard 
+    this.toggleModal();
   }
 
   logChange(val) {

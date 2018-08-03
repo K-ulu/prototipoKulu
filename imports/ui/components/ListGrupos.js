@@ -8,6 +8,9 @@ import "react-table/react-table.css";
 // import matchSorter from 'match-sorter';
 import Modal from 'react-modal';
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+
 const buttonStyle = {
     margin: "10px 10px",
     maxWidth: "120px"
@@ -24,6 +27,23 @@ class ListGrupo extends Component {
     
         this.editar = this.editar.bind(this);
     }
+
+    submit = (eventId) => {
+        confirmAlert({
+            title: 'Confirmación de Eliminación',
+            message: '¿Esta seguro que desea eliminar?.',
+            buttons: [
+            {
+                label: 'Yes',
+                onClick: () => this.handleDelete(eventId)
+            },
+            {
+                label: 'No',
+                onClick: () => alert('Click para cancelar!')
+            }
+            ]
+        })
+    };
 
     componentWillMount(){
         Modal.setAppElement('body');
@@ -101,7 +121,7 @@ class ListGrupo extends Component {
                             <button
                                 className="btn btn-outline-danger col"
                                 style={buttonStyle}
-                                onClick={() => this.handleDelete(original.id)}
+                                onClick={() => this.submit(original.id)}
                             >
                                 Eliminar
                             </button>   

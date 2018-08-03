@@ -10,6 +10,9 @@ import Modal from 'react-modal';
 
 // import {Users} from "../../api/users";
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+
 const buttonStyle = {
   margin: "10px 15px",
   maxWidth: "120px"
@@ -26,6 +29,23 @@ class ListAlumnos extends Component {
 
     this.editar = this.editar.bind(this);
   }
+
+  submit = (eventId) => {
+    confirmAlert({
+      title: 'Confirmación de Eliminación',
+      message: '¿Esta seguro que desea eliminar?.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => this.handleDelete(eventId)
+        },
+        {
+          label: 'No',
+          onClick: () => alert('Click para cancelar!')
+        }
+      ]
+    })
+  };
 
   componentWillMount(){
     Modal.setAppElement('body');
@@ -104,7 +124,7 @@ class ListAlumnos extends Component {
                         <button
                             className="btn btn-outline-danger col"
                             style={buttonStyle}
-                            onClick={() => this.handleDelete(original.id)}
+                            onClick={() => this.submit(original.id)}
                         >
                             Eliminar
                         </button>   
@@ -268,7 +288,6 @@ export default withTracker(() => {
     Meteor.subscribe("alumnos", id);
     // Meteor.subscribe("users", id);
     console.log(Alumnos.findOne( { correo : "a@g.com" }));
-    console.log(Meteor.users.findOne({ emails : "a@g.com" }));
     return {
         events: Alumnos.find({}). fetch()        
     }
