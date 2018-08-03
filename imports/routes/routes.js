@@ -87,6 +87,7 @@ export const routes = (
       <Route path="/imagenes" component={()=>(<Images/>)}/> 
       <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>    
       <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/> 
+      <Route path="/dashboard/nueva-sesion" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>       
       <Route path="/dashboard/explora" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>       
       <Route path="/dashboard/biblioteca" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/biblioteca/libros" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
