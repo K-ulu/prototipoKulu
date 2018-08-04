@@ -11,6 +11,10 @@ import Modal from 'react-modal';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
+//Para las notificaciones!
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const buttonStyle = {
     margin: "10px 10px",
     maxWidth: "120px"
@@ -162,11 +166,19 @@ class ListGrupo extends Component {
 
     Meteor.call('grupos.update', this.idG, nombreGrupo1, grado1, grupo1, claveEscuela1, (err, res) => {
       if (!err) {
-        alert("editado");
+        return(
+            toast.success('Editado!', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000
+            })
+        );
       } else {
-        alert("ocurrió un error al editar");
-        alert(err.reason);
-        console.log(err.reason);
+        return(
+            console.log(err.reason),
+            toast.error("ocurrió un error al editar", {
+                position: toast.POSITION.TOP_CENTER
+            })
+        );
       }
     });
     this.handleEdit();
@@ -176,8 +188,12 @@ class ListGrupo extends Component {
         console.log(eventId);
         Meteor.call('grupos.remove', eventId, (err, res) => {
             if (!err) {
-                // this.handleModalClose();
-                alert("eliminado!");
+                return(
+                    toast.info('🦄Eliminado!', {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 3000
+                    })
+                );
             } else {
                 this.setState({error: ''});
             }
@@ -264,7 +280,7 @@ class ListGrupo extends Component {
                                     </div>                                   
                                 </div>
                                 <div className="row-login">
-                                    <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Regístrar</button>
+                                    <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Editar</button>
                                 </div>
                             </form>
                         </div>
@@ -275,6 +291,11 @@ class ListGrupo extends Component {
                 </Modal>
             </section>
 
+            <ToastContainer
+                hideProgressBar={true}
+                newestOnTop={true}
+                autoClose={5000}
+            />
         </div>
         );
     }

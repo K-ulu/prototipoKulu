@@ -17,6 +17,10 @@ import { Session } from 'meteor/session';
 import ListAlumnos from './components/ListAlumnos';
 import Modal from 'react-modal';
 
+//Para las notificaciones!
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 class MaestroAlumnos extends React.Component { 
   constructor(){
     super()
@@ -81,13 +85,19 @@ class MaestroAlumnos extends React.Component {
 
     Meteor.call('alumnos.insert2', nombre, apellidoP, matricula, claveEscuela, email, (err, res) => {
       if (!err) {
-        // this.handleModalClose();
-        alert("insertado");
+        return(
+          toast.success('Insertado!', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000
+          })
+        );
       } else {
-        // this.setState({ error: err.reason });
-        alert("ocurrió un error al insertar");
-        alert(err.reason);
-        console.log(err.reason);
+        return(
+          console.log(err.reason),
+          toast.error("ocurrió un error al insertar", {
+              position: toast.POSITION.TOP_CENTER
+          })
+        );
       }
     });
     this.toggleModal();
@@ -268,6 +278,12 @@ class MaestroAlumnos extends React.Component {
             </div>
           </Modal>
         </section>
+
+        <ToastContainer
+            hideProgressBar={true}
+            newestOnTop={true}
+            autoClose={5000}
+        />
       </div>
   );
   }

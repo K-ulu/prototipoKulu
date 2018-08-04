@@ -5,14 +5,64 @@ import { Session } from 'meteor/session';
 
 import ReactTable from 'react-table'
 import "react-table/react-table.css";
-// import matchSorter from 'match-sorter';
 import Modal from 'react-modal';
+// import matchSorter from 'match-sorter';
 
-// import {Users} from "../../api/users";
-
+// Para confirmar eliminación;
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
+//Para las notificaciones!
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import Select from 'react-select';
+import {Grupos} from "../../api/grupos";
+
+const dot = (color = "#ccc") => ({
+    alignItems: "center",
+    display: "flex",
+  
+    ":before": {
+      backgroundColor: color,
+      borderRadius: 10,
+      content: " ",
+      display: "block",
+      marginRight: 8,
+      height: 10,
+      width: 10
+    }
+  });
+  
+  const colourStyles = {
+    control: styles => ({ ...styles, backgroundColor: "white" }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      const color = chroma(data.color);
+      return {
+        ...styles,
+        backgroundColor: isDisabled
+          ? null
+          : isSelected
+            ? data.color
+            : isFocused
+              ? color.alpha(0.1).css()
+              : null,
+        color: isDisabled
+          ? "#ccc"
+          : isSelected
+            ? chroma.contrast(color, "white") > 2
+              ? "white"
+              : "black"
+            : data.color,
+        cursor: isDisabled ? "not-allowed" : "default"
+      };
+    },
+    input: styles => ({ ...styles, ...dot() }),
+    placeholder: styles => ({ ...styles, ...dot() }),
+    singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) })
+  };
+
+  
 const buttonStyle = {
   margin: "10px 15px",
   maxWidth: "120px"
@@ -25,32 +75,17 @@ class ListAlumnos extends Component {
     super()
     this.state = {
       isActive:false,
+      selectedOption: null,
     }
 
     this.editar = this.editar.bind(this);
   }
 
-  submit = (eventId) => {
-    confirmAlert({
-      title: 'Confirmación de Eliminación',
-      message: '¿Esta seguro que desea eliminar?.',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => this.handleDelete(eventId)
-        },
-        {
-          label: 'No',
-          onClick: () => alert('Click para cancelar!')
-        }
-      ]
-    })
-  };
-
   componentWillMount(){
     Modal.setAppElement('body');
   }
 
+  //Funciones de la tabla
   getData(){
     const data = [];
     
@@ -139,20 +174,20 @@ class ListAlumnos extends Component {
     return columns;
   }
 
-  handleEdit = (/*nombre, apellidoP,*/ matricula, claveEscuela, id) => {
-    console.log(matricula);
-    // this.grad = nombre;
-    // this. grup= apellidoP;
-    this.matri= matricula;
-    this.claveEs = claveEscuela;
-    this.miId = id;
-    this.setState(
-    {
-        isActive:!this.state.isActive
+  //Funciones de editado
+    handleEdit = (/*nombre, apellidoP,*/ matricula, claveEscuela, id) => {
+        console.log(matricula);
+        // this.grad = nombre;
+        // this. grup= apellidoP;
+        this.matri= matricula;
+        this.claveEs = claveEscuela;
+        this.miId = id;
+        this.setState(
+        {
+            isActive:!this.state.isActive
+        }
+        )
     }
-    )
-  }
-
    //evento al mandar los datos del formulario
    editar(e){
     e.preventDefault();
@@ -162,29 +197,77 @@ class ListAlumnos extends Component {
 
     Meteor.call('alumnos.update', this.miId, matricula1, claveEscuela1, (err, res) => {
       if (!err) {
-        alert("editado");
+        return(
+            toast.success('Editado!', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000
+            })
+        );
       } else {
-        alert("ocurrió un error al editar");
-        alert(err.reason);
-        console.log(err.reason);
+        return(
+            console.log(err.reason),
+            toast.error("ocurrió un error al editar", {
+                position: toast.POSITION.TOP_CENTER
+            })
+        );
       }
     });
     this.handleEdit();
   }
 
-  handleDelete = (eventId) => {
-    console.log(eventId);
-    Meteor.call('alumnos.remove', eventId, (err, res) => {
-        if (!err) {
-            // this.handleModalClose();
-            alert("eliminado!");
-        } else {
-            this.setState({error: ''});
-        }
-    });
+    //Funcion de eliminación
+    submit = (eventId) => {
+        confirmAlert({
+        title: 'Confirmación de Eliminación',
+        message: '¿Esta seguro que desea eliminar?.',
+        buttons: [
+            {
+            label: 'Yes',
+            onClick: () => this.handleDelete(eventId)
+            },
+            {
+            label: 'No',
+            onClick: () => alert('Click para cancelar!')
+            }
+        ]
+        })
+    };
+    handleDelete = (eventId) => {
+        console.log(eventId);
+        Meteor.call('alumnos.remove', eventId, (err, res) => {
+            if (!err) {
+                return(
+                    toast.info('🦄Eliminado!', {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 3000
+                    })
+                );
+            } else {
+                this.setState({error: ''});
+            }
+        });
+    }
+
+    //Funciones del select
+  getGrupos(){
+    const grup = [];
+    
+    this.props.grupos.map((grupo) => (
+        grup.push( {
+            value: grupo._id,
+            label: grupo.nombreGrupo,
+        })
+    ))
+    return grup; 
   }
 
-  render() {
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
+  }
+
+render() {
+    var misGrupos = this.getGrupos();
     return(
       <div>
           {
@@ -211,19 +294,19 @@ class ListAlumnos extends Component {
                   isOpen={this.state.isActive} 
                   onRequestClose={this.toggleModal}
                   contentLabel="Inline Styles Modal Example"
-              style={{
-                  overlay: {
-                      //position: absolute,
-                      top: 60,
-                      left: 250,
-                      right: 250,
-                      bottom: 40,
-                  },
-                  content: {
-                      color: 'purple'
-                  }
-                  }}
-              >
+                style={{
+                    overlay: {
+                        //position: absolute,
+                        top: 60,
+                        left: 250,
+                        right: 250,
+                        bottom: 40,
+                    },
+                    content: {
+                        color: 'purple'
+                    }
+                    }}
+                >
               <div >
                   <span className="anchor" id="formLogin"></span>
                   <div className="card rounded">
@@ -263,11 +346,26 @@ class ListAlumnos extends Component {
                                         <span className="input-group-text"><i className="fa fa-envelope">Clave Escuela</i></span>
                                         <input type="text" ref="claveEscuela" name="claveEscuela" className="form-control form-control rounded" defaultValue={this.claveEs}/>
                                     </div>                                         
-                                  </div>                                   
-                              </div>
-                              <div className="row-login">
+                                  </div> 
+                                  <Select
+                                    name="form-field-name"
+                                    value={selectedOption}
+                                    options={misGrupos}
+                                    onChange={this.handleChange}
+                                    styles={colourStyles}
+                                />                                
+                              </div> 
+                              <Select 
+                                    label="Single select" 
+                                    value={selectedOption}
+                                    options={misGrupos}
+                                    styles={colourStyles} 
+                                    onChange={this.handleChange}
+                                />
+                         
+                                <div className="row-login">
                                   <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Editar</button>
-                              </div>
+                                </div>
                           </form>
                       </div>
                       {/*<!--/card-block-->*/}
@@ -277,7 +375,20 @@ class ListAlumnos extends Component {
               </Modal>
           </section>
 
-      </div>
+            <ToastContainer
+                hideProgressBar={true}
+                newestOnTop={true}
+                autoClose={5000}
+            />
+
+            <Select
+                                    name="form-field-name"
+                                    value="one"
+                                    options={misGrupos}
+                                    onChange={this.handleChange}
+                                    styles={colourStyles}
+                                /> 
+        </div>
       );
   }
 }
@@ -286,9 +397,12 @@ export default withTracker(() => {
     id = Session.get('user')._id;
     console.log(id);
     Meteor.subscribe("alumnos", id);
-    // Meteor.subscribe("users", id);
-    console.log(Alumnos.findOne( { correo : "a@g.com" }));
+    Meteor.subscribe("grupos", id);
+
+    // console.log(Alumnos.findOne( { correo : "a@g.com" }));
     return {
-        events: Alumnos.find({}). fetch()        
+        events: Alumnos.find({}). fetch(),  
+        grupos: Grupos.find({}).fetch()   
+  
     }
 })(ListAlumnos);

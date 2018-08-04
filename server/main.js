@@ -34,6 +34,7 @@ Meteor.startup(() => {
 
         if (datos.profile)
             user.profile = datos.profile;
+
             return user;
     });
 

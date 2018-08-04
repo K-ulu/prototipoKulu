@@ -6,6 +6,10 @@ import Modal from 'react-modal';
 
 import ListGrupo from './components/ListGrupos';
 
+//Para las notificaciones!
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 class MaestroGrupos extends React.Component{
   constructor(){
     super()
@@ -41,11 +45,19 @@ class MaestroGrupos extends React.Component{
 
     Meteor.call('grupos.insert', nombreGrupo, grado, grupo, claveEscuela, (err, res) => {
       if (!err) {
-        alert("insertado");
+        return(
+          toast.success('Insertado!', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000
+          })
+        );
       } else {
-        alert("ocurrió un error al insertar");
-        alert(err.reason);
-        console.log(err.reason);
+        return(
+          console.log(err.reason),
+          toast.error("ocurrió un error al insertar", {
+              position: toast.POSITION.TOP_CENTER
+          })
+        );
       }
     });
     this.toggleModal();
@@ -195,6 +207,13 @@ class MaestroGrupos extends React.Component{
                 </div>
             </Modal>
       </section>
+
+      <ToastContainer
+          hideProgressBar={true}
+          newestOnTop={true}
+          autoClose={5000}
+      />
+
       </div>
   );
   }
