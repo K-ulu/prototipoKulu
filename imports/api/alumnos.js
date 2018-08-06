@@ -13,7 +13,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'alumnos.insert'(matricula, claveEscuela, correo, idDocente) {
+  'alumnos.insert'(matricula, claveEscuela, correo, idGrupo, idDocente) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -37,11 +37,12 @@ Meteor.methods({
       claveEscuela,
       userId: this.userId,
       correo,
+      idGrupo,
       idDocente
     });
   },
 
-  'alumnos.insert2'(nombre, apellidoP, matricula, claveEscuela, correo, userId) {
+  'alumnos.insert2'(nombre, apellidoP, matricula, claveEscuela, correo, idGrupo, userId) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -67,18 +68,19 @@ Meteor.methods({
       claveEscuela,
       userId,
       correo,
+      idGrupo,
       idDocente: this.userId
     });
   },
 
-  'alumnos.update'( miId, matricula,claveEscuela){
+  'alumnos.update'( miId, matricula,claveEscuela, idGrupo){
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     Alumnos.update({
       _id: miId
     }, {
-      $set: { matricula, claveEscuela}
+      $set: { matricula, claveEscuela, idGrupo}
     });
   },
   'alumnos.remove'(id) {

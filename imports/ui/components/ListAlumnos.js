@@ -18,212 +18,211 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Select from 'react-select';
 import {Grupos} from "../../api/grupos";
-
-const dot = (color = "#ccc") => ({
-    alignItems: "center",
-    display: "flex",
-  
-    ":before": {
-      backgroundColor: color,
-      borderRadius: 10,
-      content: " ",
-      display: "block",
-      marginRight: 8,
-      height: 10,
-      width: 10
-    }
-  });
-  
-  const colourStyles = {
-    control: styles => ({ ...styles, backgroundColor: "white" }),
-    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-      const color = chroma(data.color);
-      return {
-        ...styles,
-        backgroundColor: isDisabled
-          ? null
-          : isSelected
-            ? data.color
-            : isFocused
-              ? color.alpha(0.1).css()
-              : null,
-        color: isDisabled
-          ? "#ccc"
-          : isSelected
-            ? chroma.contrast(color, "white") > 2
-              ? "white"
-              : "black"
-            : data.color,
-        cursor: isDisabled ? "not-allowed" : "default"
-      };
-    },
-    input: styles => ({ ...styles, ...dot() }),
-    placeholder: styles => ({ ...styles, ...dot() }),
-    singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) })
-  };
-
-  
+ 
 const buttonStyle = {
-  margin: "10px 15px",
-  maxWidth: "120px"
+    margin: "10px 15px",
+    maxWidth: "120px"
 }
+
+const customStyles = {
+    option: (base, state) => ({
+      ...base,
+      borderBottom: '1px dotted pink',
+      color: state.isFullscreen ? 'red' : 'blue',
+      padding: 20,
+    }),
+    control: () => ({
+      // none of react-selects styles are passed to <View />
+      width: 200,
+    }),
+    singleValue: (base, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+  
+      return { ...base, opacity, transition };
+    }
+  }
 
 class ListAlumnos extends Component {
 
-  constructor(){
-    let miId, matri,claveEs, idDoc;
-    super()
-    this.state = {
-      isActive:false,
-      selectedOption: null,
+    constructor(){
+        let miId, matri,claveEs, idDoc, idGrupo;
+        super()
+        this.state = {
+            selectedOption: null,
+            isActive:false,
+        }      
+        this.editar = this.editar.bind(this);
     }
 
-    this.editar = this.editar.bind(this);
-  }
+    componentWillMount(){
+        Modal.setAppElement('body');
+    }
 
-  componentWillMount(){
-    Modal.setAppElement('body');
-  }
-
-  //Funciones de la tabla
-  getData(){
-    const data = [];
-    
-    this.props.events.map((event) => (
-        data.push( {
-            nombre: event.nombre,
-            apellidoP: event.apellidoP,
-            matricula: event.matricula,
-            claveEscuela: event.claveEscuela,
-            id: event._id,
-            idDocente: event.idDocente,
-        })
-    ))
-
-    return data;
-  }
-
-  getColumns(){
-    const columns = [{
-        Header: 'Nombre',
-        accessor: 'nombre', // String-based value accessors!
-        width: 130,
-        filterMethod: (filter, row) =>
-            row[filter.id].startsWith(filter.value)
-      }, {
-        Header: 'Apellido',
-        accessor: 'apellidoP',
-        width: 130,
-        filterMethod: (filter, row) =>
-            row[filter.id].startsWith(filter.value)
-      }, {
-        Header: 'Matricula', // Required because our accessor is not a string
-        accessor: 'matricula',
-        width: 130,
-        filterMethod: (filter, row) =>
-            row[filter.id].startsWith(filter.value)
-    }, {
-        Header: 'ClaveEscuela', // Custom header components!
-        accessor: 'claveEscuela',
-        width: 130,
-        filterMethod: (filter, row) =>
-            row[filter.id].startsWith(filter.value)
-      },
-      {
-        Header: 'Opciones', // Custom header components!
-        accessor: 'id',
-        maxWidth: 310,
-        filterMethod: (filter, rows) =>
-            matchSorter(rows, filter.value, { keys: ["id"] }),
-              
-            Cell: ({ original }) => {
-                return (
-                <div>
-                    <button
-                            className="btn btn-outline-warning col"
-                            data-toggle="modal"
-                            data-target="#myModal"
-                            type="button"
-                            style={buttonStyle}
-                            onClick={() => this.handleEdit(
-                                // original.nombre,
-                                // original.apellidoP,
-                                original.matricula,
-                                original.claveEscuela,
-                                original.id
-                            )}
-                        >
-                        Editar
-                        </button>
-
-                        <button
-                            className="btn btn-outline-danger col"
-                            style={buttonStyle}
-                            onClick={() => this.submit(original.id)}
-                        >
-                            Eliminar
-                        </button>   
-                    </div>
-                    
-                );
-            }
-
+    //Funciones de la tabla
+    getData(){
+        const data = [];
+        // console.log(Alumnos.find( { idGrupo: "MM-8Y987M"}).fetch());
+        console.log(this.props.seleccion);
+        const dataS = this.props.seleccion;
+        if (dataS == "todos" || dataS == null){
+            this.props.events.map((event) => (
+                data.push( {
+                    nombre: event.nombre,
+                    apellidoP: event.apellidoP,
+                    matricula: event.matricula,
+                    claveEscuela: event.claveEscuela,
+                    id: event._id,
+                    idDocente: event.idDocente,
+                    idGrupo: event.idGrupo
+                })
+            ))
         }
-    ]
+        else{
+            const xgrupo = Alumnos.find( { idGrupo: dataS}).fetch()
+            xgrupo.map((event) => (
+                data.push( {
+                    nombre: event.nombre,
+                    apellidoP: event.apellidoP,
+                    matricula: event.matricula,
+                    claveEscuela: event.claveEscuela,
+                    id: event._id,
+                    idDocente: event.idDocente,
+                    idGrupo: event.idGrupo
+                })
+            ))
+        }
+        
+        return data;
+    }
 
-    return columns;
-  }
+    getColumns(){
+        const columns = [{
+            Header: 'Nombre',
+            accessor: 'nombre', // String-based value accessors!
+            width: 130,
+            filterMethod: (filter, row) =>
+                row[filter.id].startsWith(filter.value)
+        }, {
+            Header: 'Apellido',
+            accessor: 'apellidoP',
+            width: 130,
+            filterMethod: (filter, row) =>
+                row[filter.id].startsWith(filter.value)
+        }, {
+            Header: 'Matricula', // Required because our accessor is not a string
+            accessor: 'matricula',
+            width: 130,
+            filterMethod: (filter, row) =>
+                row[filter.id].startsWith(filter.value)
+        }, {
+            Header: 'ClaveEscuela', // Custom header components!
+            accessor: 'claveEscuela',
+            width: 130,
+            filterMethod: (filter, row) =>
+                row[filter.id].startsWith(filter.value)
+        },{
+            Header: 'Grupo', // Custom header components!
+            accessor: 'idGrupo',
+            width: 130,
+            filterMethod: (filter, row) =>
+                row[filter.id].startsWith(filter.value)
+        },
+        {
+            Header: 'Opciones', // Custom header components!
+            accessor: 'id',
+            maxWidth: 320,
+            filterMethod: (filter, rows) =>
+                matchSorter(rows, filter.value, { keys: ["id"] }),
+                
+                Cell: ({ original }) => {
+                    return (
+                    <div className="row justify-content-between">
+                        <button
+                                className="btn btn-outline-warning col"
+                                data-toggle="modal"
+                                data-target="#myModal"
+                                type="button"
+                                style={buttonStyle}
+                                onClick={() => this.handleEdit(
+                                    // original.nombre,
+                                    // original.apellidoP,
+                                    original.matricula,
+                                    original.claveEscuela,
+                                    original.id,
+                                    original.idGrupo
+                                )}
+                            >
+                            Editar
+                            </button>
 
-  //Funciones de editado
-    handleEdit = (/*nombre, apellidoP,*/ matricula, claveEscuela, id) => {
-        console.log(matricula);
+                            <button
+                                className="btn btn-outline-danger col"
+                                style={buttonStyle}
+                                onClick={() => this.handleDelete(original.id)}
+                            >
+                                Eliminar
+                            </button>   
+                        </div>
+                        
+                    );
+                }
+
+            }
+        ]
+
+        return columns;
+    }
+
+    toggleModal = () =>{
+        this.setState(
+            {
+            isActive:!this.state.isActive
+            }
+        )
+    }
+
+    //Funciones de editado
+    handleEdit = (/*nombre, apellidoP,*/ matricula, claveEscuela, id, idGrupo) => {
+        console.log(idGrupo);
         // this.grad = nombre;
         // this. grup= apellidoP;
         this.matri= matricula;
         this.claveEs = claveEscuela;
         this.miId = id;
-        this.setState(
-        {
-            isActive:!this.state.isActive
+        if (idGrupo != null){
+            const grupo = Grupos.findOne( { _id: idGrupo});
+            console.log(grupo);
+            this.setState(
+                {
+                    selectedOption: {
+                        value: grupo._id,
+                        label: grupo.nombreGrupo,
+                    },
+                }
+            )
         }
-        )
+        this.toggleModal();
     }
    //evento al mandar los datos del formulario
-   editar(e){
-    e.preventDefault();
-    //verifica contraseña
-    let matricula1 = this.refs.matricula.value.trim();
-    let claveEscuela1 = this.refs.claveEscuela.value.trim();
-
-    Meteor.call('alumnos.update', this.miId, matricula1, claveEscuela1, (err, res) => {
-      if (!err) {
-        return(
-            toast.success('Editado!', {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 3000
-            })
-        );
-      } else {
-        return(
-            console.log(err.reason),
-            toast.error("ocurrió un error al editar", {
-                position: toast.POSITION.TOP_CENTER
-            })
-        );
-      }
-    });
-    this.handleEdit();
-  }
+    editar(e){
+        e.preventDefault();
+        //verifica contraseña
+        let matricula1 = this.refs.matricula.value.trim();
+        let claveEscuela1 = this.refs.claveEscuela.value.trim();
+        this.props.editar(e, this.miId, matricula1, claveEscuela1, this.idGrupo);
+        this.toggleModal();
+    }
 
     //Funcion de eliminación
-    submit = (eventId) => {
+    handleDelete = (eventId) => {
         confirmAlert({
         title: 'Confirmación de Eliminación',
         message: '¿Esta seguro que desea eliminar?.',
         buttons: [
             {
             label: 'Yes',
-            onClick: () => this.handleDelete(eventId)
+            onClick: () => this.eliminar(eventId)
             },
             {
             label: 'No',
@@ -232,7 +231,7 @@ class ListAlumnos extends Component {
         ]
         })
     };
-    handleDelete = (eventId) => {
+    eliminar = (eventId) => {
         console.log(eventId);
         Meteor.call('alumnos.remove', eventId, (err, res) => {
             if (!err) {
@@ -249,148 +248,138 @@ class ListAlumnos extends Component {
     }
 
     //Funciones del select
-  getGrupos(){
-    const grup = [];
+    getGrupos(){
+        const grup = [];
     
-    this.props.grupos.map((grupo) => (
-        grup.push( {
-            value: grupo._id,
-            label: grupo.nombreGrupo,
-        })
-    ))
-    return grup; 
-  }
+        this.props.grupos.map((grupo) => (
+            grup.push( {
+                value: grupo._id,
+                label: grupo.nombreGrupo,
+            })
+        ))
+        return grup; 
+    }
 
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
-  }
+    handleChange = (selectedOption) => {
+        this.setState({ selectedOption });
+        console.log(`Option selected:`, selectedOption);
+        if (selectedOption != null){
+            console.log(selectedOption.value);
+            this.idGrupo = selectedOption.value;
+        }
+        else{
+            this.idGrupo = null;
+        }
+    }
 
-render() {
-    var misGrupos = this.getGrupos();
-    return(
-      <div>
-          {
-          this.props.events.length ? 
-              <ReactTable
-                  data={this.getData()}
-                  
-                  filterable
-                  defaultFilterMethod={(filter, row) =>
-                  String(row[filter.id]) === filter.value}
+    render() {
+        var misGrupos = this.getGrupos();
+        const { selectedOption } = this.state;
 
-                  columns={this.getColumns()}
-                  defaultPageSize={5}
-                  className="-striped -highlight"
-                    maxWidth="800"
+        return(
+        <div>
+            {
+            this.props.events.length ? 
+                <ReactTable
+                    data={this.getData()}
+                    filterable
+                    defaultFilterMethod={(filter, row) =>
+                    String(row[filter.id]) === filter.value}
+
+                    columns={this.getColumns()}
+                    defaultPageSize={5}
+                    className="-striped -highlight"
+                        maxWidth="800"
                 />
-
-          :
+            :
               <div className="no-events text-center" style={{ padding: "100px 0" }}>NO TIENE ALUMNOS REGISTRADOS!!!</div>
-          }
+            }
 
-          <section className="row justify-content-center">
-              <Modal 
-                  isOpen={this.state.isActive} 
-                  onRequestClose={this.toggleModal}
-                  contentLabel="Inline Styles Modal Example"
-                style={{
-                    overlay: {
-                        //position: absolute,
-                        top: 60,
-                        left: 250,
-                        right: 250,
-                        bottom: 40,
-                    },
-                    content: {
-                        color: 'purple'
-                    }
-                    }}
-                >
-              <div >
-                  <span className="anchor" id="formLogin"></span>
-                  <div className="card rounded">
-                      <div className="card-header mt-2">
-                      <div className="row">
-                      <div className="col-14 col-sm-6">
-                          <h3 className="mb-0 text-center">Editar Grupo!</h3>
-                      </div>
-                      <div className="col-2 col-sm-2 float:right">
-                          <button onClick={this.handleEdit}>Cerrar!</button>
-                      </div>
-                      </div>
-                      </div>
-                      <div className="card-body mt-2">
-                          <form onSubmit={this.editar} className="form" role="form" autoComplete="off" id="formLogin">
-                              <div className="row">
-                                  {/* <div className="col-12 col-sm-6">
-                                  <div className="input-group-prepend">
-                                      <span className="input-group-text"><i className="fa fa-user-circle-o">Grado</i></span>
-                                      <input type="text" ref="nombre" name="nombre" className="form-control form-control rounded" defaultValue={this.nomb}/>
-                                  </div>                                          
-                                  </div>
-                                  <div className="col-12 col-sm-6">
-                                  <div className="input-group-prepend">
-                                      <span className="input-group-text"><i className="fa fa-user fa-fw">Grupo</i></span>
-                                      <input type="text" ref="apellidoP" name="apellidoP" className="form-control form-control rounded" defaultValue={this.apP}/>
-                                  </div>                                                                          
-                                  </div>   */}
-                                  <div className="col-12">                                        
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text"><i className="fa fa-envelope">Matricula</i></span>
-                                        <input type="text" ref="matricula" name="matricula" className="form-control form-control rounded" defaultValue={this.matri}/>
-                                    </div>                                         
-                                  </div>  
-                                  <div className="col-12">                                        
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text"><i className="fa fa-envelope">Clave Escuela</i></span>
-                                        <input type="text" ref="claveEscuela" name="claveEscuela" className="form-control form-control rounded" defaultValue={this.claveEs}/>
-                                    </div>                                         
-                                  </div> 
-                                  <Select
-                                    name="form-field-name"
-                                    value={selectedOption}
-                                    options={misGrupos}
-                                    onChange={this.handleChange}
-                                    styles={colourStyles}
-                                />                                
-                              </div> 
-                              <Select 
-                                    label="Single select" 
-                                    value={selectedOption}
-                                    options={misGrupos}
-                                    styles={colourStyles} 
-                                    onChange={this.handleChange}
-                                />
-                         
-                                <div className="row-login">
-                                  <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Editar</button>
+            <section className="row justify-content-center">
+                <Modal 
+                    isOpen={this.state.isActive} 
+                    onRequestClose={this.toggleModal}
+                    contentLabel="Inline Styles Modal Example"
+                    style={{
+                        overlay: {
+                            //position: absolute,
+                            top: 60,
+                            left: 250,
+                            right: 250,
+                            bottom: 40,
+                        },
+                        content: {
+                            color: 'purple'
+                        }
+                        }}
+                    >
+                    <div >
+                        <span className="anchor" id="formLogin"></span>
+                        <div className="card rounded">
+                            <div className="card-header mt-2">
+                                <div className="row">
+                                    <div className="col-14 col-sm-6">
+                                        <h3 className="mb-0 text-center">Editar Grupo!</h3>
+                                    </div>
+                                    <div className="col-2 col-sm-2 float:right">
+                                        <button onClick={this.toggleModal}>Cerrar!</button>
+                                    </div>
                                 </div>
-                          </form>
-                      </div>
-                      {/*<!--/card-block-->*/}
-                  </div>
-                  {/*<!-- /form card login -->*/}
-                  </div>
-              </Modal>
-          </section>
+                            </div>
+                            <div className="card-body mt-2">
+                                <form onSubmit={this.editar} className="form" role="form" autoComplete="off" id="formLogin">
+                                    <div className="row">
+                                        {/* <div className="col-12 col-sm-6">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text"><i className="fa fa-user-circle-o">Grado</i></span>
+                                            <input type="text" ref="nombre" name="nombre" className="form-control form-control rounded" defaultValue={this.nomb}/>
+                                        </div>                                          
+                                        </div>
+                                        <div className="col-12 col-sm-6">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text"><i className="fa fa-user fa-fw">Grupo</i></span>
+                                            <input type="text" ref="apellidoP" name="apellidoP" className="form-control form-control rounded" defaultValue={this.apP}/>
+                                        </div>                                                                          
+                                        </div>   */}
+                                        <div className="col-12">                                        
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text"><i className="fa fa-envelope">Matricula</i></span>
+                                                <input type="text" ref="matricula" name="matricula" className="form-control form-control rounded" defaultValue={this.matri}/>
+                                            </div>                                         
+                                        </div>  
+                                        <div className="col-12">                                        
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text"><i className="fa fa-envelope">Clave Escuela</i></span>
+                                                <input type="text" ref="claveEscuela" name="claveEscuela" className="form-control form-control rounded" defaultValue={this.claveEs}/>
+                                            </div>                                         
+                                        </div>  
+                                    </div> 
+                                    <Select
+                                        value={selectedOption}
+                                        onChange={this.handleChange}
+                                        options={misGrupos}
+                                        styles={customStyles}
+                                    />
+                                    <div className="row-login">
+                                        <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Editar</button>
+                                    </div>
+                                </form>
+                            </div>
+                            {/*<!--/card-block-->*/}
+                        </div>
+                        {/*<!-- /form card login -->*/}
+                    </div>
+                </Modal>
+            </section>
 
             <ToastContainer
                 hideProgressBar={true}
                 newestOnTop={true}
                 autoClose={5000}
             />
-
-            <Select
-                                    name="form-field-name"
-                                    value="one"
-                                    options={misGrupos}
-                                    onChange={this.handleChange}
-                                    styles={colourStyles}
-                                /> 
         </div>
       );
-  }
+    }
 }
 
 export default withTracker(() => {
@@ -399,10 +388,8 @@ export default withTracker(() => {
     Meteor.subscribe("alumnos", id);
     Meteor.subscribe("grupos", id);
 
-    // console.log(Alumnos.findOne( { correo : "a@g.com" }));
     return {
-        events: Alumnos.find({}). fetch(),  
+        events: Alumnos.find({}).fetch(),  
         grupos: Grupos.find({}).fetch()   
-  
     }
 })(ListAlumnos);
