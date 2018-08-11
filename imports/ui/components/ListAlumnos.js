@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Select from 'react-select';
 import {Grupos} from "../../api/grupos";
- 
+
 const buttonStyle = {
     margin: "10px 15px",
     maxWidth: "120px"
@@ -387,7 +387,7 @@ export default withTracker(() => {
     console.log(id);
     Meteor.subscribe("alumnos", id);
     Meteor.subscribe("grupos", id);
-
+    console.log("users", Meteor.users.find({}).fetch());
     return {
         events: Alumnos.find({}).fetch(),  
         grupos: Grupos.find({}).fetch()   
