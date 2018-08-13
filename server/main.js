@@ -21,7 +21,13 @@ import {UsuarioSAprendizaje} from '../imports/api/usuariosSesionAprendizaje.js';
 import {SesionesAprendizaje} from '../imports/api/sesionesAprendizaje.js';
 import {Estadisticas} from '../imports/api/estadisticas.js';
 import {UsuarioLobby} from '../imports/api/usuarioLobby.js';
-import {UserFiles} from '../imports/api/images.js';
+
+//Pruebas para verificar la imagen! ---caro---
+import {Images} from '../imports/api/images.js';//Images con publication
+//aqui usa ostrioFiles
+// import {UserFiles} from '../imports/api/userFiles.js';
+// import UserFiles2 from '../imports/api/filesCol.js';
+import '../imports/api/userFiles.js';
 
 import '../imports/api/links';
 import '../imports/api/users';

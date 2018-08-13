@@ -4,7 +4,6 @@ import {  BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //import {  Router, Route, Switch, Link, Redirect  } from 'react-router';
 //import createBrowserHistory from 'history/createBrowserHistory'
 //const history = createBrowserHistory();
-//hola no funcionó mi parte para guardar imagenes :c
 
 import { Tracker } from 'meteor/tracker';
 
@@ -16,12 +15,7 @@ import Business from '../ui/Business';
 import Contact from '../ui/Contact';
 import Support from '../ui/Support';
 import NotFound from '../ui/NotFound';
-import SaveImages from '../ui/SaveImages.js';
-import Images from '../ui/Imagenes.js';
-
-import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
-import MaestroElementos from '../ui/MaestroElementos';
 import MaestroElementosNuevo from '../ui/MaestroElementosNuevo';
 import UsuarioDashboard from '../ui/UsuarioDashboard';
 import Link from '../ui/Link';
@@ -31,11 +25,20 @@ import DashboardContainer from '../ui/DashboardContainer';
 
 import { withTracker } from 'meteor/react-meteor-data';
 
-//importacion de la clase maestroAlumnos
-import MaestroAlumnos from '../ui/MaestroAlumnos.js';
 
-let isAuthenticated, tipo;
+
+/*Caro:
+  importación de clases para probar la imagen! 
+  las que cree son:
+    userFiles, FileUpload.js, FileIndividualFile y filesColecction.
+*/
+import FileUploadComponent from '../ui/FileUpload';
+//Este archivo usa clases como gallery, publications, e images.js
+import Gallery from '../ui/gallery';
+
+let isAuthenticated;
 let user;
+
 Tracker.autorun(() => {
   isAuthenticated = !!Meteor.userId(); //doble negacion dice si la cadena esta vacia o no
   //onAuthChange(isAuthenticated);
@@ -81,8 +84,6 @@ export const routes = (
       <Route path="/support" component={()=>(<Support isAuthenticated={isAuthenticated}/>)}/>
       {/* No estoy segura de teachers */}
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
-      <Route path="/saveImages" component={()=>(<SaveImages/>)}/>   
-      <Route path="/imagenes" component={()=>(<Images/>)}/> 
       <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>    
       <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/> 
       <Route path="/dashboard/nueva-sesion" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>       
@@ -93,11 +94,17 @@ export const routes = (
       <Route path="/dashboard/biblioteca/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/biblioteca/objetos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/biblioteca/elementos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
-      <Route exact path="/dashboard/alumnos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroAlumnos"}/>)}/>  
-      <Route exact path="/dashboard/grupos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroGrupos"}/>)}/> 
+      <Route exact path="/dashboard/alumnos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} />)}/>  
+      <Route exact path="/dashboard/grupos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} />)}/> 
       <Route path="/dashboard/multimedia" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
-      
+
+      // pruebas para poder guardar una imagen! 
+      <Route path="/pruebas" component={ ()=>(<MaestroElementosNuevo isAuthenticated={isAuthenticated}/>)}/>      
+      //Hechas por caro.
+      <Route path="/saveImages" component={()=>(<FileUploadComponent/>)}/>   
+      <Route path="/imagenes" component={()=>(<Gallery/>)}/>   
+
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
   </Router>
