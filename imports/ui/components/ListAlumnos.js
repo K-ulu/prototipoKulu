@@ -1,8 +1,11 @@
+/*
+    Puede editar el nombre y apellido del alumno?, que tal del correo tambien?
+    que tal si se olvido e ingreso mal el correo
+*/
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Alumnos } from "../../api/alumnos";
 import { Session } from 'meteor/session';
-
 import ReactTable from 'react-table'
 import "react-table/react-table.css";
 import Modal from 'react-modal';
@@ -46,7 +49,7 @@ const customStyles = {
 class ListAlumnos extends Component {
 
     constructor(){
-        let miId, matri,claveEs, idDoc, idGrupo;
+        let miId, matri,claveEs, idDoc, idGrupo, nomb, apeP, miCorreo;
         super()
         this.state = {
             selectedOption: null,
@@ -62,34 +65,54 @@ class ListAlumnos extends Component {
     //Funciones de la tabla
     getData(){
         const data = [];
-        // console.log(Alumnos.find( { idGrupo: "MM-8Y987M"}).fetch());
-        console.log(this.props.seleccion);
-        const dataS = this.props.seleccion;
+        let correo, userAlumno;
+        let correos;
+        const dataS = this.props.seleccion;		
+
         if (dataS == "todos" || dataS == null){
+            
             this.props.events.map((event) => (
-                data.push( {
-                    nombre: event.nombre,
-                    apellidoP: event.apellidoP,
-                    matricula: event.matricula,
-                    claveEscuela: event.claveEscuela,
-                    id: event._id,
-                    idDocente: event.idDocente,
-                    idGrupo: event.idGrupo
-                })
+                correo = event.correo,
+                correos = [{address: correo, verified:false}],
+
+                //Verifica que los alumnos registrados tengan correos en la coleccion users
+                userAlumno = Meteor.users.findOne({ emails: correos }), // will return all users
+                (userAlumno != undefined) ? 
+                    data.push( {
+                        nombre: event.userId,
+                        apellidoP: event.userId,
+                        matricula: event.matricula,
+                        claveEscuela: event.claveEscuela,
+                        id: event._id,
+                        idDocente: event.idDocente,
+                        idGrupo: event.idGrupo,
+                        correo: event.correo,
+                        registrado: event.estatus,
+                    })                
+                : console.log("undefinido")                
             ))
         }
         else{
-            const xgrupo = Alumnos.find( { idGrupo: dataS}).fetch()
+            const xgrupo = Alumnos.find( { idGrupo: dataS}).fetch();
             xgrupo.map((event) => (
-                data.push( {
-                    nombre: event.nombre,
-                    apellidoP: event.apellidoP,
-                    matricula: event.matricula,
-                    claveEscuela: event.claveEscuela,
-                    id: event._id,
-                    idDocente: event.idDocente,
-                    idGrupo: event.idGrupo
-                })
+                correo = event.correo,
+                correos = [{address: correo, verified:false}],
+                //Verifica que los alumnos registrados tengan correos en la coleccion users
+                userAlumno = Meteor.users.findOne({ emails: correos }), // will return all users
+
+                (userAlumno != undefined) ? 
+                    data.push( {
+                        nombre: event.userId,
+                        apellidoP: event.userId,
+                        matricula: event.matricula,
+                        claveEscuela: event.claveEscuela,
+                        id: event._id,
+                        idDocente: event.idDocente,
+                        idGrupo: event.idGrupo,
+                        correo: event.correo,
+                        registrado: event.estatus,
+                    })                
+                : console.log("undefinido")  
             ))
         }
         
@@ -97,22 +120,42 @@ class ListAlumnos extends Component {
     }
 
     getColumns(){
+        let xnombreG, xnombreA, correos;
         const columns = [{
             Header: 'Nombre',
             accessor: 'nombre', // String-based value accessors!
-            width: 130,
+            maxwidth: 120,
             filterMethod: (filter, row) =>
-                row[filter.id].startsWith(filter.value)
+                row[filter.id].startsWith(filter.value),
+            Cell: ({ original }) => {
+                correos = [{address: original.correo, verified:false}],
+                xnombreA =  Meteor.users.findOne({ emails:  correos }); // will return all users
+                return (
+                <div>
+                    {xnombreA.profile.nombre}
+                </div>
+                    
+            );}
+
         }, {
             Header: 'Apellido',
             accessor: 'apellidoP',
-            width: 130,
+            maxwidth: 120,
             filterMethod: (filter, row) =>
-                row[filter.id].startsWith(filter.value)
+                row[filter.id].startsWith(filter.value),
+            Cell: ({ original }) => {
+                correos = [{address: original.correo, verified:false}],
+                xnombreA =  Meteor.users.findOne({ emails:  correos }); // will return all users
+                return (
+                <div>
+                    {xnombreA.profile.apellidoP}
+                </div>
+                    
+            );}
         }, {
             Header: 'Matricula', // Required because our accessor is not a string
             accessor: 'matricula',
-            width: 130,
+            maxwidth: 120,
             filterMethod: (filter, row) =>
                 row[filter.id].startsWith(filter.value)
         }, {
@@ -124,11 +167,40 @@ class ListAlumnos extends Component {
         },{
             Header: 'Grupo', // Custom header components!
             accessor: 'idGrupo',
-            width: 130,
+            maxwidth: 120,
+            filterMethod: (filter, row) =>
+                row[filter.id].startsWith(filter.value),
+
+            Cell: ({ original }) => {
+                if (original.idGrupo != null) {
+                    console.log(original.idGrupo);
+                    xnombreG = Grupos.findOne({_id: original.idGrupo});
+                    console.log(xnombreG);
+                    return (
+                        <div>
+                            {xnombreG.nombreGrupo}
+                        </div>
+                    );
+                }
+                else{
+                    return (
+                        <div></div>
+                    );
+                } 
+            }
+        }, {
+            Header: 'Correo', // Custom header components!
+            accessor: 'correo',
+            maxwidth: 120,
             filterMethod: (filter, row) =>
                 row[filter.id].startsWith(filter.value)
-        },
-        {
+        }, {
+            Header: 'Estado', // Custom header components!
+            accessor: 'registrado',
+            maxwidth: 100,
+            filterMethod: (filter, row) =>
+                row[filter.id].startsWith(filter.value)
+        },{
             Header: 'Opciones', // Custom header components!
             accessor: 'id',
             maxWidth: 320,
@@ -145,8 +217,7 @@ class ListAlumnos extends Component {
                                 type="button"
                                 style={buttonStyle}
                                 onClick={() => this.handleEdit(
-                                    // original.nombre,
-                                    // original.apellidoP,
+                                    original.correo,
                                     original.matricula,
                                     original.claveEscuela,
                                     original.id,
@@ -183,16 +254,17 @@ class ListAlumnos extends Component {
     }
 
     //Funciones de editado
-    handleEdit = (/*nombre, apellidoP,*/ matricula, claveEscuela, id, idGrupo) => {
-        console.log(idGrupo);
-        // this.grad = nombre;
-        // this. grup= apellidoP;
+    handleEdit = (correo, matricula, claveEscuela, id, idGrupo) => {
+        let correos = [{address: correo, verified:false}];
+        let usuario =  Meteor.users.findOne({ emails:  correos }); // will return all users
+        this.miCorreo = correo;
+        this.nomb = usuario.profile.nombre;
+        this.apeP= usuario.profile.apellidoP;
         this.matri= matricula;
         this.claveEs = claveEscuela;
         this.miId = id;
         if (idGrupo != null){
             const grupo = Grupos.findOne( { _id: idGrupo});
-            console.log(grupo);
             this.setState(
                 {
                     selectedOption: {
@@ -207,10 +279,13 @@ class ListAlumnos extends Component {
    //evento al mandar los datos del formulario
     editar(e){
         e.preventDefault();
-        //verifica contraseña
+        let grupo = this.state.selectedOption.value;
+        let nombreU = this.refs.nombre.value.trim();
+        let apePU = this.refs.apellidoP.value.trim();
         let matricula1 = this.refs.matricula.value.trim();
         let claveEscuela1 = this.refs.claveEscuela.value.trim();
-        this.props.editar(e, this.miId, matricula1, claveEscuela1, this.idGrupo);
+        let correo = this.refs.correo.value.trim();
+        this.props.editar(e,nombreU, apePU, correo, this.miId, matricula1, claveEscuela1, grupo);
         this.toggleModal();
     }
 
@@ -232,7 +307,6 @@ class ListAlumnos extends Component {
         })
     };
     eliminar = (eventId) => {
-        console.log(eventId);
         Meteor.call('alumnos.remove', eventId, (err, res) => {
             if (!err) {
                 return(
@@ -262,9 +336,7 @@ class ListAlumnos extends Component {
 
     handleChange = (selectedOption) => {
         this.setState({ selectedOption });
-        console.log(`Option selected:`, selectedOption);
         if (selectedOption != null){
-            console.log(selectedOption.value);
             this.idGrupo = selectedOption.value;
         }
         else{
@@ -329,18 +401,24 @@ class ListAlumnos extends Component {
                             <div className="card-body mt-2">
                                 <form onSubmit={this.editar} className="form" role="form" autoComplete="off" id="formLogin">
                                     <div className="row">
-                                        {/* <div className="col-12 col-sm-6">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"><i className="fa fa-user-circle-o">Grado</i></span>
-                                            <input type="text" ref="nombre" name="nombre" className="form-control form-control rounded" defaultValue={this.nomb}/>
-                                        </div>                                          
+                                        <div className="col-12 col-sm-6">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text"><i className="fa fa-user-circle-o">email</i></span>
+                                                <input type="email" ref="correo" name="correo" className="form-control form-control rounded" defaultValue={this.miCorreo}/>
+                                            </div>                                          
                                         </div>
                                         <div className="col-12 col-sm-6">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"><i className="fa fa-user fa-fw">Grupo</i></span>
-                                            <input type="text" ref="apellidoP" name="apellidoP" className="form-control form-control rounded" defaultValue={this.apP}/>
-                                        </div>                                                                          
-                                        </div>   */}
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text"><i className="fa fa-user fa-fw">Nombre</i></span>
+                                                <input type="text" ref="nombre" name="nombre" className="form-control form-control rounded" defaultValue={this.nomb}/>
+                                            </div>                                                                          
+                                        </div>  
+                                        <div className="col-12">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text"><i className="fa fa-user fa-fw">Apellido</i></span>
+                                                <input type="text" ref="apellidoP" name="apellidoP" className="form-control form-control rounded" defaultValue={this.apeP}/>
+                                            </div>                                                                          
+                                        </div> 
                                         <div className="col-12">                                        
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text"><i className="fa fa-envelope">Matricula</i></span>
@@ -384,12 +462,12 @@ class ListAlumnos extends Component {
 
 export default withTracker(() => {
     id = Session.get('user')._id;
-    console.log(id);
     Meteor.subscribe("alumnos", id);
+    console.log(Alumnos.find({}).fetch());
     Meteor.subscribe("grupos", id);
-    console.log("users", Meteor.users.find({}).fetch());
+    Meteor.subscribe('allUsers');	
     return {
-        events: Alumnos.find({}).fetch(),  
-        grupos: Grupos.find({}).fetch()   
+        events: Alumnos.find({idDocente: id}).fetch(),  
+        grupos: Grupos.find({}).fetch(),
     }
 })(ListAlumnos);

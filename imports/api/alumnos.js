@@ -10,10 +10,14 @@ if (Meteor.isServer) {
   Meteor.publish('alumnos', function () {
     return Alumnos.find({ idDocente: this.userId });
   });
+
+  Meteor.publish('allAlumnos', function () {
+    return Alumnos.find({});
+  });
 }
 
 Meteor.methods({
-  'alumnos.insert'(matricula, claveEscuela, correo, idGrupo, idDocente) {
+  'alumnos.insert'(matricula, claveEscuela, correo, estatus, idGrupo, idDocente) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -38,11 +42,12 @@ Meteor.methods({
       userId: this.userId,
       correo,
       idGrupo,
+      estatus,
       idDocente
     });
   },
 
-  'alumnos.insert2'(nombre, apellidoP, matricula, claveEscuela, correo, idGrupo, userId) {
+  'alumnos.insert2'(/*nombre, apellidoP,*/ matricula, claveEscuela, correo, idGrupo, estatus, userId) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -62,27 +67,40 @@ Meteor.methods({
   
     Alumnos.insert({
       _id: shortid.generate(),
-      nombre,
-      apellidoP,
       matricula,
       claveEscuela,
       userId,
       correo,
       idGrupo,
+      estatus,
       idDocente: this.userId
     });
   },
 
-  'alumnos.update'( miId, matricula,claveEscuela, idGrupo){
+  //El docente puede editar los correos de sus alumnos en caso de que se haya equivocado y no concuerde
+  'alumnos.update'( miId, matricula,claveEscuela, idGrupo, correo, idDocente){
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     Alumnos.update({
       _id: miId
     }, {
-      $set: { matricula, claveEscuela, idGrupo}
+      $set: { matricula, claveEscuela, idGrupo, correo, idDocente }
     });
   },
+
+  'alumnos.updateStatus'( miId, estatus){
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+    Alumnos.update({
+      _id: miId
+    }, {
+      $set: { estatus }
+    });
+
+  },
+
   'alumnos.remove'(id) {
     check(id, String);
  

@@ -21,6 +21,13 @@ import Modal from 'react-modal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import {Alumnos} from "../api/alumnos";
+
+Tracker.autorun(() => {
+  Meteor.subscribe('allAlumnos');
+  console.log(Alumnos.find({}).fetch());
+});
+
 class MaestroAlumnos extends React.Component { 
   constructor(){
     super()
@@ -49,31 +56,101 @@ class MaestroAlumnos extends React.Component {
   insertar(e, nombre, apellidoP, matricula, claveEscuela, email, grupo){
     e.preventDefault();  
 
-    Meteor.call('alumnos.insert2', nombre, apellidoP, matricula, claveEscuela, email, grupo, (err, res) => {
-      if (!err) {
-        return(
-          toast.success('Insertado!', {
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 3000
-          })
-        );
-      } else {
-        return(
-          console.log(err.reason),
-          toast.error("ocurrió un error al insertar", {
-              position: toast.POSITION.TOP_CENTER
-          })
-        );
-      }
-    });
+    let correos = [{address: email, verified:false}];
+    console.log(correos);
+
+    //Verifica que los alumnos registrados tengan correos en la coleccion users
+    let userAlumno = Meteor.users.findOne({ emails: correos }); // will return all users
+    console.log(userAlumno);
+
+    if (userAlumno == undefined){
+      Meteor.call('users.insert', email, nombre, apellidoP, (err, res) => {
+        if (!err) {
+          console.log("usuario registrado");
+        } else {
+            console.log(err.reason)
+        }
+      });
+
+      Meteor.call('alumnos.insert2', matricula, claveEscuela, email, grupo, "no registrado", (err, res) => {
+        if (!err) {
+          return(
+            toast.success('Insertado!', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000
+            })
+          );
+        } else {
+          return(
+            console.log(err.reason),
+            toast.error("ocurrió un error al insertar", {
+                position: toast.POSITION.TOP_CENTER
+            })
+          );
+        }
+      });
+
+    }
+    else{
+      Meteor.call('users.update', email, nombre, apellidoP,  (err, res) => {
+        if (!err) {
+          console.log("editado en usuarios");
+        } else {
+          console.log(err.reason);
+        }
+      });
+
+      let idDocente = Session.get('user')._id;
+      console.log(email);
+      let myID = Alumnos.findOne({correo: email});
+      console.log(myID);
+      Meteor.call('alumnos.update', myID._id, matricula, claveEscuela, grupo, email, "no registrado", idDocente, (err, res) => {
+        if (!err) {
+          return(
+            toast.success('Insertado!', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000
+            })
+          );
+        } else {
+          return(
+            console.log(err.reason),
+            toast.error("ocurrió un error al insertar", {
+                position: toast.POSITION.TOP_CENTER
+            })
+          );
+        }
+      });
+
+      Meteor.call('alumnos.updateStatus', myID._id, "registrado", (err, res) => {
+        if (!err) {
+          // this.handleModalClose();
+        } else {
+          // this.setState({ error: err.reason });
+          console.log(err.reason);
+        }
+      });
+    }
+
     this.toggleModal();
   }
 
   //evento al mandar los datos del formulario
-  editar(e, miId, matricula1, claveEscuela1, idGrupo){
+  editar(e,nombreU, apellidoPU, correo, miId, matricula1, claveEscuela1, idGrupo){
     e.preventDefault();
 
-    Meteor.call('alumnos.update', miId, matricula1, claveEscuela1, idGrupo,  (err, res) => {
+    console.log(nombreU, apellidoPU, correo);
+    
+    Meteor.call('users.update', correo, nombreU, apellidoPU,  (err, res) => {
+      if (!err) {
+        console.log("editado en usuarios");
+      } else {
+        console.log(err.reason);
+      }
+    });
+  
+    let idDocente = Session.get('user')._id;
+    Meteor.call('alumnos.update', miId, matricula1, claveEscuela1, idGrupo, correo, idDocente, (err, res) => {
         if (!err) {
             return(
                 toast.success('Editado!', {
@@ -96,7 +173,6 @@ class MaestroAlumnos extends React.Component {
     this.setState({
       opcionSelectP: data
     });
-    console.log(this.state.opcionSelectP);
   }
 
   render () {    
