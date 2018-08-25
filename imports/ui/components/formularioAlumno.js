@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
 import Select from 'react-select';
 import {Grupos} from "../../api/grupos";
+import {Alumnos} from "../../api/alumnos";
 import { withTracker } from 'meteor/react-meteor-data';
 
 const customStyles = {
@@ -49,7 +50,17 @@ class FormularioAlumno extends React.Component {
 
     console.log(this.idGrupo);
 
-    this.props.insertar(e, nombre, apellidoP, matricula, claveEscuela, email, this.idGrupo);
+    let correos = [{address: email, verified:false}];//realizamos un arreglo para la busqueda del alumno
+    console.log(correos);
+
+    //Verifica que los alumnos registrados tengan correos en la coleccion users
+    let userAlumno = Meteor.users.findOne({ emails: correos }); // will return all users
+    console.log(userAlumno);
+
+    let alumnoExiste = Alumnos.findOne({correo: email});//verificamos que el alumno exista
+    console.log(alumnoExiste);
+
+    this.props.insertar(e, nombre, apellidoP, matricula, claveEscuela, email, this.idGrupo, userAlumno, alumnoExiste);
   }
 
   //Funciones del select
@@ -67,8 +78,6 @@ class FormularioAlumno extends React.Component {
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
-    console.log(selectedOption.value);
     this.idGrupo = selectedOption.value;
   }
 
@@ -126,8 +135,9 @@ class FormularioAlumno extends React.Component {
 
 export default withTracker(() => {
   id = Session.get('user')._id;
-  console.log(id);
-  Meteor.subscribe("grupos", id);
+  // console.log(id);
+  Meteor.subscribe("grupos", id); //suscripcion a users
+  Meteor.subscribe('allUsers'); //suscripcion a usuarios
 
   return {
       grupos: Grupos.find({}).fetch()   

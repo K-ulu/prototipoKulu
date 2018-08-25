@@ -8,10 +8,6 @@ export const Alumnos = new Mongo.Collection('alumnos');
 
 if (Meteor.isServer) {
   Meteor.publish('alumnos', function () {
-    return Alumnos.find({ idDocente: this.userId });
-  });
-
-  Meteor.publish('allAlumnos', function () {
     return Alumnos.find({});
   });
 }

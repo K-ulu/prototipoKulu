@@ -57,13 +57,13 @@ class SelectPrincipal extends Component {
     }
 
     seleccion = (opcion) => {
-        console.log(opcion);
+        // console.log(opcion);
         this.setState({
             opcionSeleccionada: opcion,
         });
 
         this.props.handlerFromParant(opcion.value);
-        console.log("hi2", opcion.value);
+        // console.log("hi2", opcion.value);
     }
 
     render() {
@@ -83,10 +83,10 @@ class SelectPrincipal extends Component {
 
 export default withTracker(() => {
     id = Session.get('user')._id;
-    console.log(id);
+    // console.log(id);
     Meteor.subscribe("grupos", id);
 
     return {
-        grupos: Grupos.find({}).fetch()   
+        grupos: Grupos.find({claveDocente: id}).fetch()   
     }
 })(SelectPrincipal);

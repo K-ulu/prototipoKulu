@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Grupos } from "../../api/grupos";
+import { Grupos } from "../../api/grupos.js";
 import { Session } from 'meteor/session';
 
 import ReactTable from 'react-table'
@@ -217,7 +217,7 @@ class ListGrupo extends Component {
                 />
 
             :
-                <div className="no-events text-center" style={{ padding: "100px 0" }}>NO TIENE ALUMNOS REGISTRADOS!!!</div>
+                <div className="no-events text-center" style={{ padding: "100px 0" }}>NO TIENE GRUPOS REGISTRADOS!!!</div>
             }
 
             <section className="row justify-content-center">
@@ -303,9 +303,10 @@ class ListGrupo extends Component {
 
     export default withTracker(() => {
         id = Session.get('user')._id;
-        console.log(id);
         Meteor.subscribe("grupos", id);
+
         return {
             events: Grupos.find({}). fetch()
         }
+
     })(ListGrupo);

@@ -21,6 +21,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Select from 'react-select';
 import {Grupos} from "../../api/grupos";
+// import MaestroAlumnos from '../MaestroAlumnos';
 
 const buttonStyle = {
     margin: "10px 15px",
@@ -70,17 +71,15 @@ class ListAlumnos extends Component {
         const dataS = this.props.seleccion;		
 
         if (dataS == "todos" || dataS == null){
-            
             this.props.events.map((event) => (
                 correo = event.correo,
                 correos = [{address: correo, verified:false}],
-
                 //Verifica que los alumnos registrados tengan correos en la coleccion users
-                userAlumno = Meteor.users.findOne({ emails: correos }), // will return all users
+                userAlumno = Meteor.users.findOne({ emails: correos }), // will return one user
                 (userAlumno != undefined) ? 
                     data.push( {
-                        nombre: event.userId,
-                        apellidoP: event.userId,
+                        nombre: userAlumno.profile.nombre,
+                        apellidoP: userAlumno.profile.apellidoP,
                         matricula: event.matricula,
                         claveEscuela: event.claveEscuela,
                         id: event._id,
@@ -93,17 +92,17 @@ class ListAlumnos extends Component {
             ))
         }
         else{
-            const xgrupo = Alumnos.find( { idGrupo: dataS}).fetch();
+            const xgrupo = Alumnos.find( { idGrupo: dataS}).fetch(); //will return one alumno
             xgrupo.map((event) => (
                 correo = event.correo,
                 correos = [{address: correo, verified:false}],
                 //Verifica que los alumnos registrados tengan correos en la coleccion users
-                userAlumno = Meteor.users.findOne({ emails: correos }), // will return all users
+                userAlumno = Meteor.users.findOne({ emails: correos }), // will return one user
 
                 (userAlumno != undefined) ? 
                     data.push( {
-                        nombre: event.userId,
-                        apellidoP: event.userId,
+                        nombre: userAlumno.profile.nombre,
+                        apellidoP: userAlumno.profile.apellidoP,
                         matricula: event.matricula,
                         claveEscuela: event.claveEscuela,
                         id: event._id,
@@ -115,43 +114,27 @@ class ListAlumnos extends Component {
                 : console.log("undefinido")  
             ))
         }
-        
+
         return data;
     }
 
     getColumns(){
-        let xnombreG, xnombreA, correos;
+
+        // Meteor.subscribe('allUsers');	
+
+        let xnombreG;
         const columns = [{
             Header: 'Nombre',
             accessor: 'nombre', // String-based value accessors!
             maxwidth: 120,
             filterMethod: (filter, row) =>
-                row[filter.id].startsWith(filter.value),
-            Cell: ({ original }) => {
-                correos = [{address: original.correo, verified:false}],
-                xnombreA =  Meteor.users.findOne({ emails:  correos }); // will return all users
-                return (
-                <div>
-                    {xnombreA.profile.nombre}
-                </div>
-                    
-            );}
-
+                row[filter.id].startsWith(filter.value)
         }, {
             Header: 'Apellido',
             accessor: 'apellidoP',
             maxwidth: 120,
             filterMethod: (filter, row) =>
-                row[filter.id].startsWith(filter.value),
-            Cell: ({ original }) => {
-                correos = [{address: original.correo, verified:false}],
-                xnombreA =  Meteor.users.findOne({ emails:  correos }); // will return all users
-                return (
-                <div>
-                    {xnombreA.profile.apellidoP}
-                </div>
-                    
-            );}
+                row[filter.id].startsWith(filter.value)
         }, {
             Header: 'Matricula', // Required because our accessor is not a string
             accessor: 'matricula',
@@ -173,14 +156,15 @@ class ListAlumnos extends Component {
 
             Cell: ({ original }) => {
                 if (original.idGrupo != null) {
-                    console.log(original.idGrupo);
                     xnombreG = Grupos.findOne({_id: original.idGrupo});
-                    console.log(xnombreG);
-                    return (
-                        <div>
-                            {xnombreG.nombreGrupo}
-                        </div>
-                    );
+                    if (xnombreG != null){
+                        return (
+                            <div>
+                                {xnombreG.nombreGrupo}
+                            </div>
+                        );
+                    }
+                    return (<div></div>);
                 }
                 else{
                     return (
@@ -306,6 +290,7 @@ class ListAlumnos extends Component {
         ]
         })
     };
+
     eliminar = (eventId) => {
         Meteor.call('alumnos.remove', eventId, (err, res) => {
             if (!err) {
@@ -462,12 +447,15 @@ class ListAlumnos extends Component {
 
 export default withTracker(() => {
     id = Session.get('user')._id;
-    Meteor.subscribe("alumnos", id);
-    console.log(Alumnos.find({}).fetch());
-    Meteor.subscribe("grupos", id);
-    Meteor.subscribe('allUsers');	
+
+    Meteor.subscribe("grupos", id);//suscripcion a grupos
+    Meteor.subscribe("alumnos");//suscripcion a alumnos
+    Meteor.subscribe('allUsers'); //suscripcion a usuarios
+
+    // console.log(Meteor.users.find({}).fetch());
     return {
         events: Alumnos.find({idDocente: id}).fetch(),  
         grupos: Grupos.find({}).fetch(),
+        usuarios: Meteor.users.find({}).fetch()
     }
 })(ListAlumnos);

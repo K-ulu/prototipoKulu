@@ -12,7 +12,7 @@ import { Alumnos } from "../api/alumnos";
 
 Tracker.autorun(() => {
   Meteor.subscribe('allUsers');	
-  Meteor.subscribe('allAlumnos');
+  Meteor.subscribe('alumnos');
 });
 
 class Signup extends React.Component {
