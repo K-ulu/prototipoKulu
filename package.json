@@ -28,6 +28,7 @@
     "react-confirm-alert": "^2.0.5",
     "react-dom": "^16.4.2",
     "react-dropzone": "^4.3.0",
+    "react-dropzone-component": "^3.2.0",
     "react-modal": "^3.5.1",
     "react-native": "^0.56.0",
     "react-native-awesome-alerts": "^1.0.8",
@@ -44,6 +45,7 @@
     "reactstrap": "^6.3.1",
     "semantic-ui-react": "^0.82.1",
     "shortid": "^2.2.12",
-    "simpl-schema": "^1.5.3"
+    "simpl-schema": "^1.5.3",
+    "superagent": "^3.8.3"
   }
 }

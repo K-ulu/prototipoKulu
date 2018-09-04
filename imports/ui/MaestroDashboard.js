@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 
 import ContenidoPrincipal from './components/ContenidoPrincipal';
-import ContenidoMultimedia from './components/ContenidoMultimedia';
+import ContenidoMultimedia from './ContenidoMultimedia';
 import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
 import MaestroAlumnos from './MaestroAlumnos';
@@ -27,7 +27,7 @@ class MaestroDashboard extends React.Component {
       contenido = <MaestroAlumnos/>
     } else if(pathname == '/dashboard/grupos' || pathname == '/dashboard/grupos/'){
       contenido = <MaestroGrupos/>
-    }
+    } 
 
     return (
       <div id="main" className="enlarged">  

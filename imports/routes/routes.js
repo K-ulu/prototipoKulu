@@ -16,7 +16,6 @@ import Contact from '../ui/Contact';
 import Support from '../ui/Support';
 import NotFound from '../ui/NotFound';
 import MaestroDashboard from '../ui/MaestroDashboard';
-import MaestroElementosNuevo from '../ui/MaestroElementosNuevo';
 import UsuarioDashboard from '../ui/UsuarioDashboard';
 import Link from '../ui/Link';
 import Chat from '../ui/Chat';
@@ -24,17 +23,6 @@ import Chat from '../ui/Chat';
 import DashboardContainer from '../ui/DashboardContainer';
 
 import { withTracker } from 'meteor/react-meteor-data';
-
-
-
-/*Caro:
-  importación de clases para probar la imagen! 
-  las que cree son:
-    userFiles, FileUpload.js, FileIndividualFile y filesColecction.
-*/
-import FileUploadComponent from '../ui/FileUpload';
-//Este archivo usa clases como gallery, publications, e images.js
-import Gallery from '../ui/gallery';
 
 let isAuthenticated;
 let user;
@@ -98,12 +86,6 @@ export const routes = (
       <Route exact path="/dashboard/grupos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} />)}/> 
       <Route path="/dashboard/multimedia" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
-
-      // pruebas para poder guardar una imagen! 
-      <Route path="/pruebas" component={ ()=>(<MaestroElementosNuevo isAuthenticated={isAuthenticated}/>)}/>      
-      //Hechas por caro.
-      <Route path="/saveImages" component={()=>(<FileUploadComponent/>)}/>   
-      <Route path="/imagenes" component={()=>(<Gallery/>)}/>   
 
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
