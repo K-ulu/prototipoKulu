@@ -1,7 +1,10 @@
 import { FilesCollection } from 'meteor/ostrio:files';
 
 const UserFiles = new FilesCollection({
-  storagePath: 'assets/app/uploads/UserFiles',
+  storagePath: '/data/assets/app/uploads/UserFiles',
+  // storagePath: () => {
+  //   return '${process.env.PWD}/UserFiles';
+  // },
   downloadRoute: '/files/UserFiles',
   collectionName: 'UserFiles',
   permissions: 0o755,
