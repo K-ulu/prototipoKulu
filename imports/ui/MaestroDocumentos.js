@@ -1,14 +1,14 @@
 
 /*Caro:
-  Este archivo trabaja con FileUpload el cual muestra la lista de las imagenes subidas y usa maestro ElementosNuevos 
+  Este archivo trabaja con documentoUpload el cual muestra la lista de las imagenes subidas y usa MaestroDocumentoNuevo 
   el cual guarda un archivo nuevo
 */
 
 import React from 'react'
-import FileUploadComponent from '../ui/FileUpload';
-import MaestroElementosNuevo from '../ui/MaestroElementosNuevo';
+import DocumentoUploadComponent from '../ui/documentoUpload';
+import MaestrosDocumentoNuevo from '../ui/MaestroDocumentoNuevo';
 
-export default class ContenidoMultimedia extends React.Component {
+export default class MaestroDocumentos extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -36,7 +36,7 @@ export default class ContenidoMultimedia extends React.Component {
                   {/*title*/}
                   <div className="row justify-content-center">
                     <div className="col-6">
-                      <h1>Mi contenido multimedia</h1>
+                      <h1>Mis Documentos</h1>
                     </div>     
                   </div>
 
@@ -51,7 +51,7 @@ export default class ContenidoMultimedia extends React.Component {
                           <button  type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
                           <button  type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
                         </div> 
-                        {this.state.showComponent ? <MaestroElementosNuevo nuevo={this.nuevo} /> : null}
+                        {this.state.showComponent ? <MaestrosDocumentoNuevo nuevo={this.nuevo} /> : null}
                       </div>
                       {/*Buscador..*/}
                       <div className="row justify-content-between">
@@ -67,7 +67,7 @@ export default class ContenidoMultimedia extends React.Component {
                         <div className="col-12">                            
                           <div className="card">
                             <div className="contenido">
-                              <FileUploadComponent/>
+                              <DocumentoUploadComponent/>
                             </div>
                           </div>
                         </div>                        

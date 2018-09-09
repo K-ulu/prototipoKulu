@@ -9,34 +9,32 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-class IndividualFile extends Component {
+class IndividualDocumento extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
     };
     
-    this.removeFile = this.removeFile.bind(this);
-    this.renameFile = this.renameFile.bind(this);
-
+    this.docRemoveFile = this.docRemoveFile.bind(this);
+    this.docRenameFile = this.docRenameFile.bind(this);
   }
 
   static propTypes = {
     fileName: PropTypes.string.isRequired,
     fileSize: PropTypes.number.isRequired,
     fileUrl: PropTypes.string,
-    fileId: PropTypes.string.isRequired,
-    fileType: PropTypes.string.isRequired
+    fileId: PropTypes.string.isRequired
   }
 
-  removeFile(){
+  docRemoveFile(){
     confirmAlert({
       title: 'Confirmación de Eliminación',
       message: '¿Esta seguro que desea eliminar este archivo?.',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => Meteor.call('RemoveFile', this.props.fileId, function (err, res) {
+          onClick: () => Meteor.call('docRemoveFile', this.props.fileId, function (err, res) {
                           if (!err){
                             return(
                               toast.info('🦄Eliminado!', {
@@ -58,8 +56,7 @@ class IndividualFile extends Component {
     })
   }
 
-  renameFile(){
-
+  docRenameFile(){
     let validName = /[^a-zA-Z0-9 \.:\+()\-_%!&]/gi;
     let prompt    = window.prompt('Nuevo Archivo?', this.props.fileName);
 
@@ -69,8 +66,9 @@ class IndividualFile extends Component {
       prompt.trim();
     }
 
+    console.log(prompt);
     if (!_.isEmpty(prompt)) {
-      Meteor.call('RenameFile', this.props.fileId, prompt, function (err, res) {
+      Meteor.call('docRenameFile', this.props.fileId, prompt, function (err, res) {
         if (err)
           console.log(err);
       })
@@ -78,48 +76,32 @@ class IndividualFile extends Component {
   }
 
   render() {
-    let tipo = this.props.fileType;
-    let arregloDeSubCadenas = tipo.split("/");
-    tipo = arregloDeSubCadenas[0];
-
-    let url ="";
-    if (tipo == "image"){
-      url = this.props.fileUrl;
-    }
-    else if (tipo == "video"){
-      url = "/images/video.png";
-    }
-    else{
-      url = "/images/audio.jpg";
-    }
-
+    console.log(this.props);
     return (
     <div className="m-t-sm">
       <div className="row">
+        {/* <img src = {this.props.fileUrl} width = "70px" height ="70px" /> */}
+        <div className="m-b-sm">
+          <strong>{this.props.fileName}</strong>
+        </div>
+      </div>
+
+      <div className="row">
         <div className="col">
-          <img src = {url} width = "70px" height ="70px" />
-          <div className="m-b-sm">
-            <strong>{this.props.fileName}</strong>
-          </div>
+          <a href={this.props.fileUrl} className="btn btn-outline btn-success btn-sm"
+            target="_blank">Ver</a>
         </div>
 
         <div className="col">
-          <div className="row">
-            <a href={this.props.fileUrl} className="btn btn-outline btn-success btn-sm"
-              target="_blank">Ver</a>
-          </div>
+          <button onClick={this.docRenameFile} className="btn btn-outline btn-primary btn-sm">
+            Renombrar
+          </button>
+        </div>
 
-          <div className="row">
-            <button onClick={this.renameFile} className="btn btn-outline btn-primary btn-sm">
-              Renombrar
-            </button>
-          </div>
-
-          <div className="row">
-            <button onClick={this.removeFile} className="btn btn-outline btn-danger btn-sm">
-              Borrar
-            </button>
-          </div>
+        <div className="col">
+          <button onClick={this.docRemoveFile} className="btn btn-outline btn-danger btn-sm">
+            Borrar
+          </button>
         </div>
       </div>
       <ToastContainer
@@ -131,4 +113,4 @@ class IndividualFile extends Component {
     );
   }
 }
-export default IndividualFile;
+export default IndividualDocumento;

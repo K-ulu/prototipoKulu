@@ -1,9 +1,9 @@
 import { FilesCollection } from 'meteor/ostrio:files';
 
-const UserFiles = new FilesCollection({
-  storagePath: 'assets/app/uploads/UserFiles',
-  downloadRoute: '/files/UserFiles',
-  collectionName: 'UserFiles',
+const UserDocs = new FilesCollection({
+  storagePath: 'assets/app/uploads/UserDocs',
+  downloadRoute: '/files/UserDocs',
+  collectionName: 'UserDocs',
   permissions: 0o755,
   allowClientCode: false,
   cacheControl: 'public, max-age=31536000',
@@ -18,17 +18,16 @@ const UserFiles = new FilesCollection({
     // to check file's "magic-numbers" use `mmmagic` or `file-type` package
     // real extension and mime-type can be checked on client (untrusted side)
     // and on server at `onAfterUpload` hook (trusted side)
-    // if (file.size <= 10485760 && /mp4|png|jpe?g/i.test(file.ext)) {
-    if (file.size <= 15605760 && /mp4|png|jpe?g/i.test(file.ext)) {
+    if (file.size <= 15605760 && /docx|pdf|pptx|xlsx/i.test(file.ext)) {
       return true;
     }
-    return 'Please upload image, with size equal or less than 15MB';
+    return 'Porfavor cargue un documento, con un tamanio menor o igual 15MB';
   },
 
   downloadCallback(fileObj) {
     if (this.params.query.download == 'true') {
       // Increment downloads counter
-      UserFiles.update(fileObj._id, {$inc: {'meta.downloads': 1}});
+      UserDocs.update(fileObj._id, {$inc: {'meta.downloads': 1}});
     }
     // Must return true to continue download
     return true;
@@ -36,4 +35,4 @@ const UserFiles = new FilesCollection({
 });
 
 // Export FilesCollection instance, so it can be imported in other files
-export default UserFiles;
+export default UserDocs;

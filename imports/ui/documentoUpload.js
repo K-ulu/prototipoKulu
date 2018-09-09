@@ -3,34 +3,40 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import IndividualFile from './FileIndividualFile.js';
-import UserFiles from '../api/filesCol.js';
+import IndividualDocumento from './IndividualDocumento.js';
+import UserDocs from '../api/documentosCol';
 
 import { Session } from 'meteor/session';
 
-class FileUploadComponent extends Component {
+class DocumentoUploadComponent extends Component {
   constructor(props) {
     super(props);
   }
 
+  // This is our progress bar, bootstrap styled
+  // Remove this function if not needed
+
+
   render() {
     if (this.props.files.length > 0 && this.props.docsReadyYet) {
+      console.log("Listo");
       let fileCursors = this.props.files;
 
       // Run through each file that the user has stored
       // (make sure the subscription only sends files owned by this user)
       let display = fileCursors.map((aFile, key) => {
-        console.log(UserFiles.findOne({_id: aFile._id}));
-        let link = UserFiles.findOne({_id: aFile._id}).link();  //The "view/download" link
+        // console.log('A file: ', aFile.link(), aFile.get('name'))
+        let link = UserDocs.findOne({_id: aFile._id}).link();  //The "view/download" link
+        console.log(UserDocs.findOne({_id: aFile._id}));
+        console.log(link);
 
         // Send out components that show details of each file
         return <div key={'file' + key}>
-          <IndividualFile
+          <IndividualDocumento
             fileName={aFile.name}
             fileUrl={link}
             fileId={aFile._id}
             fileSize={aFile.size}
-            fileType = {aFile.type}
           />
         </div>
       })
@@ -40,7 +46,7 @@ class FileUploadComponent extends Component {
 
       </div>
     }
-    else return <div> No tiene ningun archivo almacenado </div>;
+    else return <div> No tiene ningun documento almacenado </div>;
   }
 }
 
@@ -50,12 +56,15 @@ class FileUploadComponent extends Component {
 //
 export default withTracker( ( props ) => {
   id = Session.get('user')._id;
-  const filesHandle = Meteor.subscribe('files.all');
+  const filesHandle = Meteor.subscribe('documentos.all');
+  console.log(filesHandle);
   const docsReadyYet = filesHandle.ready();
-  const files = UserFiles.find({userId: id}, {sort: {name: 1}}).fetch();
+  console.log(docsReadyYet);
+  const files = UserDocs.find({userId: id}, {sort: {name: 1}}).fetch();
 
+  console.log(files);
   return {
     docsReadyYet,
     files,
   };
-})(FileUploadComponent);
+})(DocumentoUploadComponent);

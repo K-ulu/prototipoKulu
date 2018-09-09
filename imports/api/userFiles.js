@@ -1,10 +1,6 @@
 import UserFiles from './filesCol.js'
 import { Meteor } from 'meteor/meteor';
-
-if (Meteor.isClient) {
-    Meteor.subscribe('files.images.all');
-}
-  
+ 
 if (Meteor.isServer) {
     Meteor.publish('files.all', function () {
     return UserFiles.find().cursor;
@@ -25,15 +21,11 @@ Meteor.methods({
 
     },
     
-    'RenameFile'(id, nombre) {
-       console.log("noombre", nombre);
-      UserFiles.RenameFile({_id: id},{name: nombre}, function (error) {
-          if (error) {
-            console.error("Archivo no editado, error: " + error.reason)
-          } else {
-            console.info("Archivo editado correctamente!");
-          }
-      });
-
-  },
+    'RenameFile'(id, name) {
+        UserFiles.update({
+            _id: id
+        }, {
+            $set: { name }
+        });
+    }
 });

@@ -2,12 +2,12 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 
 import ContenidoPrincipal from './components/ContenidoPrincipal';
-import ContenidoMultimedia from './ContenidoMultimedia';
+import ContenidoMultimedia from './MaestroContenidoMultimedia';
 import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
 import MaestroAlumnos from './MaestroAlumnos';
 import MaestroGrupos from './MaestroGrupos';
-
+import MaestroDocumentos from './MaestroDocumentos';
 class MaestroDashboard extends React.Component {
 
   componentDidMount(){    
@@ -23,6 +23,8 @@ class MaestroDashboard extends React.Component {
       contenido = <ContenidoPrincipal/>
     } else if(pathname == '/dashboard/multimedia' || pathname == '/dashboard/multimedia/'){
       contenido = <ContenidoMultimedia/>
+    } else if(pathname == '/dashboard/documentos' || pathname == '/dashboard/multimedia/'){
+      contenido = <MaestroDocumentos/>
     } else if(pathname == '/dashboard/alumnos' || pathname == '/dashboard/alumnos/'){
       contenido = <MaestroAlumnos/>
     } else if(pathname == '/dashboard/grupos' || pathname == '/dashboard/grupos/'){

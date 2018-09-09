@@ -22,8 +22,10 @@ import {SesionesAprendizaje} from '../imports/api/sesionesAprendizaje.js';
 import {Estadisticas} from '../imports/api/estadisticas.js';
 import {UsuarioLobby} from '../imports/api/usuarioLobby.js';
 
-//Pruebas para verificar la imagen! ---caro---
+//Guarda archivos como imagenes, videos, audios
 import '../imports/api/userFiles.js';
+//Guarda documentos
+import '../imports/api/userDocs.js';
 
 import '../imports/api/links';
 import '../imports/api/users';
