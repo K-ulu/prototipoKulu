@@ -8,7 +8,7 @@ export const Temas = new Mongo.Collection('temas');
 
 if (Meteor.isServer) {
   Meteor.publish('temas', function () {
-    return Temas.find({ userId: this.userId });
+    return Temas.find();
   });
 }
 

@@ -8,12 +8,12 @@ export const Materias = new Mongo.Collection('materias');
 
 if (Meteor.isServer) {
   Meteor.publish('materias', function () {
-    return Materias.find({ userId: this.userId });
+    return Materias.find();
   });
 }
 
 Meteor.methods({
-  'materias.insert'(nombreMateria, grado, cantidadBloques) {
+  'materias.insert'(nombreMateria, grado) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -22,7 +22,19 @@ Meteor.methods({
       _id: shortid.generate(),
       nombreMateria,
       grado,
-      cantidadBloques
+      cantidadBloques: 0
+    });
+  },
+
+  'materias.updateCantBloques'( miId, cantidadBloques ){
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+    cantidadBloques += 1;
+    Materias.update({
+      _id: miId
+    }, {
+      $set: { cantidadBloques }
     });
   },
 

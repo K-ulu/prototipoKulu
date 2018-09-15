@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import MaestroDashboard from './MaestroDashboard';
 import UsuarioDashboard from './UsuarioDashboard';
+import AdminContenidoDashboardContainer from './AdminContenidoDashboardContainer';
 
 class Dashboard extends React.Component {
 
@@ -32,14 +33,14 @@ class Dashboard extends React.Component {
     if( this.state.user !== undefined && this.state.user.tipoUsuario !== undefined){
       tipoUsuario = this.state.user.tipoUsuario;
 
-
-        //determinamos el dashboard a cargar
-        if (tipoUsuario == "docente"){
-          dashboard = <MaestroDashboard user={this.state.user}/>;
-        }  
-        else{
-          dashboard = <UsuarioDashboard user={this.state.user}/>; 
-        }
+      //determinamos el dashboard a cargar
+      if (tipoUsuario == "docente"){
+        dashboard = <MaestroDashboard user={this.state.user}/>;
+      } else if(tipoUsuario == 'adminContenido'){//TODO: mostrar el dashboard apropiado
+        dashboard = <AdminContenidoDashboardContainer user={this.state.user}/>;
+      } else { 
+        dashboard = <UsuarioDashboard user={this.state.user}/>; 
+      }
       //creamos sesion con los datos del usuario logueado
       Session.set('user', this.state.user);
     }

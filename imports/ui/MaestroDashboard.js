@@ -7,6 +7,7 @@ import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
 import MaestroAlumnos from './MaestroAlumnos';
 import MaestroGrupos from './MaestroGrupos';
+import NuevaSesionContainer from './NuevaSesionContainer';
 
 class MaestroDashboard extends React.Component {
 
@@ -20,13 +21,15 @@ class MaestroDashboard extends React.Component {
     let pathname = this.props.history.location.pathname;
     
     if(pathname == '/dashboard' || pathname == '/dashboard/'){
-      contenido = <ContenidoPrincipal/>
+      contenido = <ContenidoPrincipal/>;
     } else if(pathname == '/dashboard/multimedia' || pathname == '/dashboard/multimedia/'){
-      contenido = <ContenidoMultimedia/>
+      contenido = <ContenidoMultimedia/>;
     } else if(pathname == '/dashboard/alumnos' || pathname == '/dashboard/alumnos/'){
-      contenido = <MaestroAlumnos/>
+      contenido = <MaestroAlumnos/>;
     } else if(pathname == '/dashboard/grupos' || pathname == '/dashboard/grupos/'){
-      contenido = <MaestroGrupos/>
+      contenido = <MaestroGrupos/>;
+    } else if(pathname == '/dashboard/nueva-sesion' || pathname == '/dashboard/nueva-sesion/'){
+      contenido = <NuevaSesionContainer/>;
     }
 
     return (

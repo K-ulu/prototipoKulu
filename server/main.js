@@ -25,6 +25,9 @@ import {UserFiles} from '../imports/api/images.js';
 
 import '../imports/api/links';
 import '../imports/api/users';
+import '../imports/api/mensajes';
+import '../imports/api/lobbies';
+import '../imports/api/materias';
 
 Meteor.startup(() => {
   // code to run on server at startup

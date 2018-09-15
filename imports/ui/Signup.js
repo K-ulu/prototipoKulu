@@ -8,13 +8,26 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Error from './components/Error'
 
+function DefaultSelect(props) {
+  return (
+    <React.Fragment>
+      <option value="alumno">Alumno</option>
+      <option value ="docente">Docente</option>     
+    </React.Fragment>
+  );
+}
+
+function SelectAdminContenido(props) {
+  return <option value ="adminContenido">Administrador de Contenidos</option>;
+}
+
 class Signup extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       error: '', //almacena el error
       value: '' //almacena valor del tipo de usuario
-    };
+    };    
 
     //contexto de navegador para nuestras funciones
     this.handleChange = this.handleChange.bind(this);    
@@ -104,6 +117,9 @@ class Signup extends React.Component {
           }
         });
         this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
+    } else if(opcion == 'adminContenido'){
+      //TODO:hacer inserciones en la tabla de administradores de contenido
+      this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
     }
     else{
       alert("Contrasenias desiguales");
@@ -113,7 +129,11 @@ class Signup extends React.Component {
 
   render () {
     let errorMessage = null, error;
+    let pathname = this.props.history.location.pathname;
+    //verificamos url para determinar que opciones mostrar
+    let select = (pathname == '/admin-contenido' || pathname == '/admin-contenido/') ? <SelectAdminContenido/> : <DefaultSelect/>;
     errorMessage = (this.state.error) ? this.state.error : undefined;
+    //determinamos error a mostrar si es que lo hay
     if(errorMessage === undefined){
       error = null;
     } else {
@@ -178,10 +198,12 @@ class Signup extends React.Component {
                                   <span className="input-group-text"><i className="fa fa-info-circle"></i></span>
                                   <select value={this.state.value} onChange={this.handleChange} className="form-control form-control rounded">
                                     <option value ="seleccione">Seleccione tipo de usuario</option>
-                                    <option value="alumno">Alumno</option>
-                                    <option value ="docente">Docente</option>                                      
+                                    { select }
+                                    {/*<option value="alumno">Alumno</option>
+                                    <option value ="docente">Docente</option>  */}                                    
                                   </select>                         
-                              </div>                                                                       
+                              </div> 
+                                                                                             
                             </div>                                    
                           </div>
 

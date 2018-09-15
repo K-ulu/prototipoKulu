@@ -16,8 +16,8 @@ import Business from '../ui/Business';
 import Contact from '../ui/Contact';
 import Support from '../ui/Support';
 import NotFound from '../ui/NotFound';
-import SaveImages from '../ui/SaveImages.js';
-import Images from '../ui/Imagenes.js';
+import SaveImages from '../ui/SaveImages';
+import Images from '../ui/Imagenes';
 
 import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
@@ -28,11 +28,12 @@ import Link from '../ui/Link';
 import Chat from '../ui/Chat';
 
 import DashboardContainer from '../ui/DashboardContainer';
+import SelectList from '../ui/SelectList';
 
 import { withTracker } from 'meteor/react-meteor-data';
 
 //importacion de la clase maestroAlumnos
-import MaestroAlumnos from '../ui/MaestroAlumnos.js';
+import MaestroAlumnos from '../ui/MaestroAlumnos';
 
 let isAuthenticated, tipo;
 let user;
@@ -97,6 +98,14 @@ export const routes = (
       <Route exact path="/dashboard/grupos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroGrupos"}/>)}/> 
       <Route path="/dashboard/multimedia" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
+
+      <Route path="/chat" component={ ()=>(<Chat isAuthenticated={isAuthenticated}/>)}/>   
+      <Route path="/admin-contenido" component={()=>(<Signup isAuthenticated={isAuthenticated}/>)}/>   
+      <Route path="/admin" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/mat" component={()=>(<SelectList isAuthenticated={isAuthenticated}/>)}/>
+      
+
+
       
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>
     </Switch>
