@@ -3,15 +3,15 @@ import { Meteor } from 'meteor/meteor';
 import { withRouter } from "react-router-dom";
 
 import ContenidoPrincipal from './components/ContenidoPrincipal';
-import ContenidoMultimedia from './components/ContenidoMultimedia';
+//import ContenidoMultimedia from './components/ContenidoMultimedia';
 import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
-import MaestroAlumnos from './MaestroAlumnos';
-import MaestroGrupos from './MaestroGrupos';
-import NuevaSesion from './NuevaSesion';
+// import MaestroAlumnos from './MaestroAlumnos';
+// import MaestroGrupos from './MaestroGrupos';
+// import NuevaSesion from './NuevaSesion';
 
-import { Materias } from '../api/materias';
-import { Tracker } from 'meteor/tracker';
+// import { Materias } from '../api/materias';
+// import { Tracker } from 'meteor/tracker';
 
 class AdminContenidoDashboard extends React.Component {
 

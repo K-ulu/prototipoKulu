@@ -52,9 +52,19 @@
   margin-bottom: 0px;
 } 
 
+.card-table2 div {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  max-width: 1000px;
+} 
+
 .row-login{
   display: flex;
   justify-content: center;
+}
+
+.contenido{
+  padding-left: 20px;
 }
 
 /* importando componentnes */

@@ -4,7 +4,6 @@ import {  BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //import {  Router, Route, Switch, Link, Redirect  } from 'react-router';
 //import createBrowserHistory from 'history/createBrowserHistory'
 //const history = createBrowserHistory();
-//hola no funcionó mi parte para guardar imagenes :c
 
 import { Tracker } from 'meteor/tracker';
 
@@ -16,13 +15,11 @@ import Business from '../ui/Business';
 import Contact from '../ui/Contact';
 import Support from '../ui/Support';
 import NotFound from '../ui/NotFound';
-import SaveImages from '../ui/SaveImages';
-import Images from '../ui/Imagenes';
+// import SaveImages from '../ui/SaveImages'; TODO: preguntar a norma sobre estos import
+// import Images from '../ui/Imagenes';
 
 import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
-import MaestroElementos from '../ui/MaestroElementos';
-import MaestroElementosNuevo from '../ui/MaestroElementosNuevo';
 import UsuarioDashboard from '../ui/UsuarioDashboard';
 import Link from '../ui/Link';
 import Chat from '../ui/Chat';
@@ -37,6 +34,7 @@ import MaestroAlumnos from '../ui/MaestroAlumnos';
 
 let isAuthenticated, tipo;
 let user;
+
 Tracker.autorun(() => {
   isAuthenticated = !!Meteor.userId(); //doble negacion dice si la cadena esta vacia o no
   //onAuthChange(isAuthenticated);
@@ -82,8 +80,6 @@ export const routes = (
       <Route path="/support" component={()=>(<Support isAuthenticated={isAuthenticated}/>)}/>
       {/* No estoy segura de teachers */}
       <Route path="/teachers" component={()=>(<MaestroDashboard isAuthenticated={isAuthenticated}/>)}/>
-      <Route path="/saveImages" component={()=>(<SaveImages/>)}/>   
-      <Route path="/imagenes" component={()=>(<Images/>)}/> 
       <Route path="/users" component={()=>(<UsuarioDashboard isAuthenticated={isAuthenticated}/>)}/>    
       <Route path="/dashboard" component={()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/> 
       <Route path="/dashboard/nueva-sesion" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>       
@@ -94,8 +90,8 @@ export const routes = (
       <Route path="/dashboard/biblioteca/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/biblioteca/objetos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/biblioteca/elementos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
-      <Route exact path="/dashboard/alumnos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroAlumnos"}/>)}/>  
-      <Route exact path="/dashboard/grupos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} tipo={"maestroGrupos"}/>)}/> 
+      <Route exact path="/dashboard/alumnos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} />)}/>  
+      <Route exact path="/dashboard/grupos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated} />)}/> 
       <Route path="/dashboard/multimedia" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/dashboard/documentos" component={ ()=>(<DashboardContainer isAuthenticated={isAuthenticated}/>)}/>      
 

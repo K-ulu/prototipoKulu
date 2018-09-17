@@ -8,6 +8,14 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Error from './components/Error'
 
+import { Alumnos } from "../api/alumnos";
+
+Tracker.autorun(() => {
+  Meteor.subscribe('allUsers');	
+  Meteor.subscribe('alumnos');
+});
+
+
 function DefaultSelect(props) {
   return (
     <React.Fragment>
@@ -52,6 +60,9 @@ class Signup extends React.Component {
   //evento al mandar los datos del formulario
   onSubmit(e){
     e.preventDefault();
+    // Meteor.subscribe("alumnos", id);
+    Meteor.subscribe('allUsers');	
+
     //verifica contraseña
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
@@ -63,6 +74,31 @@ class Signup extends React.Component {
     let apellidoM = '';
     let nickname = this.refs.username.value.trim();
     let curp = '';
+
+    let correos = [{address: email, verified:false}];
+    console.log(correos);
+
+    //Verifica que los alumnos registrados tengan correos en la coleccion users
+    console.log(Meteor.users.find({}).fetch());
+
+    let userAlumno = Meteor.users.findOne({ emails: correos }); // will return all users
+    console.log(userAlumno);
+
+    if ( userAlumno != undefined ){
+      console.log(userAlumno, userAlumno.tipoUsuario, opcion);
+      if ( userAlumno.tipoUsuario == "alumno" && opcion == "alumno"){
+        console.log(userAlumno._id);
+        apellidoP = userAlumno.profile.apellidoP;
+        Meteor.call('users.remove', userAlumno._id, (err, res) => {
+          if (!err) {
+            console.log("Eliminado!");
+            // this.handleModalClose();
+          } else {
+            this.setState({error: ''});
+          }
+        });
+      }
+    } 
 
     //creando nuestro objeto con los datos del usuario
     var datos = {
@@ -103,10 +139,10 @@ class Signup extends React.Component {
       });
       this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
     }
-    else if (opcion == 'alumno'){
+    else if (opcion == 'alumno' && userAlumno == undefined ){
         var matricula = "";
         var claveEscuela = '';
-        Meteor.call('alumnos.insert', matricula, claveEscuela, email, (err, res) => {
+        Meteor.call('alumnos.insert', matricula, claveEscuela, email,"no registrado", (err, res) => {
           if (!err) {
             // this.handleModalClose();
             alert("insertado");
@@ -119,6 +155,18 @@ class Signup extends React.Component {
         this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
     } else if(opcion == 'adminContenido'){
       //TODO:hacer inserciones en la tabla de administradores de contenido
+      this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
+    }
+    else if (opcion == 'alumno' && userAlumno != undefined){
+      let myID = Alumnos.findOne({correo: email});
+      Meteor.call('alumnos.updateStatus', myID._id, "registrado", (err, res) => {
+        if (!err) {
+          // this.handleModalClose();
+        } else {
+          // this.setState({ error: err.reason });
+          console.log(err.reason);
+        }
+      });
       this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard
     }
     else{

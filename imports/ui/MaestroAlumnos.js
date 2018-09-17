@@ -1,31 +1,37 @@
-/* Se debe de guardar la clave del grupo? porque en alumnos no esta.. ahora con el userID no lo tenemos como 
-  lo generamos en la clase alumnos si el usuario en turno es un docente?
-  creo que es todo aunque no se como registrar un alumno con nombre y apellidos si el docente no crea usuario 
-  solo alumnos.
-  Si el docente registra a su alumno pero el alumno aun no ha confirmado siguen siendo sus alumnos?
-
-  Verificar que cosas si se pueden editar pienso que el correo quiza.
-  Porque se tiene que editar el id del docente?
+/*
+  MaestroAlumnos hace uso de varios componentes.
+  selectPrincipal: Este lo unico quee hace es mostrar un select en el cual dependiendo de lo que se seleccione mostrara 
+                   desde el componente ListAlumno
+  formularioAlumno: Mostrará un formulario cuando se seleccione registrar alumno
+  ListAlumno: Despliega dentro de una tabla toda la lista de alumnos que tiene a cargo el docente dependiendo de los grupos
+              que tenga registrado
 */
 import React from 'react';
 import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
 import { Session } from 'meteor/session';
-//import Select from 'react-select';
-//import {Grupos} from '../api/grupos.js';
 
 import ListAlumnos from './components/ListAlumnos';
+import FormularioAlumno from './components/formularioAlumno';
+import SelectPrincipal from './components/selectPrincipal';
+
 import Modal from 'react-modal';
+
+//Para las notificaciones!
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class MaestroAlumnos extends React.Component { 
   constructor(){
     super()
 
     this.state = {
-      isActive:false
+      isActive:false,
+      opcionSelectP: "todos",
     }
-
-    this.onSubmit = this.onSubmit.bind(this);
+    this.handleData = this.handleData.bind(this);
+    this.insertar = this.insertar.bind(this);
+    this.editar = this.editar.bind(this);
   }
 
   componentWillMount(){
@@ -40,240 +46,217 @@ class MaestroAlumnos extends React.Component {
     )
   }
 
-  //evento al mandar los datos del formulario
-  onSubmit(e){
-    e.preventDefault();
-    //verifica contraseña
-    let nombre = this.refs.nombre.value.trim();
-    let apellidoP = this.refs.apellidoP.value.trim();
-    let email = this.refs.email.value.trim();
-
-    let claveEscuela = this.refs.claveEscuela.value.trim();
-    let matricula = this.refs.matricula.value.trim();
-
-    let grupo = this.state.value;    
-
-    //creando nuestro objeto con los datos del usuario
-    var datos = {
-      email: email,
-      password: "",
-      profile: {
-        nombre: nombre,
-        apellidoP: apellidoP,
-        apellidoM: "",
-        nickname: "",
-        curp: ""
-      },
-      tipoUsuario: "alumno"
-    };
-  
-    /*//Aqui se crea el alumno
-    var userId = Accounts.createUser(datos, (err) => {
-      if(err){
-        this.setState({error: err.reason});
-        
+  usersInsert(email, nombre, apellidoP){
+    Meteor.call('users.insert', email, nombre, apellidoP, (err, res) => { //InsertaUsuarios
+      if (!err) {
+        console.log("usuario registrado");
       } else {
-        this.setState({error: ''});
+          console.log(err.reason)
       }
     });
-    */
+  }
 
-
-    Meteor.call('alumnos.insert2', nombre, apellidoP, matricula, claveEscuela, email, (err, res) => {
+  alumnosInsert(matricula, claveEscuela, email, grupo, estado){
+    Meteor.call('alumnos.insert2', matricula, claveEscuela, email, grupo, estado, (err, res) => {
       if (!err) {
-        // this.handleModalClose();
-        alert("insertado");
+        return(
+          toast.success('Insertado!', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000
+          })
+        );
       } else {
-        // this.setState({ error: err.reason });
-        alert("ocurrió un error al insertar");
-        alert(err.reason);
+        return(
+          console.log(err.reason),
+          toast.error("ocurrió un error al insertar", {
+              position: toast.POSITION.TOP_CENTER
+          })
+        );
+      }
+    });
+  }
+
+  usersUpdate(email, nombre, apellidoP){
+    Meteor.call('users.update', email, nombre, apellidoP,  (err, res) => {
+      if (!err) {
+        console.log("editado en usuarios");
+      } else {
         console.log(err.reason);
       }
     });
-    //this.props.history.push('/dashboard'); //Agregue para redireccionamiento al dashboard 
   }
 
-  logChange(val) {
-    console.log("Selected: " + val);
+  alumnosUpdate(id, matricula, claveEscuela, grupo, email){
+    let idDocente = Session.get('user')._id;//obtenemos el id del docente en turno
+    console.log(idDocente);
+
+    Meteor.call('alumnos.update', id, matricula, claveEscuela, grupo, email, idDocente, (err, res) => {
+      if (!err) {
+        return(
+          toast.success('Editado!', {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000
+          })
+        );
+      } else {
+        return(
+          console.log(err.reason),
+          toast.error("ocurrió un error al editar", {
+              position: toast.POSITION.TOP_CENTER
+          })
+        );
+      }
+    });
   }
 
-  render () {
-    var options = [
-      { value: 'one', label: 'One' },
-      { value: 'two', label: 'Two' }
-    ];
-    
+  // evento que inserta los datos en la colección alumnos
+  insertar(e, nombre, apellidoP, matricula, claveEscuela, email, grupo, userExiste, alumnoExiste){
+    e.preventDefault();  
+
+    if (userExiste == undefined){//En caso de que el usuario no exista 
+      this.usersInsert(email, nombre, apellidoP);
+      this.alumnosInsert(matricula, claveEscuela, email, grupo, "no registrado");
+    }
+
+    else{ //En caso de que el usuario si exista
+      this.usersUpdate(email, nombre, apellidoP);
+
+      if (alumnoExiste == undefined){//En caso de que el alumno no exista!
+        this.alumnosInsert(matricula, claveEscuela, email, grupo, "registrado");
+      }
+
+      else{//En caso de que exista el alumno
+        this.alumnosUpdate(alumnoExiste._id, matricula, claveEscuela, grupo, email);
+
+        Meteor.call('alumnos.updateStatus', alumnoExiste._id, "registrado", (err, res) => {
+          if (!err) {
+            // this.handleModalClose();
+          } else {
+            // this.setState({ error: err.reason });
+            console.log(err.reason);
+          }
+        });
+      }
+    }
+    this.toggleModal();
+  }
+
+  //evento al mandar los datos del formulario
+  editar(e,nombreU, apellidoPU, correo, miId, matricula1, claveEscuela1, idGrupo){
+    e.preventDefault();
+    this.usersUpdate(correo, nombreU, apellidoPU);
+    this.alumnosUpdate(miId, matricula1, claveEscuela1, idGrupo, correo);
+  }
+
+  handleData(data) {
+    this.setState({
+      opcionSelectP: data
+    });
+  }
+
+  render () {    
     return (
       <div>
       {/*Inicio componente */}
-
-          {/*Inicio row */}
+        {/*Inicio row */}
           <div className="row">
-              <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div className="card noborder mb-3">
+                <div className="card-body">
+                  {/*title*/}
+                  <div className="row justify-content-center">
+                    <div className="col-6">
+                      <h1>Mi Lista de Alumnos!</h1>
+                    </div>     
+                  </div>
 
-                  <div className="card noborder mb-3">
-                      <div className="card-body">
-                          {/*title*/}
-                          <div className="row justify-content-center">
-                              <div className="col-6">
-                                  <h1>Mi Lista de Grupos</h1>
-                              </div>     
-                          </div>
+                  <div className="row justify-content-center">
+                    <div className="col-10">
+                    {/*buttons and filter options*/}
+                      <div className="row justify-content-between">
 
-                      <div className="row justify-content-center">
-                          <div className="col-10">
+                        <div className="col-2">
+                          <button onClick={this.toggleModal} className="btn btn-primary btn-block">Nuevo</button>
+                        </div>
 
+                        <div className="col-2 btn-group" role="group" aria-label="Basic example">
+                          <button  type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
+                          <button  type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
+                        </div> 
 
-                          {/*buttons and filter options*/}
-                          <div className="row justify-content-between">
-
-                          <div className="col-2">
-                            <button onClick={this.toggleModal} className="btn btn-primary btn-block">Nuevo</button>
-                          </div>
-
-                          <div className="col-2 btn-group" role="group" aria-label="Basic example">
-                              <button  type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
-                              <button  type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
-                          </div> 
-
-                          </div>
+                      </div>
 
 
-                          {/*Buscar alumnos mediante un select*/}
-                          <div className="row justify-content-between">
-                          <div className="col-12">
-                            <form className="form-inline">
-                                <select /*value={this.state.value}*/ onChange={this.handleChange} className="form-control mr-4 col-lg-8">
-                                    <option value ="seleccione">Seleccione un grupo!</option>
-                                    <option value="alumno">Grupo A</option>
-                                    <option value ="docente">Grupo B</option>                                      
-                                </select> 
-                                <button className="btn btn-outline-success col-lg-3" type="submit">Buscar</button>
-                                {/* <Select
-                                  name="form-field-name"
-                                  value="one"
-                                  options={options}
-                                  onChange={this.logChange}
-                                /> */}
-                            </form>                  
-                          </div>
-                          </div>
-
-
-
-                          {/*Aqui inicia para la lista de grupos..*/}
-                          <div className = "card-table" >
-                            <ListAlumnos handleEdit={this.handleEdit} />
-                          </div>                         
-                          
+                      {/*Buscar alumnos mediante un select*/}
+                      <div className="row justify-content-between">
+                        <div className="col-12">
+                        <SelectPrincipal  handlerFromParant={this.handleData}/>                 
                         </div>
                       </div>
 
-                                          
-                      </div>
-                      {/*<div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*/}
+                      {/*Aqui inicia para la lista de grupos..*/}
+                      <div className = "card-table2">
+                        <ListAlumnos editar={this.editar} seleccion={this.state.opcionSelectP}/>
+                      </div>                         
+                        
+                    </div>
                   </div>
-              </div>
-
-
+                </div>
+                  {/*<div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*/}
+                </div>
+            </div>
           </div>
           {/*Fin row */}
-
-
-      
-      {/*Modal de inseerción */}
-      <section className="row justify-content-center">
-        <Modal 
-          isOpen={this.state.isActive} 
-          onRequestClose={this.toggleModal}
-          contentLabel="Inline Styles Modal Example"
-        style={{
-          overlay: {
-            //position: absolute,
-            top: 60,
-            left: 250,
-            right: 250,
-            bottom: 40,
-          },
-          content: {
-            color: 'purple'
-          }
-        }}
-        >
-          <div >
+          {/*Modal de inseerción */}
+          <section className="row justify-content-center">
+            <Modal 
+              isOpen={this.state.isActive} 
+              onRequestClose={this.toggleModal}
+              contentLabel="Inline Styles Modal Example"
+            style={{
+              overlay: {
+                //position: absolute,
+                top: 60,
+                left: 250,
+                right: 250,
+                bottom: 40,
+              },
+              content: {
+                color: 'purple'
+              }
+            }}
+            >
+            <div >
               <span className="anchor" id="formLogin"></span>
               <div className="card rounded">
                 <div className="card-header mt-2">
-                <div className="row">
-                  <div className="col-14 col-sm-6">
-                    <h3 className="mb-0 text-center">Agregar Alumno!</h3>
-                  </div>
-                  <div className="col-2 col-sm-2 float:right">
-                    <button onClick={this.toggleModal}>Cerrar!</button>
-                  </div>
+                  <div className="row">
+                    <div className="col-14 col-sm-6">
+                      <h3 className="mb-0 text-center">Agregar Alumno!</h3>
+                    </div>
+                    <div className="col-2 col-sm-2 float:right">
+                      <button onClick={this.toggleModal}>Cerrar!</button>
+                    </div>
                   </div>
                 </div>
-                  <div className="card-body mt-2">
-                    <form onSubmit={this.onSubmit} className="form" role="form" autoComplete="off" id="formLogin">
-                      <div className="row">
-                        <div className="col-12 col-sm-6">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text"><i className="fa fa-user-circle-o"></i></span>
-                            <input type="text" ref="nombre" name="nombre" className="form-control form-control rounded" placeholder="Nombre"/>
-                          </div>                                          
-                        </div>
-                        <div className="col-12 col-sm-6">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text"><i className="fa fa-user fa-fw"></i></span>
-                            <input type="text" ref="apellidoP" name="apellidoP" className="form-control form-control rounded" placeholder="ApellidoP"/>
-                          </div>                                                                          
-                        </div>  
-                        <div className="col-12">                                        
-                          <div className="input-group-prepend">
-                            <span className="input-group-text"><i className="fa fa-envelope"></i></span>
-                            <input type="email" ref="email" name="email" className="form-control form-control rounded" placeholder="Correo"/>
-                          </div>                                         
-                        </div>  
-                        <div className="col-12">                                        
-                          <div className="input-group-prepend">
-                            <span className="input-group-text"><i className="fa fa-envelope"></i></span>
-                            <input type="text" ref="claveEscuela" name="claveEscuela" className="form-control form-control rounded" placeholder="Clave Escuela"/>
-                          </div>                                         
-                        </div> 
-                        <div className="col-12">                                        
-                          <div className="input-group-prepend">
-                            <span className="input-group-text"><i className="fa fa-envelope"></i></span>
-                            <input type="text" ref="matricula" name="matricula" className="form-control form-control rouded" placeholder="Matricula"/>
-                          </div>                                         
-                        </div> 
-                        <div className="col-12">  
-                          <div className="input-group-prepend">     
-                              <span className="input-group-text"><i className="fa fa-info-circle"></i></span>
-                              <select value={this.state.value} onChange={this.handleChange} className="form-control form-control rounded">
-                                <option value ="seleccione">Grupo</option>
-                                <option value="grupoA">A</option>
-                                <option value ="grupoB">B</option>                                      
-                              </select>                         
-                          </div>                                                                       
-                        </div>                                    
-                      </div>
-                      <div className="row-login">
-                        <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Regístrar</button>
-                      </div>
-                    </form>
-                  </div>
-                  {/*<!--/card-block-->*/}
+                <div className="card-body mt-2">
+                  <FormularioAlumno insertar={this.insertar} />
+                </div>
+                {/*<!--/card-block-->*/}
               </div>
-              {/*<!-- /form card login -->*/}
+                {/*<!-- /form card login -->*/}
             </div>
           </Modal>
         </section>
+        <ToastContainer
+            hideProgressBar={true}
+            newestOnTop={true}
+            autoClose={5000}
+        />
       </div>
-  );
+    );
   }
 }
-
-
 export default withRouter(MaestroAlumnos);
 
 
