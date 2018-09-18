@@ -20,7 +20,7 @@ class FileUploadComponent extends Component {
       // Run through each file that the user has stored
       // (make sure the subscription only sends files owned by this user)
       let display = fileCursors.map((aFile, key) => {
-        console.log(UserFiles.findOne({_id: aFile._id}));
+        // console.log(UserFiles.findOne({_id: aFile._id}));
         let link = UserFiles.findOne({_id: aFile._id}).link();  //The "view/download" link
 
         // Send out components that show details of each file
