@@ -15,10 +15,7 @@ import Business from '../ui/Business';
 import Contact from '../ui/Contact';
 import Support from '../ui/Support';
 import NotFound from '../ui/NotFound';
-// import SaveImages from '../ui/SaveImages'; TODO: preguntar a norma sobre estos import
-// import Images from '../ui/Imagenes';
 
-import Dashboard from '../ui/Dashboard';
 import MaestroDashboard from '../ui/MaestroDashboard';
 import UsuarioDashboard from '../ui/UsuarioDashboard';
 import Link from '../ui/Link';
@@ -28,9 +25,6 @@ import DashboardContainer from '../ui/DashboardContainer';
 import SelectList from '../ui/SelectList';
 
 import { withTracker } from 'meteor/react-meteor-data';
-
-//importacion de la clase maestroAlumnos
-import MaestroAlumnos from '../ui/MaestroAlumnos';
 
 let isAuthenticated, tipo;
 let user;
