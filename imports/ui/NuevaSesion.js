@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Meteor } from 'meteor/meteor';
+import Chat from './Chat'
 
 export default class NuevaSesion extends React.Component {
 
@@ -19,6 +19,10 @@ export default class NuevaSesion extends React.Component {
 			valueGrupo: '', //valor del tema seleccionado en el select
 			optionsBloquesSelect: [], //guarda los bloques de acuerdo a la materia seleccionada
 			optionsTemasSelect: [], //guarda los temas de acuerdo al bloque seleccioando
+
+			lobbies: [], //almacena todos los lobbies 
+			mensajes: [], //almacena todos los mensajes
+			allUsers: [], //alamcena todos los usuarios
     };
 	}
 
@@ -30,13 +34,16 @@ export default class NuevaSesion extends React.Component {
 	//actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
 	if(nextProps.materias.length > 0 && nextProps.bloques.length > 0 && nextProps.temas.length > 0){
-			console.log('nuevos props de gera: ', nextProps);
+			//console.log('nuevos props de gera: ', nextProps);
 			return {
         materias: nextProps.materias,
 				bloques: nextProps.bloques,
 				temas: nextProps.temas,
 				grupos: nextProps.grupos,
 				alumnos: nextProps.alumnos,
+				lobbies: nextProps.lobbies,
+				mensajes: nextProps.mensajes,
+				allUsers: nextProps.allUsers,
       };
 		}
 		//retornamos null cuando no sea necesario actualizar state
@@ -105,7 +112,6 @@ export default class NuevaSesion extends React.Component {
 	//evento clic primera tab
 	handleConfigTab(event){
 		event.preventDefault();
-		
 
 		//Declare all variables
 		let i, tabcontent, tablinks;
@@ -164,7 +170,6 @@ export default class NuevaSesion extends React.Component {
 			});
 		} 
 	}
-
 	
 	//metodo que se encarga de cargar los alumnos en el select
 	renderAlumnosListItems(){
@@ -191,7 +196,7 @@ export default class NuevaSesion extends React.Component {
 										<a onClick={ this.handleEvent.bind(this, 'participantes') } className="nav-link tablinks" href="#">Participantes</a>
 									</li>
 									<li className="nav-item">
-										<a className="nav-link disabled tablinks" href="#">Lobby</a>
+										<a onClick={ this.handleEvent.bind(this, 'lobby') } className="nav-link tablinks" href="#">Lobby</a>
 									</li>
 								</ul>
 							</div>
@@ -349,6 +354,13 @@ export default class NuevaSesion extends React.Component {
 												</form>  
 																					
 											</div>                       
+										</div>
+
+										<div id="lobby" className="row tab-content">
+											<div className="col-12">  
+												
+												<Chat lobbies={this.state.lobbies} mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>
+											</div>
 										</div>
 
 
