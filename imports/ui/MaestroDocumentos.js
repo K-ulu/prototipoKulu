@@ -65,11 +65,7 @@ export default class MaestroDocumentos extends React.Component {
                       {/*Cards 100%..*/}
                       <div className="row section-cards list">
                         <div className="col-12">                            
-                          <div className="card">
-                            <div className="contenido">
-                              <DocumentoUploadComponent/>
-                            </div>
-                          </div>
+                          <DocumentoUploadComponent/>
                         </div>                        
                       </div>                          
                     </div>

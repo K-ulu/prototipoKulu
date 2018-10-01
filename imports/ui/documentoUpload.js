@@ -31,18 +31,20 @@ class DocumentoUploadComponent extends Component {
         console.log(link);
 
         // Send out components that show details of each file
-        return <div key={'file' + key}>
-          <IndividualDocumento
+        return <IndividualDocumento
+            key={'file' + key}
             fileName={aFile.name}
             fileUrl={link}
             fileId={aFile._id}
             fileSize={aFile.size}
           />
-        </div>
+        
       })
 
-      return <div>
-        {display}
+      return <div className="container">
+        <div className="row">
+          { display }
+        </div>
 
       </div>
     }

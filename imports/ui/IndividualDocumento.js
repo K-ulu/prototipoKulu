@@ -16,8 +16,9 @@ class IndividualDocumento extends Component {
     this.state = {
     };
     
+    //binding functions
     this.docRemoveFile = this.docRemoveFile.bind(this);
-    this.docRenameFile = this.docRenameFile.bind(this);
+    this.docRenameFile = this.docRenameFile.bind(this);  
   }
 
   static propTypes = {
@@ -35,18 +36,18 @@ class IndividualDocumento extends Component {
         {
           label: 'Yes',
           onClick: () => Meteor.call('docRemoveFile', this.props.fileId, function (err, res) {
-                          if (!err){
-                            return(
-                              toast.info('🦄Eliminado!', {
-                                  position: toast.POSITION.TOP_CENTER,
-                                  autoClose: 3000
-                              })
-                            );
-                          }
-                          else{
-                            console.log(err);
-                          }
-                        })
+            if (!err){
+              return(
+                toast.info('🦄Eliminado!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 3000
+                })
+              );
+            }
+            else{
+              console.log(err);
+            }
+          })
         },
         {
           label: 'No',
@@ -64,7 +65,7 @@ class IndividualDocumento extends Component {
     if (prompt) {
       prompt = prompt.replace(validName, '-');
       prompt.trim();
-    }
+    }   
 
     console.log(prompt);
     if (!_.isEmpty(prompt)) {
@@ -75,41 +76,40 @@ class IndividualDocumento extends Component {
     }
   }
 
+  openFile(url){
+    //abre url 
+    window.open(url, '_blank');
+  }
+
   render() {
     console.log(this.props);
     return (
-    <div className="m-t-sm">
-      <div className="row">
-        {/* <img src = {this.props.fileUrl} width = "70px" height ="70px" /> */}
-        <div className="m-b-sm">
-          <strong>{this.props.fileName}</strong>
+      <div className="col-md-4">
+        <div className="card">
+          <img className="card-img-top" src="/images/pdf.png" alt="pdf image"/>
+          <div className="card-body">
+            <h5 className="card-title">{ this.props.fileName }</h5>
+            <p className="card-text text-muted">Documento PDF</p>          
+            <div className="row">
+              <div className="col-4">
+                <button onClick={ this.openFile.bind(this, this.props.fileUrl) } className="btn btn-outline-success btn-block" target="_blank"><i className="fa fa-fw fa-eye"></i></button>                
+              </div>  
+              <div className="col-4">
+                <button onClick={ this.docRenameFile } className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>                
+              </div>  
+              <div className="col-4">
+                <button onClick={ this.docRemoveFile } className="btn btn-outline-danger btn-block"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              </div>  
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="row">
-        <div className="col">
-          <a href={this.props.fileUrl} className="btn btn-outline btn-success btn-sm"
-            target="_blank">Ver</a>
-        </div>
-
-        <div className="col">
-          <button onClick={this.docRenameFile} className="btn btn-outline btn-primary btn-sm">
-            Renombrar
-          </button>
-        </div>
-
-        <div className="col">
-          <button onClick={this.docRemoveFile} className="btn btn-outline btn-danger btn-sm">
-            Borrar
-          </button>
-        </div>
-      </div>
-      <ToastContainer
+      
+        <ToastContainer
           hideProgressBar={true}
           newestOnTop={true}
           autoClose={5000}
-      />
-    </div>
+        />
+      </div>
     );
   }
 }
