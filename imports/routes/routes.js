@@ -26,6 +26,9 @@ import SelectList from '../ui/SelectList';
 
 import { withTracker } from 'meteor/react-meteor-data';
 
+// Pruebas para la linea del tiempo
+import PruebasCaro from '../ui/PruebasCaro';
+
 let isAuthenticated, tipo;
 let user;
 
@@ -94,6 +97,8 @@ export const routes = (
       <Route path="/admin" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/mat" component={()=>(<SelectList isAuthenticated={isAuthenticated}/>)}/>
       
+      // Pruebas para la linea del tiempo
+      <Route path="/prueba" component={()=>(<PruebasCaro isAuthenticated={isAuthenticated}/>)}/>
 
 
       

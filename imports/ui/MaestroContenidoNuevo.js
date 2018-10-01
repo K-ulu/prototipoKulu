@@ -145,7 +145,7 @@ class MaestroContenidoNuevo extends React.Component {
                         <div className="col-10">
 
                           <ReactDropzone
-                            // accept="image/*"
+                            accept="image/*, video/*, audio/*"
                             onDrop={this.onPreviewDrop}
                             style={{"width" : "100%", "height" : "25%", "border" : "1px dashed black"}}>
                             <div>
