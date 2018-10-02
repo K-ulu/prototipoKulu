@@ -150,7 +150,7 @@ class MaestrosDocumentoNuevo extends React.Component {
                         <div className="col-10">
 
                           <ReactDropzone
-                            accept="application/*"
+                            accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.presentationml.presentation"
                             onDrop={this.onPreviewDrop}
                             style={{"width" : "100%", "height" : "25%", "border" : "1px dashed black"}}>
                             <div>

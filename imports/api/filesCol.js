@@ -22,7 +22,7 @@ const UserFiles = new FilesCollection({
     // real extension and mime-type can be checked on client (untrusted side)
     // and on server at `onAfterUpload` hook (trusted side)
     // if (file.size <= 10485760 && /mp4|png|jpe?g/i.test(file.ext)) {
-    if (file.size <= 15605760 && /mp4|png|jpe?g/i.test(file.ext)) {
+    if (file.size <= 15605760 && /mp4|gif|png|jpe?g/i.test(file.ext)) {
       return true;
     }
     return 'Please upload image, with size equal or less than 15MB';
