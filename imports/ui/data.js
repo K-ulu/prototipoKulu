@@ -20,56 +20,19 @@
         var data = [];
         files.map((aFile) => {
             let link = UserFiles.findOne({_id: aFile._id}).link();  //The "view/download" link
-            data.push({
-                title:aFile.name,
-                imageUrl:link
-            })
+            let tipo = aFile.type;
+            let arregloDeSubCadenas = tipo.split("/");
+            tipo = arregloDeSubCadenas[0];
+            if (tipo == "image"){
+                data.push({
+                    title:aFile.name,
+                    imageUrl:link
+                })
+            }
         })
+
         return data;
     }
-
-    const cities1 = [
-        {
-            title: 'Berlin, Germany',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/berlin.jpg'
-        },
-        {
-            title: 'Chicago, Illinois',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/chicago.jpg'
-        },
-        {
-            title: 'Cairo, Egypt',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/egypt.jpg'
-        },
-        {
-            title: 'London, England',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/london.jpg'
-        },
-        {
-            title: 'New York, New York',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/ny.jpg'
-        },
-        {
-            title: 'Paris, France',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/paris.jpg'
-        },
-        {
-            title: 'Rome, Italy',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/rome.jpg'
-        },
-        {
-            title: 'Seoul, South Korea',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/seoul.jpg'
-        },
-        {
-            title: 'Madrid, Spain',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/spain.jpg'
-        },
-        {
-            title: 'Tokyo, Japan',
-            imageUrl: 'https://s3.amazonaws.com/aaron-cdn/react-image-timeline/tokyo.jpg'
-        }
-    ];
 
     function shuffled(inputArray) {
         let j, x, i;
@@ -89,15 +52,7 @@
     }
 
     export function getSampleData(inOrder = true, files) {
-        var data;
-        if (files == undefined || files.length == 0){
-            console.log("intentando");
-            data = cities1;
-        }
-        else{
-            data = datos(files);
-            console.log(data);
-        }
+        var data = datos(files);
 
         let offset = 0;
         const t = inOrder ? array => array : shuffled;
