@@ -1,11 +1,14 @@
 import { withRouter } from "react-router-dom";
-
 import React, {Component, PropTypes} from 'react';
-import Timeline from './timeline';
-import {getSampleData} from './data';
-// require('../dist/timeline.css');
-require('react-image-timeline/dist/timeline.css');
 
+import { withTracker } from 'meteor/react-meteor-data';
+import UserFiles from '../api/filesCol.js';
+
+import Timeline from './timeline';
+
+import {getSampleData} from './data';
+
+require('react-image-timeline/dist/timeline.css');
 const CustomStartLabel = (props) => {
     return <div className="custom-start-label">
         <p>Start Label</p>
@@ -48,20 +51,30 @@ const CustomImageBody = (props) => {
 class PruebasCaro extends React.Component {
     static displayName = 'TimelineExample';
     static propTypes = {};
-
     constructor(props) {
         super(props);
         this.state = {
-            events: getSampleData(false),
-            useCustomComponents: false
+            contador: 0,
+            events: getSampleData(false, this.props.files),
+            // useCustomComponents: false
         };
     }
 
-    handleToggle(event) {
-        this.setState({useCustomComponents: event.target.checked});
-    }
+    // handleToggle(event) {
+    //     this.setState({useCustomComponents: event.target.checked});
+    // }
 
     render() {
+        let data = this.props.files;
+        console.log(this.state.contador);
+        if (data.length > 0 && this.state.contador < 1){
+            this.setState(
+                {
+                    contador: 1,
+                    events:getSampleData(false, data)
+                }
+            )
+        }
         const {events, useCustomComponents} = this.state;
         const timeline = <Timeline events={events}/>;
         const customTimeline = <Timeline events={events}
@@ -75,10 +88,10 @@ class PruebasCaro extends React.Component {
             <h1>React Image Timeline Example (resize me - I'm responsive)</h1>
             <div className="toggle-container">
                 <strong>Use Custom Components:</strong>
-                <input type="checkbox"
+                {/* <input type="checkbox"
                        onChange={this.handleToggle.bind(this)}
                        checked={useCustomComponents}
-                />
+                /> */}
             </div>
             <hr/>
             {useCustomComponents ? customTimeline : timeline}
@@ -86,27 +99,13 @@ class PruebasCaro extends React.Component {
     }
 }
 
-// import Chronology from 'react-chronos';
+//export default withRouter(PruebasCaro);
 
-// class PruebasCaro extends React.Component {
-//     render() {
-//         return (
-//         <div>
-//             <Chronology type="vertical">
-//                 {events.map(event => (
-//                     <div>
-//                         <div class="marker">
-                        
-//                         </div>
-//                         <div class="event">
-//                         { event.details }
-//                         </div>
-//                     </div>
-//                 ))
-//             }
-//         </Chronology>
-//         </div>
-//         );
-//     }
-// }
-export default withRouter(PruebasCaro);
+export default withTracker(() => {
+    var filesHandle = Meteor.subscribe("files.all");//suscripcion a files
+    console.log(filesHandle.ready());
+
+    return {
+        files: UserFiles.find({}, {sort: {name: 1}}).fetch(), 
+    }
+})(PruebasCaro);
