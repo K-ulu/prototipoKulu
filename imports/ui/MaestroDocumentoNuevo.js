@@ -23,6 +23,7 @@ class MaestrosDocumentoNuevo extends React.Component {
   }
 
   onPreviewDrop = (files) => {
+    console.log(files);
     this.setState({
       files: this.state.files.concat(files),
      });
