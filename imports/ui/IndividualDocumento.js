@@ -83,22 +83,40 @@ class IndividualDocumento extends Component {
 
   render() {
     console.log(this.props);
+    //dividimos el arreglo atraves de "." para poder obtener la extension del archivo
+    let extension = this.props.fileName.split('.');   
+    let image = null;
+    let etiquetaTipoArchivo = null;
+    //determinamos la imagen y la etiqueta del tipo de texto
+    if(extension.includes("docx") || extension.includes("doc")){
+      image = <img className="card-img-top " src="/images/word.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Texto</p>
+    } else if(extension.includes("pptx") || extension.includes("ppt")){
+      image = <img className="card-img-top " src="/images/powerp.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Presentación</p>
+    } else if(extension.includes("pdf")){
+      image = <img className="card-img-top " src="/images/pdf.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">PDF</p>
+    }
+
     return (
-      <div className="col-md-4">
-        <div className="card">
-          <img className="card-img-top" src="/images/pdf.png" alt="pdf image"/>
-          <div className="card-body">
+      <div className="col-md-3">
+        <div className="card" id="document">
+          <div className="text-center">
+            { image }
+          </div>          
+          <div className="card-body br-none">
             <h5 className="card-title">{ this.props.fileName }</h5>
-            <p className="card-text text-muted">Documento PDF</p>          
+            { etiquetaTipoArchivo }         
             <div className="row">
-              <div className="col-4">
+              <div className="col-4 no-padding">
                 <button onClick={ this.openFile.bind(this, this.props.fileUrl) } className="btn btn-outline-success btn-block" target="_blank"><i className="fa fa-fw fa-eye"></i></button>                
               </div>  
-              <div className="col-4">
+              <div className="col-4 no-padding">
                 <button onClick={ this.docRenameFile } className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>                
               </div>  
-              <div className="col-4">
-                <button onClick={ this.docRemoveFile } className="btn btn-outline-danger btn-block"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              <div className="col-4 no-padding">
+                <button onClick={ this.docRemoveFile } className="btn btn-outline-danger btn-block"><i className="fa fa-trash-o" aria-hidden="true"></i></button>
               </div>  
             </div>
           </div>

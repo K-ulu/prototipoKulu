@@ -45,7 +45,6 @@ class DocumentoUploadComponent extends Component {
         <div className="row">
           { display }
         </div>
-
       </div>
     }
     else return <div> No tiene ningun documento almacenado </div>;

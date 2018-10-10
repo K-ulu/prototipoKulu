@@ -2,9 +2,9 @@ import { withRouter } from "react-router-dom";
 
 import React, {Component, PropTypes} from 'react';
 import Timeline from './timeline';
-import {getSampleData} from './data';
+//import {getSampleData} from './data';
 // require('../dist/timeline.css');
-require('react-image-timeline/dist/timeline.css');
+//require('react-image-timeline/dist/timeline.css');
 
 const CustomStartLabel = (props) => {
     return <div className="custom-start-label">
@@ -62,7 +62,7 @@ class PruebasCaro extends React.Component {
     }
 
     render() {
-        const {events, useCustomComponents} = this.state;
+        /*const {events, useCustomComponents} = this.state;
         const timeline = <Timeline events={events}/>;
         const customTimeline = <Timeline events={events}
                                          customStartLabel={CustomStartLabel}
@@ -70,10 +70,10 @@ class PruebasCaro extends React.Component {
                                          customHeader={CustomHeader}
                                          customImageBody={CustomImageBody}
                                          customTextBody={CustomTextBody}
-                                         customFooter={CustomFooter}/>;
+                                         customFooter={CustomFooter}/>;*/
         return <div>
             <h1>React Image Timeline Example (resize me - I'm responsive)</h1>
-            <div className="toggle-container">
+            {/*<div className="toggle-container">
                 <strong>Use Custom Components:</strong>
                 <input type="checkbox"
                        onChange={this.handleToggle.bind(this)}
@@ -81,7 +81,7 @@ class PruebasCaro extends React.Component {
                 />
             </div>
             <hr/>
-            {useCustomComponents ? customTimeline : timeline}
+            {useCustomComponents ? customTimeline : timeline}*/}
         </div>;
     }
 }

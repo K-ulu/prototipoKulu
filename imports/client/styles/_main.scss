@@ -67,9 +67,26 @@
   padding-left: 20px;
 }
 
+
+/* Ajustes en card para visualizar un documento*/
+#document .card-img-top {
+  width: 50%;
+  height: 7vw;
+  object-fit: fill;
+}
+
+#document .no-padding {
+  padding: 0px 2px;
+}
+
+.br-none {
+  padding: 0;
+  margin: 0;
+}
+
 /* importando componentnes */
-@import './components/_carousel';
-@import './components/_homeBand';
+@import './components/carousel';
+@import './components/homeBand';
 
 /*importando estilos de paginas principales*/
 @import './about';

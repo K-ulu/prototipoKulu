@@ -97,8 +97,8 @@ export const routes = (
       <Route path="/admin" component={()=>(<Login isAuthenticated={isAuthenticated}/>)}/>
       <Route path="/mat" component={()=>(<SelectList isAuthenticated={isAuthenticated}/>)}/>
       
-      // Pruebas para la linea del tiempo
-      <Route path="/prueba" component={()=>(<PruebasCaro isAuthenticated={isAuthenticated}/>)}/>
+      {/* Pruebas para la linea del tiempo */}
+      {/*<Route path="/prueba" component={()=>(<PruebasCaro isAuthenticated={isAuthenticated}/>)}/>*/}
 
 
       
