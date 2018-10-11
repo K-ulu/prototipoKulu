@@ -49,7 +49,7 @@ class MaestrosDocumentoNuevo extends React.Component {
           },
           streams: 'dynamic',
           chunkSize: 'dynamic',
-          allowWebWorkers: true // If you see issues with uploads, change this to false
+          allowWebWorkers: true, // If you see issues with uploads, change this to false
         }, false)
 
         self.setState({
