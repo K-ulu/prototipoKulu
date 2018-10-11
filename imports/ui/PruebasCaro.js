@@ -6,7 +6,8 @@ import UserFiles from '../api/filesCol.js';
 import Timeline from './timeline';
 import {getSampleData} from './data';
 
-require('react-image-timeline/dist/timeline.css');
+require('../client/styles/lineaTiempo.scss');
+require('../client/styles/timeline.css');
 
 const CustomStartLabel = (props) => {
     return <div className="custom-start-label">
@@ -87,7 +88,7 @@ class PruebasCaro extends React.Component {
             <div>
                 <h1>Linea del Tiempo</h1>
                 <div className="toggle-container">
-                    <strong>Usar Componentes:</strong>
+                    <h1>Usar Componentes:</h1>
                     <input type="checkbox"
                         onChange={this.handleToggle.bind(this)}
                         checked={useCustomComponents}

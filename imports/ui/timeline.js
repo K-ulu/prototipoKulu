@@ -85,7 +85,7 @@ const ArrowAndDot = (props) => {
 export default class Timelime extends Component {
     static displayName = 'Timeline';
     static propTypes = {
-        events: PropTypes.arrayOf(Event).isRequired,
+        // events: PropTypes.arrayOf(Event).isRequired,
         reverseOrder: PropTypes.bool,
         customStartLabel: PropTypes.func,
         customEndLabel: PropTypes.func,
