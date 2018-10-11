@@ -61,7 +61,6 @@ export default withTracker( ( props ) => {
   const docsReadyYet = filesHandle.ready();
   console.log(docsReadyYet);
   const files = UserDocs.find({userId: id}, {sort: {name: 1}}).fetch();
-
   console.log(files);
   return {
     docsReadyYet,
