@@ -24,20 +24,20 @@ class FileUploadComponent extends Component {
         let link = UserFiles.findOne({_id: aFile._id}).link();  //The "view/download" link
 
         // Send out components that show details of each file
-        return <div key={'file' + key}>
-          <IndividualFile
+        return <IndividualFile
+            key={'file' + key}
             fileName={aFile.name}
             fileUrl={link}
             fileId={aFile._id}
             fileSize={aFile.size}
             fileType = {aFile.type}
           />
-        </div>
       })
 
-      return <div>
-        {display}
-
+      return <div className="container">
+        <div className="row">
+          { display }
+        </div> 
       </div>
     }
     else return <div> No tiene ningun archivo almacenado </div>;

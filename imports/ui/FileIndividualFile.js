@@ -77,57 +77,57 @@ class IndividualFile extends Component {
     }
   }
 
-  render() {
-    let tipo = this.props.fileType;
-    let arregloDeSubCadenas = tipo.split("/");
-    tipo = arregloDeSubCadenas[0];
+  openFile(url){
+    //abre url 
+    window.open(url, '_blank');
+  }
 
-    let url ="";
-    if (tipo == "image"){
-      url = this.props.fileUrl;
-    }
-    else if (tipo == "video"){
-      url = "/images/video.png";
-    }
-    else{
-      url = "/images/audio.jpg";
-    }
+  render() {
+    //dividimos el arreglo atraves de "." para poder obtener la extension del archivo
+    let extension = this.props.fileName.split('.');   
+    let image = null;
+    let etiquetaTipoArchivo = null;
+    //determinamos la imagen y la etiqueta del tipo de texto
+    if(extension.includes("mp3") || extension.includes("wav") || extension.includes("wma")){
+      image = <img className="card-img-top " src="/images/audio.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Audio</p>
+    } else if(extension.includes("mp4") || extension.includes("3gp") || extension.includes("avi") || extension.includes("flv") || extension.includes("wmv")){
+      image = <img className="card-img-top " src="/images/video.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Vídeo</p>
+    } else if(extension.includes("jpg") || extension.includes("JPG") || extension.includes("png") || extension.includes("PNG") || extension.includes("bmp") || extension.includes("gif")){
+      image = <img className="card-img-top " src="/images/picture.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Imagen</p>
+    }    
 
     return (
-    <div className="m-t-sm">
-      <div className="row">
-        <div className="col">
-          <img src = {url} width = "70px" height ="70px" />
-          <div className="m-b-sm">
-            <strong>{this.props.fileName}</strong>
+      <div className="col-md-3">
+        <div className="card" id="document">
+          <div className="text-center">
+            { image }
+          </div>          
+          <div className="card-body br-none">
+            <h5 className="card-title">{ this.props.fileName }</h5>
+            { etiquetaTipoArchivo }         
+            <div className="row">
+              <div className="col-4 no-padding">
+                <button onClick={ this.openFile.bind(this, this.props.fileUrl) } className="btn btn-outline-success btn-block" target="_blank"><i className="fa fa-fw fa-eye"></i></button>                
+              </div>  
+              <div className="col-4 no-padding">
+                <button onClick={ this.renameFile } className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>                
+              </div>  
+              <div className="col-4 no-padding">
+                <button onClick={ this.removeFile } className="btn btn-outline-danger btn-block"><i className="fa fa-trash-o" aria-hidden="true"></i></button>
+              </div>  
+            </div>
           </div>
         </div>
-
-        <div className="col">
-          <div className="row">
-            <a href={this.props.fileUrl} className="btn btn-outline btn-success btn-sm"
-              target="_blank">Ver</a>
-          </div>
-
-          <div className="row">
-            <button onClick={this.renameFile} className="btn btn-outline btn-primary btn-sm">
-              Renombrar
-            </button>
-          </div>
-
-          <div className="row">
-            <button onClick={this.removeFile} className="btn btn-outline btn-danger btn-sm">
-              Borrar
-            </button>
-          </div>
-        </div>
-      </div>
-      <ToastContainer
+      
+        <ToastContainer
           hideProgressBar={true}
           newestOnTop={true}
           autoClose={5000}
-      />
-    </div>
+        />
+      </div>    
     );
   }
 }

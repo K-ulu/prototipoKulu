@@ -1,9 +1,6 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
 
-import { Lobbies } from '../api/lobbies';
-import LobbiesListItem from './LobbiesListItem';
+import { Session } from 'meteor/session';
 
 export default class LobbiesList extends React.Component {
 
@@ -19,19 +16,19 @@ export default class LobbiesList extends React.Component {
 		console.log(event.target.value.trim());
     this.setState({value: event.target.value});
 		Session.set('lobby', event.target.value.trim());
-  }
-
-	componentDidMount(){		
-		this.lobbiesTracker = Tracker.autorun( () => {
-			Meteor.subscribe('lobbies');
-			const lobbies = Lobbies.find().fetch();			
-			this.setState({  lobbies });
-		});
 	}
-
-	componentWillUnmount(){
-		this.lobbiesTracker.stop();
-	}
+	
+	//actualizamos props
+	static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.lobbies.length > 0){
+        console.log('nuevos props de lobbies list: ', nextProps);
+        return {
+          lobbies: nextProps.lobbies,
+        };
+      }
+      //retornamos null cuando no sea necesario actualizar state
+      return null;
+    }
 
 	renderLobbiesListItems(){
 		return this.state.lobbies.map((lobby) => {
@@ -42,11 +39,9 @@ export default class LobbiesList extends React.Component {
 		});
 	}	
 
-
 	render() {
 		return (
-			<div>
-			
+			<div>			
 				<p>LobbiesList</p>                  
 				<select value={this.state.value} onChange={this.handleChange.bind(this)} className="form-control form-control rounded">
 					<option value ="seleccione">Seleccione lobby</option>    

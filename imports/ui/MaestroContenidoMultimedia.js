@@ -64,12 +64,8 @@ export default class ContenidoMultimedia extends React.Component {
                       </div>
                       {/*Cards 100%..*/}
                       <div className="row section-cards list">
-                        <div className="col-12">                            
-                          <div className="card">
-                            <div className="contenido">
-                              <FileUploadComponent/>
-                            </div>
-                          </div>
+                        <div className="col-12">       
+                          <FileUploadComponent/>
                         </div>                        
                       </div>                          
                     </div>
