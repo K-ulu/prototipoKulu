@@ -2,13 +2,13 @@ import UserDocs from './documentosCol.js'
 import { Meteor } from 'meteor/meteor';
   
 if (Meteor.isServer) {
-    Meteor.publish('documentos.all', function () {
+    Meteor.publish('documentos.alla', function () {
         return UserDocs.find().cursor;
     });
 }
 
 Meteor.methods({
-    'docRemoveFile'(id) {
+    'docRemoveFilea'(id) {
         UserDocs.remove({_id: id}, function (error) {
             if (error) {
               console.error("Documento no removido, error: " + error.reason)
@@ -19,7 +19,7 @@ Meteor.methods({
 
     },
     
-    'docRenameFile'(id, name) {
+    'docRenameFilea'(id, name) {
         UserDocs.update({
             _id: id
         }, {

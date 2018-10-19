@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
-import { Session } from 'meteor/session';
 
 import ReactDropzone from "react-dropzone";
-import UserDocs from '../api/documentosCol.js';
-class MaestrosDocumentoNuevo extends React.Component {
+import Documentos from '../../../api/documentos';
+
+class DocumentoNuevo extends React.Component {
 
   constructor(props) {
     let todas = 0;
@@ -34,24 +32,30 @@ class MaestrosDocumentoNuevo extends React.Component {
 
   uploadIt() {
     this.todas = this.state.files.length;//obetenemos el total del arreglo
+    //segun la url es el tipo de documento que se guarda
+    let pathname = this.props.history.location.pathname;
+    let estado = null;
+    //en base a la url asignamos el tipo de archivo que será
+    estado = (pathname == '/dashboard/documentos' || pathname == '/dashboard/documentos/')? 'privado' : 'publico';
 
     for (var i = 0; i < this.todas; i++) { //recorremos todo el arreglo
       var file = this.state.files[i]; //Asignamos a una variable una posicion del arreglo
       let self = this;
-      file.public = true;
+      
       console.log('file ', file);      
       if (file) {
-        let uploadInstance = UserDocs.insert({
+        let uploadInstance = Documentos.insert({
           file: file,
           meta: {
             locator: self.props.fileLocator,
             userId: Meteor.userId(), // Optional,asignamos el id del usuario que guarda el archivo
-            estado: 'publico'
+            estado: estado
           },          
           streams: 'dynamic',
           chunkSize: 'dynamic',
           allowWebWorkers: true // If you see issues with uploads, change this to false                    
         }, false)
+        console.log('upload dats ', uploadInstance)
 
         self.setState({
           uploading: uploadInstance, // guardamos los datos de la variable a upliading
@@ -124,7 +128,7 @@ class MaestrosDocumentoNuevo extends React.Component {
       }
   }
 
-  render () {
+  render () {        
     const previewStyle = {
       display: 'inline',
       width: 100,
@@ -176,7 +180,7 @@ class MaestrosDocumentoNuevo extends React.Component {
                           {this.showUploads()}
 
                           <button className="btn btn-success btn-block" onClick={this.uploadIt} >Agregar</button>                          
-                          <button className="btn btn-warning btn-block" onClick={this.cerrar} >Cerrar</button>                         
+                          <button className="btn btn-danger btn-block" onClick={this.cerrar} >Cerrar</button>                         
                         </div>
                       </div>
                     </div>
@@ -190,4 +194,4 @@ class MaestrosDocumentoNuevo extends React.Component {
   }
 }
 
-export default withRouter(MaestrosDocumentoNuevo);
+export default withRouter(DocumentoNuevo);

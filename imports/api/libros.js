@@ -1,46 +1,68 @@
+import { FilesCollection } from 'meteor/ostrio:files';
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-import SimpleSchema from 'simpl-schema';
-import shortid from 'shortid';
-import { check } from 'meteor/check';
 
-export const Libros = new Mongo.Collection('libros');
+const Libros = new FilesCollection({
+  storagePath: '/data/assets/app/uploads/libros',
+  downloadRoute: '/files/libros',
+  collectionName: 'libros',
+  permissions: 0o755,
+  allowClientCode: false,
+  cacheControl: 'public, max-age=31536000',
+  // Read more about cacheControl: https://devcenter.heroku.com/articles/increasing-application-performance-with-http-cache-headers
+  onbeforeunloadMessage() {
+    return 'Upload is still in progress! Upload will be aborted if you leave this page!';
+  },
+  onBeforeUpload(file) {
+    // Allow upload files under 10MB, and only in png/jpg/jpeg formats
+    // Note: You should never trust to extension and mime-type here
+    // as this data comes from client and can be easily substitute
+    // to check file's "magic-numbers" use `mmmagic` or `file-type` package
+    // real extension and mime-type can be checked on client (untrusted side)
+    // and on server at `onAfterUpload` hook (trusted side)
+    // if (file.size <= 10485760 && /mp4|png|jpe?g/i.test(file.ext)) {
+    if (file.size <= 15605760 && /mp4|pdf|jpe?g/i.test(file.ext)) {
+      return true;
+    }
+    return 'Please upload a book, with size equal or less than 15MB';
+  },
 
+  downloadCallback(fileObj) {
+    if (this.params.query.download == 'true') {
+      // Increment downloads counter
+      UserFiles.update(fileObj._id, {$inc: {'meta.downloads': 1}});
+    }
+    // Must return true to continue download
+    return true;
+  }
+});
+
+  
 if (Meteor.isServer) {
-  Meteor.publish('libro', function () {
-    return Libros.find({ userId: this.userId });
-  });
+    Meteor.publish('libros.all', function () {
+        return Libros.find().cursor;
+    });
 }
 
 Meteor.methods({
-  'libros.insert'(nombreLibro, tamanio,fechaCarga,descripcionLibros) {
-    if (!this.userId) {
-      throw new Meteor.Error('not-authorized');
-    }
-    
-    Libros.insert({
-      _id: shortid.generate(),
-      nombreLibro,
-      tamanio,
-      fechaCarga,
-      descripcionLibros,
-      idAdmonContenido: this.userId
-    });
-  },
+    'bookRemoveFile'(id) {
+      Libros.remove({_id: id}, function (error) {
+            if (error) {
+              console.error("Documento no removido, error: " + error.reason)
+            } else {
+              console.info("Documento removido correctamente!");
+            }
+        });
 
-  'libros.update'( miId, nombreLibro,tamanio,fechaCarga,descripcionLibros){
-    if (!this.userId) {
-      throw new Meteor.Error('not-authorized');
+    },
+    
+    'bookRenameFile'(id, name) {
+        Libros.update({
+            _id: id
+        }, {
+            $set: { name }
+        });
     }
-    Libros.update({
-        _id: miId
-    }, {
-      $set: { nombreLibro,tamanio,fechaCarga,descripcionLibros}
-    });
-  },
-  
-  'libros.remove'(id) {
-    check(id, String);
-    Libros.remove(id);
-  }
 });
+
+// Export FilesCollection instance, so it can be imported in other files
+export default Libros;

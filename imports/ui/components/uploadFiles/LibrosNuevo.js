@@ -1,13 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
-import { Session } from 'meteor/session';
 
 import ReactDropzone from "react-dropzone";
-import UserDocs from '../api/documentosCol.js';
-class MaestrosDocumentoNuevo extends React.Component {
+import Libros from '../../../api/libros';
 
+class LibrosNuevo extends React.Component {
   constructor(props) {
     let todas = 0;
     super(props);
@@ -41,7 +38,7 @@ class MaestrosDocumentoNuevo extends React.Component {
       file.public = true;
       console.log('file ', file);      
       if (file) {
-        let uploadInstance = UserDocs.insert({
+        let uploadInstance = Libros.insert({
           file: file,
           meta: {
             locator: self.props.fileLocator,
@@ -124,7 +121,7 @@ class MaestrosDocumentoNuevo extends React.Component {
       }
   }
 
-  render () {
+  render(){
     const previewStyle = {
       display: 'inline',
       width: 100,
@@ -144,7 +141,7 @@ class MaestrosDocumentoNuevo extends React.Component {
                       {/*title*/}
                       <div className="row justify-content-center">
                         <div className="col-10">
-                          <h2 className="text-center">Nuevo Documento</h2>
+                          <h2 className="text-center">Nuevo Libro</h2>
                         </div>     
                       </div>
 
@@ -152,7 +149,7 @@ class MaestrosDocumentoNuevo extends React.Component {
                         <div className="col-10">
 
                           <ReactDropzone
-                            accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                            accept="application/pdf"
                             onDrop={this.onPreviewDrop}
                             style={{"width" : "100%", "height" : "25%", "border" : "1px dashed black"}}>
                             <div>
@@ -176,7 +173,7 @@ class MaestrosDocumentoNuevo extends React.Component {
                           {this.showUploads()}
 
                           <button className="btn btn-success btn-block" onClick={this.uploadIt} >Agregar</button>                          
-                          <button className="btn btn-warning btn-block" onClick={this.cerrar} >Cerrar</button>                         
+                          <button className="btn btn-danger btn-block" onClick={this.cerrar} >Cerrar</button>                         
                         </div>
                       </div>
                     </div>
@@ -190,4 +187,4 @@ class MaestrosDocumentoNuevo extends React.Component {
   }
 }
 
-export default withRouter(MaestrosDocumentoNuevo);
+export default withRouter(LibrosNuevo);

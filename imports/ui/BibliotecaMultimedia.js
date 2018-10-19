@@ -1,47 +1,41 @@
-
-/*Caro:
-  Este archivo trabaja con documentoUpload el cual muestra la lista de las imagenes subidas y usa MaestroDocumentoNuevo 
-  el cual guarda un archivo nuevo
-*/
-
-import React from 'react'
+import React from 'react';
 import { withRouter } from "react-router-dom";
 
-import DocumentoNuevo from '../ui/components/uploadFiles/DocumentoNuevo';
-import ListaDocumentos from '../ui/components/uploadFiles/ListaDocumentos';
+import ContenidosMultimediaNuevo from '../ui/components/uploadFiles/ContenidosMultimediaNuevo';
+import ListaContenidosMultimedia from '../ui/components/uploadFiles/ListaContenidosMultimedia';
 
-class MaestroDocumentos extends React.Component {
+class BibliotecaMultimedia extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      showComponent:false,
-    };
+      showComponent: false,
+    }
 
     this.editar = this.nuevo.bind(this);
   }
- 
+
   nuevo = () => {
     this.setState({
       showComponent: !this.state.showComponent
     });
   };
 
-  render() {
+  render(){
     return (
       <div>
         {/*Inicio componente */}
         {/*Inicio row */}
-          <div className="row">
+        <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              {/*Card*/}                  
               <div className="card noborder mb-3">
                 <div className="card-body">
-                  {/*title*/}
+                  {/*Card title*/}
                   <div className="row justify-content-center">
                     <div className="col-6">
-                      <h1 className="text-center">Mis Documentos</h1>
+                      <h1 className="text-center">Contenido Multimedia</h1>
                     </div>     
                   </div>
-
                   <div className="row justify-content-center">
                     <div className="col-10">
                       {/*buttons and filter options*/}
@@ -53,7 +47,7 @@ class MaestroDocumentos extends React.Component {
                           <button  type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
                           <button  type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
                         </div> 
-                        {this.state.showComponent ? <DocumentoNuevo nuevo={this.nuevo} /> : null}
+                        {this.state.showComponent ? <ContenidosMultimediaNuevo nuevo={this.nuevo} /> : null}
                       </div>
                       {/*Buscador..*/}
                       <div className="row justify-content-between">
@@ -67,7 +61,7 @@ class MaestroDocumentos extends React.Component {
                       {/*Cards 100%..*/}
                       <div className="row section-cards list">
                         <div className="col-12">                            
-                          <ListaDocumentos history={ this.props.history }/>
+                          <ListaContenidosMultimedia history={ this.props.history }/>
                         </div>                        
                       </div>                          
                     </div>
@@ -78,10 +72,10 @@ class MaestroDocumentos extends React.Component {
             </div>
           </div>
           {/*Fin row */}
-      {/*Fin componente */}
+        {/*Fin componente */}
       </div>
     );
   }
-} 
+}
 
-export default withRouter(MaestroDocumentos);
+export default withRouter(BibliotecaMultimedia);

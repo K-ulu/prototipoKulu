@@ -1,47 +1,41 @@
-
-/*Caro:
-  Este archivo trabaja con documentoUpload el cual muestra la lista de las imagenes subidas y usa MaestroDocumentoNuevo 
-  el cual guarda un archivo nuevo
-*/
-
-import React from 'react'
+import React from 'react';
 import { withRouter } from "react-router-dom";
 
 import DocumentoNuevo from '../ui/components/uploadFiles/DocumentoNuevo';
 import ListaDocumentos from '../ui/components/uploadFiles/ListaDocumentos';
 
-class MaestroDocumentos extends React.Component {
+class BibliotecaDocumentos extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      showComponent:false,
-    };
+      showComponent: false,
+    }
 
     this.editar = this.nuevo.bind(this);
   }
- 
+
   nuevo = () => {
     this.setState({
       showComponent: !this.state.showComponent
     });
   };
 
-  render() {
+  render(){
     return (
       <div>
         {/*Inicio componente */}
         {/*Inicio row */}
-          <div className="row">
+        <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              {/*Card*/}                  
               <div className="card noborder mb-3">
                 <div className="card-body">
-                  {/*title*/}
+                  {/*Card title*/}
                   <div className="row justify-content-center">
                     <div className="col-6">
-                      <h1 className="text-center">Mis Documentos</h1>
+                      <h1 className="text-center">Documentos</h1>
                     </div>     
                   </div>
-
                   <div className="row justify-content-center">
                     <div className="col-10">
                       {/*buttons and filter options*/}
@@ -78,10 +72,10 @@ class MaestroDocumentos extends React.Component {
             </div>
           </div>
           {/*Fin row */}
-      {/*Fin componente */}
+        {/*Fin componente */}
       </div>
     );
   }
-} 
+}
 
-export default withRouter(MaestroDocumentos);
+export default withRouter(BibliotecaDocumentos);

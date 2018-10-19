@@ -9,7 +9,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-class IndividualDocumento extends Component {
+class IndividualDocumentoPrivado extends Component {
   constructor(props) {
     super(props);
 
@@ -97,7 +97,16 @@ class IndividualDocumento extends Component {
     } else if(extension.includes("pdf")){
       image = <img className="card-img-top " src="/images/pdf.png" alt="pdf image"/>
       etiquetaTipoArchivo = <p className="card-text text-muted">PDF</p>
-    }
+    } else if(extension.includes("mp3") || extension.includes("wav") || extension.includes("wma")){
+      image = <img className="card-img-top " src="/images/audio.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Audio</p>
+    } else if(extension.includes("mp4") || extension.includes("3gp") || extension.includes("avi") || extension.includes("flv") || extension.includes("wmv")){
+      image = <img className="card-img-top " src="/images/video.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Vídeo</p>
+    } else if(extension.includes("jpg") || extension.includes("JPG") || extension.includes("png") || extension.includes("PNG") || extension.includes("bmp") || extension.includes("gif")){
+      image = <img className="card-img-top " src="/images/picture.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Imagen</p>
+    }  
 
     return (
       <div className="col-md-3">
@@ -131,4 +140,4 @@ class IndividualDocumento extends Component {
     );
   }
 }
-export default IndividualDocumento;
+export default IndividualDocumentoPrivado;
