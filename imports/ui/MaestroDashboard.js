@@ -71,7 +71,7 @@ class MaestroDashboard extends React.Component {
         <div id="wrapper">
 
           {/*Left Sidebar*/}
-          <LeftSidebar/>
+          <LeftSidebar tipo="maestro"/>
 
           {/*Content*/}
           <div id="page-content-wrapper">

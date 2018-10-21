@@ -1,8 +1,10 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
+
 import LibroNuevo from '../ui/components/uploadFiles/LibrosNuevo';
 import ListaLibros from '../ui/components/uploadFiles/ListaLibros';
 
-export default class BibliotecaLibros extends React.Component {
+class BibliotecaLibros extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -59,7 +61,7 @@ export default class BibliotecaLibros extends React.Component {
                       {/*Cards 100%..*/}
                       <div className="row section-cards list">
                         <div className="col-12">                            
-                          <ListaLibros/>
+                          <ListaLibros history={ this.props.history }/>
                         </div>                        
                       </div>                          
                     </div>
@@ -75,3 +77,5 @@ export default class BibliotecaLibros extends React.Component {
     );
   }
 }
+
+export default withRouter(BibliotecaLibros);

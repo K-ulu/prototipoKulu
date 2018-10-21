@@ -61,9 +61,13 @@ export default withTracker( ( props ) => {
   console.log(filesHandle);
   const docsReadyYet = filesHandle.ready();
   console.log(docsReadyYet);
-  // const files = UserDocs.find({userId: id}, {sort: {name: 1}}).fetch();
-  const files = Libros.find( { userId: id } , {sort: {name: 1}}).fetch();
-  // meta:{ estado: 'privado'}
+  let pathname = props.history.location.pathname;
+  let files = null;  
+  if(pathname == '/dashboard/libros' || pathname == '/dashboard/libros/'){
+    files = Libros.find( { userId: id } , {sort: {name: 1}}).fetch();
+  } else {
+    files = Libros.find({ "meta.estado": 'publico'}, {sort: {name: 1}}).fetch();
+  }
 
   console.log(files);
   return {
