@@ -26,32 +26,32 @@ class ListaDocumentos extends Component {
       // Run through each file that the user has stored
       // (make sure the subscription only sends files owned by this user)
       let display = fileCursors.map((aFile, key) => {
-        // console.log('A file: ', aFile.link(), aFile.get('name'))
-        let link = Documentos.findOne({_id: aFile._id}).link();  //The "view/download" link
-        console.log(Documentos.findOne({_id: aFile._id}));
-        console.log(link);
+      // console.log('A file: ', aFile.link(), aFile.get('name'))
+      let link = Documentos.findOne({_id: aFile._id}).link();  //The "view/download" link
+      console.log(Documentos.findOne({_id: aFile._id}));
+      console.log(link);
         
-        let pathname = this.props.history.location.pathname;
-        //determinamos tipo de elemento a mostrar de acuerdo a la url        
-        if(pathname == '/dashboard/biblioteca/documentos' || pathname == '/dashboard/biblioteca/documentos/'){ //documento publico (biblioteca)
-          // Send out components that show details of each file
-          return <IndividualArchivoPublico
-            key={'file' + key}
-            fileName={aFile.name}
-            fileUrl={link}
-            fileId={aFile._id}
-            fileSize={aFile.size}
-          />
-        } else { //documento privado (maestro)
-          return <IndividualDocumentoPrivado
-            key={'file' + key}
-            fileName={aFile.name}
-            fileUrl={link}
-            fileId={aFile._id}
-            fileSize={aFile.size}
-          />
-        }        
-      })
+      let pathname = this.props.history.location.pathname;
+      //determinamos tipo de elemento a mostrar de acuerdo a la url        
+      if(pathname == '/dashboard/biblioteca/documentos' || pathname == '/dashboard/biblioteca/documentos/'){ //documento publico (biblioteca)
+        // Send out components that show details of each file
+        return <IndividualArchivoPublico
+          key={'file' + key}
+          fileName={aFile.name}
+          fileUrl={link}
+          fileId={aFile._id}
+          fileSize={aFile.size}
+        />
+      } else { //documento privado (maestro)
+        return <IndividualDocumentoPrivado
+          key={'file' + key}
+          fileName={aFile.name}
+          fileUrl={link}
+          fileId={aFile._id}
+          fileSize={aFile.size}
+        />
+      }        
+    })
 
       return <div className="container">
         <div className="row">

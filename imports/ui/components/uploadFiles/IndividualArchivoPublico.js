@@ -59,6 +59,27 @@ class IndividualArchivoPublico extends Component {
         image = <img className="card-img-top " src="/images/pdf.png" alt="pdf image"/>
         etiquetaTipoArchivo = <p className="card-text text-muted">PDF</p>
       }
+    } else {
+      if(extension.includes("docx") || extension.includes("doc")){
+        image = <img className="card-img-top " src="/images/word.png" alt="pdf image"/>
+        etiquetaTipoArchivo = <p className="card-text text-muted">Texto</p>
+      } else if(extension.includes("pptx") || extension.includes("ppt")){
+        image = <img className="card-img-top " src="/images/powerp.png" alt="pdf image"/>
+        etiquetaTipoArchivo = <p className="card-text text-muted">Presentación</p>
+      } else if(extension.includes("pdf")){
+        image = <img className="card-img-top " src="/images/pdf.png" alt="pdf image"/>
+        etiquetaTipoArchivo = <p className="card-text text-muted">PDF</p>
+      }
+      if(extension.includes("mp3") || extension.includes("wav") || extension.includes("wma")){
+        image = <img className="card-img-top " src="/images/audio.png" alt="pdf image"/>
+        etiquetaTipoArchivo = <p className="card-text text-muted">Audio</p>
+      } else if(extension.includes("mp4") || extension.includes("3gp") || extension.includes("avi") || extension.includes("flv") || extension.includes("wmv")){
+        image = <img className="card-img-top " src="/images/video.png" alt="pdf image"/>
+        etiquetaTipoArchivo = <p className="card-text text-muted">Vídeo</p>
+      } else if(extension.includes("jpg") || extension.includes("JPG") || extension.includes("png") || extension.includes("PNG") || extension.includes("bmp") || extension.includes("gif")){
+        image = <img className="card-img-top " src="/images/picture.png" alt="pdf image"/>
+        etiquetaTipoArchivo = <p className="card-text text-muted">Imagen</p>
+      } 
     }
 
     return (
