@@ -48,6 +48,7 @@ class ListaContenidosMultimedia extends Component {
             fileUrl={link}
             fileId={aFile._id}
             fileSize={aFile.size}
+            renameMethod="RenameContent"
           />
         }                
       })

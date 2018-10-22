@@ -49,6 +49,7 @@ class ListaDocumentos extends Component {
           fileUrl={link}
           fileId={aFile._id}
           fileSize={aFile.size}
+          renameMethod="docRenameFile"
         />
       }        
     })

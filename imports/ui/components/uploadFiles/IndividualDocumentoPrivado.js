@@ -69,7 +69,7 @@ class IndividualDocumentoPrivado extends Component {
 
     console.log(prompt);
     if (!_.isEmpty(prompt)) {
-      Meteor.call('RenameContent', this.props.fileId, prompt, function (err, res) {
+      Meteor.call(this.props.renameMethod, this.props.fileId, prompt, function (err, res) {
         if (err)
           console.log(err);
       })

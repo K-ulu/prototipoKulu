@@ -43,6 +43,7 @@ class ListaLibros extends Component {
             fileUrl={link}
             fileId={aFile._id}
             fileSize={aFile.size}
+            renameMethod="bookRenameFile"
             />
         } else {          
           return <IndividualArchivoPublico
@@ -50,7 +51,7 @@ class ListaLibros extends Component {
             fileName={aFile.name}
             fileUrl={link}
             fileId={aFile._id}
-            fileSize={aFile.size}
+            fileSize={aFile.size}            
             />
         }        
         
