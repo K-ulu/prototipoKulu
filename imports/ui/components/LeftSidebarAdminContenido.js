@@ -62,6 +62,34 @@ export default class LeftSidebarAdminContenido extends React.Component {
 					</li> 
 
 					<li className="submenu">
+						<a href="#">
+							<i className="fa fa-fw fa-book"></i>
+							<span> Programa Educativo </span>
+							<span className="menu-arrow"></span>
+						</a>
+						<ul className="list-unstyled">
+							<li>
+								<a href="/dashboard/biblioteca/libros">
+									<i className="fa fa-fw fa-copy"></i>
+									<span> Materias </span>
+								</a>
+							</li>
+							<li>
+								<a href="/dashboard/biblioteca/multimedia">
+									<i className="fa fa-fw fa-headphones"></i>
+									<span> Bloques </span>
+								</a>
+							</li>   
+							<li>
+								<a href="/dashboard/biblioteca/documentos">
+									<i className="fa fa-fw fa-file-text-o"></i>
+									<span> Temas </span>
+								</a>
+							</li>         
+						</ul>
+					</li> 
+
+					<li className="submenu">
 						<a href="/dashboard/alumnos">
 							<i className="fa fa-fw fa-user"></i>
 							<span> Mis Alumnos </span>
