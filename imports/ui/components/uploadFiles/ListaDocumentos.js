@@ -33,7 +33,7 @@ class ListaDocumentos extends Component {
         
       let pathname = this.props.history.location.pathname;
       //determinamos tipo de elemento a mostrar de acuerdo a la url        
-      if(pathname == '/dashboard/biblioteca/documentos' || pathname == '/dashboard/biblioteca/documentos/'){ //documento publico (biblioteca)
+      if(this.props.tipo != 'adminContenido' && (pathname == '/dashboard/biblioteca/documentos' || pathname == '/dashboard/biblioteca/documentos/')){ //documento publico (biblioteca)
         // Send out components that show details of each file
         return <IndividualArchivoPublico
           key={'file' + key}

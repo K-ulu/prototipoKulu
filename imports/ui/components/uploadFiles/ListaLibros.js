@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import IndividualArchivoPublico from './IndividualArchivoPublico';
+import IndividualDocumentoPrivado from './IndividualDocumentoPrivado';
 import Libros from '../../../api/libros';
 
 import { Session } from 'meteor/session';
@@ -15,6 +16,10 @@ class ListaLibros extends Component {
 
   // This is our progress bar, bootstrap styled
   // Remove this function if not needed
+
+  componentDidMount(){
+    console.log('lista libros props: ', this.props);
+  }
 
 
   render() {
@@ -29,15 +34,25 @@ class ListaLibros extends Component {
         let link = Libros.findOne({_id: aFile._id}).link();  //The "view/download" link
         console.log(Libros.findOne({_id: aFile._id}));
         console.log(link);
-
-        // Send out components that show details of each file
-        return <IndividualArchivoPublico
+        
+        if(this.props.tipo == 'adminContenido'){
+          // Send out components that show details of each file
+          return <IndividualDocumentoPrivado
             key={'file' + key}
             fileName={aFile.name}
             fileUrl={link}
             fileId={aFile._id}
             fileSize={aFile.size}
-          />
+            />
+        } else {          
+          return <IndividualArchivoPublico
+            key={'file' + key}
+            fileName={aFile.name}
+            fileUrl={link}
+            fileId={aFile._id}
+            fileSize={aFile.size}
+            />
+        }        
         
       })
 

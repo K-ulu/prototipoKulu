@@ -1,26 +1,16 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 
-import LibroNuevo from '../ui/components/uploadFiles/LibrosNuevo';
 import ListaLibros from '../ui/components/uploadFiles/ListaLibros';
+import LibrosForm from './LibrosForm';
 
 class BibliotecaLibros extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      showComponent: false,
-    }
-
-    this.editar = this.nuevo.bind(this);
-  }
-
-  nuevo = () => {
-    this.setState({
-      showComponent: !this.state.showComponent
-    });
-  };
-
   render(){
+    let form = null;
+    if(this.props.tipo == 'adminContenido'){
+      form = <LibrosForm/>
+    } 
+
     return (
       <div>
         {/*Inicio componente */}
@@ -38,17 +28,8 @@ class BibliotecaLibros extends React.Component {
                   </div>
                   <div className="row justify-content-center">
                     <div className="col-10">
-                      {/*buttons and filter options*/}
-                      <div className="row justify-content-between">
-                        <div className="col-2">
-                          <button className="btn btn-primary btn-block" onClick={this.nuevo}>Nuevo</button>
-                        </div>
-                        <div className="col-2 btn-group" role="group" aria-label="Basic example">
-                          <button  type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
-                          <button  type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
-                        </div> 
-                        {this.state.showComponent ? <LibroNuevo nuevo={this.nuevo} /> : null}
-                      </div>
+                      {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}
+                      { form }
                       {/*Buscador..*/}
                       <div className="row justify-content-between">
                         <div className="col-12">
@@ -61,7 +42,7 @@ class BibliotecaLibros extends React.Component {
                       {/*Cards 100%..*/}
                       <div className="row section-cards list">
                         <div className="col-12">                            
-                          <ListaLibros history={ this.props.history }/>
+                          <ListaLibros history={ this.props.history } tipo={ this.props.tipo }/>
                         </div>                        
                       </div>                          
                     </div>
