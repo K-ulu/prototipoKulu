@@ -2,6 +2,7 @@ import R from 'ramda';
 import React, {Component} from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import ActionViewArray from 'material-ui/SvgIcon';
 
 const Event =  propTypes = {
     date: PropTypes.object.isRequired,
@@ -83,7 +84,10 @@ const ArrowAndDot = (props) => {
 };
 
 export default class Timelime extends Component {
+    static total=0;
     static displayName = 'Timeline';
+    static topLabel;
+    static bottomLabel;
     static propTypes = {
         // events: PropTypes.arrayOf(Event).isRequired,
         reverseOrder: PropTypes.bool,
@@ -127,10 +131,11 @@ export default class Timelime extends Component {
                 <FooterClass event={event}/>
             </div>
         </div>;
-        return <li className={index === 1 ? 'rt-event rt-offset-second' : 'rt-event'} key={index}>
+        // Haciendo cambios
+        return <li className={index === this.total ? 'rt-event rt-offset-second' : 'rt-event'} key={index}>
             <div className='rt-backing'>
-                <ArrowAndDot/>
                 {content}
+                <ArrowAndDot/>
             </div>
         </li>;
     }
@@ -158,14 +163,25 @@ export default class Timelime extends Component {
         // Build start & end labels
         const startEvent = (reverseOrder ? R.last : R.head)(events);
         const endEvent = (!reverseOrder ? R.last : R.head)(events);
-        const startLabel = (<li key="start" className="rt-label-container">
+        // const startLabel = (<li key="start" className="rt-label-container">
+        //     <StartClass event={startEvent}/>
+        // </li>);
+        // const endLabel = (<li key="end" className="rt-label-container">
+        //     <EndClass event={endEvent}/>
+        // </li>);
+        // const topLabel = reverseOrder ? endLabel : startLabel;
+        // const bottomLabel = !reverseOrder ? endLabel : startLabel;
+
+        const startLabel = (<div key="start" className="rt-label-container">
             <StartClass event={startEvent}/>
-        </li>);
-        const endLabel = (<li key="end" className="rt-label-container">
+        </div>);
+        const endLabel = (<div key="end" className="rt-label-container">
             <EndClass event={endEvent}/>
-        </li>);
-        const topLabel = reverseOrder ? endLabel : startLabel;
-        const bottomLabel = !reverseOrder ? endLabel : startLabel;
+        </div>);
+
+        this.topLabel = reverseOrder ? endLabel : startLabel;
+        this.bottomLabel = !reverseOrder ? endLabel : startLabel;
+        
         const clear = <li key='clear' className='rt-clear'>{}</li>;
 
         // Compose labels and events together
@@ -173,20 +189,31 @@ export default class Timelime extends Component {
             R.addIndex(R.reduce)((accum, event, index) => {
                 const content = this.contentForEvent(event, index, HeaderClass, ImageBodyClass, TextBodyClass, FooterClass);
                 return R.append(content, accum);
-            }, [topLabel]),
-            R.append(clear),
-            R.append(bottomLabel)
+            // }, [topLabel]),
+            // R.append(clear),
+            // R.append(bottomLabel)
+            },  [clear])
         )(events);
     }
 
     render() {
         const {events} = this.state;
+        this.total = events.length;
+        this.total = this.total/2;
+        if (this.total % 1 != 0) {
+            this.total+=.5;
+        } 
+        console.log(this.total);
+
         const content = (events && events.length) ? this.content() : <div></div>;
+        console.log(content);
         return (
         <div className='rt-timeline-container'>
+            {this.topLabel}
               <ul className='rt-timeline'>
                   {content}
               </ul>
+            {this.bottomLabel}
         </div>
         );
     }

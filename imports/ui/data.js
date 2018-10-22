@@ -59,7 +59,7 @@
         let orderedCities = R.map(city => {
             offset += Math.random() * 100;
             return R.merge({
-                date: moment('2013-02-08').add(offset, 'days'),
+                date: moment('2018-10-19').add(offset, 'days'),
                 text: randomLengthText(),
                 buttonText: 'Read More',
                 onClick: () => {},
