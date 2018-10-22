@@ -2,16 +2,18 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withRouter } from "react-router-dom";
 
-import ContenidoPrincipal from './components/ContenidoPrincipal';
-//import ContenidoMultimedia from './components/ContenidoMultimedia';
+//importando contenido general de la interfaz
 import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
-// import MaestroAlumnos from './MaestroAlumnos';
-// import MaestroGrupos from './MaestroGrupos';
-// import NuevaSesion from './NuevaSesion';
+//importando pagina principal
+import ContenidoPrincipal from './components/ContenidoPrincipal';
+//importando componentes de la biblioteca
+import BibliotecaDocumentos from './BibliotecaDocumentos';
+import BibliotecaElementos from './BibliotecaElementos';
+import BibliotecaLibros from './BibliotecaLibros';
+import BibliotecaMultimedia from './BibliotecaMultimedia';
+import BibliotecaObjetos from './BibliotecaObjetos';
 
-// import { Materias } from '../api/materias';
-// import { Tracker } from 'meteor/tracker';
 
 class AdminContenidoDashboard extends React.Component {
 
@@ -186,8 +188,18 @@ class AdminContenidoDashboard extends React.Component {
     let pathname = this.props.history.location.pathname;
     
     if(pathname == '/dashboard' || pathname == '/dashboard/'){
-      contenido = <ContenidoPrincipal/>
-    }     
+      contenido = <h1>hola principal</h1>;
+    } else if(pathname == '/dashboard/biblioteca/libros' || pathname == '/dashboard/biblioteca/libros/'){
+      contenido = <BibliotecaLibros tipo="adminContenido"/>
+    } else if(pathname == '/dashboard/biblioteca/multimedia' || pathname == '/dashboard/biblioteca/multimedia/'){
+      contenido = <BibliotecaMultimedia tipo="adminContenido"/>
+    } else if(pathname == '/dashboard/biblioteca/documentos' || pathname == '/dashboard/biblioteca/documentos/'){
+      contenido = <BibliotecaDocumentos tipo="adminContenido"/>
+    } else if(pathname == '/dashboard/biblioteca/objetos' || pathname == '/dashboard/biblioteca/objetos/'){
+      contenido = <BibliotecaObjetos tipo="adminContenido"/>
+    } else if(pathname == '/dashboard/biblioteca/elementos' || pathname == '/dashboard/biblioteca/elementos/'){
+      contenido = <BibliotecaElementos tipo="adminContenido"/>
+    }  
 
     return (
       <div id="main" className="enlarged">  
@@ -199,7 +211,7 @@ class AdminContenidoDashboard extends React.Component {
         <div id="wrapper">
 
           {/*Left Sidebar*/}
-          <LeftSidebar/>
+          <LeftSidebar tipo="adminContenido"/>
 
           {/*Content*/}
           <div id="page-content-wrapper">
@@ -218,7 +230,7 @@ class AdminContenidoDashboard extends React.Component {
                   </div>
                 </div>
 
-                {/* contenido */}  
+                { contenido }  
 								
 								<div className="row">
 									<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -292,6 +304,8 @@ class AdminContenidoDashboard extends React.Component {
 									
 									</div>								
 								</div>
+
+                
 
               </div>          
             </div>

@@ -5,10 +5,12 @@
 */
 
 import React from 'react'
-import FileUploadComponent from '../ui/FileUpload';
-import MaestroContenidoNuevo from '../ui/MaestroContenidoNuevo';
+import { withRouter } from "react-router-dom";
 
-export default class ContenidoMultimedia extends React.Component {
+import ContenidosMultimediaNuevo from '../ui/components/uploadFiles/ContenidosMultimediaNuevo';
+import ListaContenidosMultimedia from '../ui/components/uploadFiles/ListaContenidosMultimedia';
+
+class MaestroContenidoMultimedia extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -51,7 +53,7 @@ export default class ContenidoMultimedia extends React.Component {
                           <button  type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
                           <button  type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
                         </div> 
-                        {this.state.showComponent ? <MaestroContenidoNuevo nuevo={this.nuevo} /> : null}
+                        {this.state.showComponent ? <ContenidosMultimediaNuevo nuevo={this.nuevo} /> : null}
                       </div>
                       {/*Buscador..*/}
                       <div className="row justify-content-between">
@@ -65,7 +67,7 @@ export default class ContenidoMultimedia extends React.Component {
                       {/*Cards 100%..*/}
                       <div className="row section-cards list">
                         <div className="col-12">       
-                          <FileUploadComponent/>
+                          <ListaContenidosMultimedia history={ this.props.history }/>
                         </div>                        
                       </div>                          
                     </div>
@@ -81,3 +83,5 @@ export default class ContenidoMultimedia extends React.Component {
     );
   }
 } 
+
+export default withRouter(MaestroContenidoMultimedia);

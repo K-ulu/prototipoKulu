@@ -22,16 +22,15 @@ import {SesionesAprendizaje} from '../imports/api/sesionesAprendizaje.js';
 import {Estadisticas} from '../imports/api/estadisticas.js';
 import {UsuarioLobby} from '../imports/api/usuarioLobby.js';
 
-//Guarda archivos como imagenes, videos, audios
-import '../imports/api/userFiles.js';
-//Guarda documentos
-import '../imports/api/userDocs.js';
-
 import '../imports/api/links';
 import '../imports/api/users';
+import '../imports/api/test';
 import '../imports/api/mensajes';
 import '../imports/api/lobbies';
 import '../imports/api/materias';
+
+import '../imports/api/documentos';
+
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -44,5 +43,6 @@ Meteor.startup(() => {
 
             return user;
     });
+    
 
 });

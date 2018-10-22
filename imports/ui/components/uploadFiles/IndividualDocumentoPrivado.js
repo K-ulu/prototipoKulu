@@ -9,46 +9,45 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-class IndividualFile extends Component {
+class IndividualDocumentoPrivado extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
     };
     
-    this.removeFile = this.removeFile.bind(this);
-    this.renameFile = this.renameFile.bind(this);
-
+    //binding functions
+    this.docRemoveFile = this.docRemoveFile.bind(this);
+    this.docRenameFile = this.docRenameFile.bind(this);  
   }
 
   static propTypes = {
     fileName: PropTypes.string.isRequired,
     fileSize: PropTypes.number.isRequired,
     fileUrl: PropTypes.string,
-    fileId: PropTypes.string.isRequired,
-    fileType: PropTypes.string.isRequired
+    fileId: PropTypes.string.isRequired
   }
 
-  removeFile(){
+  docRemoveFile(){
     confirmAlert({
       title: 'Confirmación de Eliminación',
       message: '¿Esta seguro que desea eliminar este archivo?.',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => Meteor.call('RemoveFile', this.props.fileId, function (err, res) {
-                          if (!err){
-                            return(
-                              toast.info('🦄Eliminado!', {
-                                  position: toast.POSITION.TOP_CENTER,
-                                  autoClose: 3000
-                              })
-                            );
-                          }
-                          else{
-                            console.log(err);
-                          }
-                        })
+          onClick: () => Meteor.call('docRemoveFile', this.props.fileId, function (err, res) {
+            if (!err){
+              return(
+                toast.info('🦄Eliminado!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 3000
+                })
+              );
+            }
+            else{
+              console.log(err);
+            }
+          })
         },
         {
           label: 'No',
@@ -58,8 +57,7 @@ class IndividualFile extends Component {
     })
   }
 
-  renameFile(){
-
+  docRenameFile(){
     let validName = /[^a-zA-Z0-9 \.:\+()\-_%!&]/gi;
     let prompt    = window.prompt('Nuevo Archivo?', this.props.fileName);
 
@@ -67,10 +65,11 @@ class IndividualFile extends Component {
     if (prompt) {
       prompt = prompt.replace(validName, '-');
       prompt.trim();
-    }
+    }   
 
+    console.log(prompt);
     if (!_.isEmpty(prompt)) {
-      Meteor.call('RenameFile', this.props.fileId, prompt, function (err, res) {
+      Meteor.call('RenameContent', this.props.fileId, prompt, function (err, res) {
         if (err)
           console.log(err);
       })
@@ -83,12 +82,22 @@ class IndividualFile extends Component {
   }
 
   render() {
+    console.log(this.props);
     //dividimos el arreglo atraves de "." para poder obtener la extension del archivo
     let extension = this.props.fileName.split('.');   
     let image = null;
     let etiquetaTipoArchivo = null;
     //determinamos la imagen y la etiqueta del tipo de texto
-    if(extension.includes("mp3") || extension.includes("wav") || extension.includes("wma")){
+    if(extension.includes("docx") || extension.includes("doc")){
+      image = <img className="card-img-top " src="/images/word.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Texto</p>
+    } else if(extension.includes("pptx") || extension.includes("ppt")){
+      image = <img className="card-img-top " src="/images/powerp.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">Presentación</p>
+    } else if(extension.includes("pdf")){
+      image = <img className="card-img-top " src="/images/pdf.png" alt="pdf image"/>
+      etiquetaTipoArchivo = <p className="card-text text-muted">PDF</p>
+    } else if(extension.includes("mp3") || extension.includes("wav") || extension.includes("wma")){
       image = <img className="card-img-top " src="/images/audio.png" alt="pdf image"/>
       etiquetaTipoArchivo = <p className="card-text text-muted">Audio</p>
     } else if(extension.includes("mp4") || extension.includes("3gp") || extension.includes("avi") || extension.includes("flv") || extension.includes("wmv")){
@@ -97,7 +106,7 @@ class IndividualFile extends Component {
     } else if(extension.includes("jpg") || extension.includes("JPG") || extension.includes("png") || extension.includes("PNG") || extension.includes("bmp") || extension.includes("gif")){
       image = <img className="card-img-top " src="/images/picture.png" alt="pdf image"/>
       etiquetaTipoArchivo = <p className="card-text text-muted">Imagen</p>
-    }    
+    }  
 
     return (
       <div className="col-md-3">
@@ -113,10 +122,10 @@ class IndividualFile extends Component {
                 <button onClick={ this.openFile.bind(this, this.props.fileUrl) } className="btn btn-outline-success btn-block" target="_blank"><i className="fa fa-fw fa-eye"></i></button>                
               </div>  
               <div className="col-4 no-padding">
-                <button onClick={ this.renameFile } className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>                
+                <button onClick={ this.docRenameFile } className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>                
               </div>  
               <div className="col-4 no-padding">
-                <button onClick={ this.removeFile } className="btn btn-outline-danger btn-block"><i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                <button onClick={ this.docRemoveFile } className="btn btn-outline-danger btn-block"><i className="fa fa-trash-o" aria-hidden="true"></i></button>
               </div>  
             </div>
           </div>
@@ -127,8 +136,8 @@ class IndividualFile extends Component {
           newestOnTop={true}
           autoClose={5000}
         />
-      </div>    
+      </div>
     );
   }
 }
-export default IndividualFile;
+export default IndividualDocumentoPrivado;

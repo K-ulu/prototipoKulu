@@ -2,7 +2,7 @@ import { withRouter } from "react-router-dom";
 import React, {Component, PropTypes} from 'react';
 
 import { withTracker } from 'meteor/react-meteor-data';
-import UserFiles from '../api/filesCol.js';
+import ContenidosMultimedia from '../api/contenidosMultimedia.js';
 import Timeline from './timeline';
 import {getSampleData} from './data';
 
@@ -104,10 +104,10 @@ class PruebasCaro extends React.Component {
 //export default withRouter(PruebasCaro);
 
 export default withTracker(() => {
-    var filesHandle = Meteor.subscribe("files.all");//suscripcion a files
+    var filesHandle = Meteor.subscribe("contenidosMultimedia.all");//suscripcion a files
     console.log(filesHandle.ready());
 
     return {
-        files: UserFiles.find({}, {sort: {name: 1}}).fetch(), 
+        files: ContenidosMultimedia.find({}, {sort: {name: 1}}).fetch(), 
     }
 })(PruebasCaro);

@@ -1,7 +1,7 @@
     import R from 'ramda';
     import moment from 'moment';
 
-    import UserFiles from '../api/filesCol.js';
+    import ContenidosMultimedia from '../api/contenidosMultimedia';
 
     const ipsum = `Sed leo elit, pellentesque sit amet congue quis, ornare nec lorem. Phasellus tincidunt rhoncus magna,
     eget elementum odio rutrum fermentum. Ut a justo lacus. Maecenas blandit molestie felis ac viverra. Pellentesque
@@ -19,7 +19,7 @@
     function datos(files){
         var data = [];
         files.map((aFile) => {
-            let link = UserFiles.findOne({_id: aFile._id}).link();  //The "view/download" link
+            let link = ContenidosMultimedia.findOne({_id: aFile._id}).link();  //The "view/download" link
             let tipo = aFile.type;
             let arregloDeSubCadenas = tipo.split("/");
             tipo = arregloDeSubCadenas[0];

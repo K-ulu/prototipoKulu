@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Accounts } from 'meteor/accounts-base';
 import { withRouter } from "react-router-dom";
-import { Session } from 'meteor/session';
 
 import ReactDropzone from "react-dropzone";
-import UserFiles from '../api/filesCol.js';
-class MaestroContenidoNuevo extends React.Component {
+import Documentos from '../../../api/documentos';
+
+class DocumentoNuevo extends React.Component {
 
   constructor(props) {
     let todas = 0;
@@ -34,22 +32,30 @@ class MaestroContenidoNuevo extends React.Component {
 
   uploadIt() {
     this.todas = this.state.files.length;//obetenemos el total del arreglo
+    //segun la url es el tipo de documento que se guarda
+    let pathname = this.props.history.location.pathname;
+    let estado = null;
+    //en base a la url asignamos el tipo de archivo que será
+    estado = (pathname == '/dashboard/documentos' || pathname == '/dashboard/documentos/')? 'privado' : 'publico';
 
     for (var i = 0; i < this.todas; i++) { //recorremos todo el arreglo
       var file = this.state.files[i]; //Asignamos a una variable una posicion del arreglo
       let self = this;
-
+      
+      console.log('file ', file);      
       if (file) {
-        let uploadInstance = UserFiles.insert({
+        let uploadInstance = Documentos.insert({
           file: file,
           meta: {
             locator: self.props.fileLocator,
-            userId: Meteor.userId() // Optional,asignamos el id del usuario que guarda el archivo
-          },
+            userId: Meteor.userId(), // Optional,asignamos el id del usuario que guarda el archivo
+            estado: estado
+          },          
           streams: 'dynamic',
           chunkSize: 'dynamic',
-          allowWebWorkers: true // If you see issues with uploads, change this to false
+          allowWebWorkers: true // If you see issues with uploads, change this to false                    
         }, false)
+        console.log('upload dats ', uploadInstance)
 
         self.setState({
           uploading: uploadInstance, // guardamos los datos de la variable a upliading
@@ -122,7 +128,12 @@ class MaestroContenidoNuevo extends React.Component {
       }
   }
 
-  render () {
+  render () {        
+    const previewStyle = {
+      display: 'inline',
+      width: 100,
+      height: 100,
+    };
     return (
         <div id="page-content-wrapper">
           <div className="content">
@@ -137,7 +148,7 @@ class MaestroContenidoNuevo extends React.Component {
                       {/*title*/}
                       <div className="row justify-content-center">
                         <div className="col-10">
-                          <h2 className="text-center">Nuevo Contenido Multimedia</h2>
+                          <h2 className="text-center">Nuevo Documento</h2>
                         </div>     
                       </div>
 
@@ -145,27 +156,21 @@ class MaestroContenidoNuevo extends React.Component {
                         <div className="col-10">
 
                           <ReactDropzone
-                            //accept="image/*, video/*, audio/*"
+                            accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.presentationml.presentation"
                             onDrop={this.onPreviewDrop}
                             style={{"width" : "100%", "height" : "25%", "border" : "1px dashed black"}}>
                             <div>
-                              Arrastra unos archivos aqui, o click para cargar el archivo!.
+                              Arrastra los documentos aqui, o click para cargar el documento!.
                             </div>  
                           </ReactDropzone>
 
                           <aside>
-                            <h2>Archivo a subir!</h2>
+                            <h3>Documento a subir!</h3>
                             <ul>
                               {
                                 this.state.files.map(
-                                  f =>
-                                    f.type == "video/mp4" ?
+                                  f => 
                                     <li key={f.name}>
-                                      {f.name} - {f.size} bytes 
-                                    </li>
-                                    :
-                                    <li key={f.name}>
-                                      <img src="/images/upload-preview.png" width = "70px" height ="70px" />
                                       {f.name} - {f.size} bytes 
                                     </li>
                                 )
@@ -175,7 +180,7 @@ class MaestroContenidoNuevo extends React.Component {
                           {this.showUploads()}
 
                           <button className="btn btn-success btn-block" onClick={this.uploadIt} >Agregar</button>                          
-                          <button className="btn btn-warning btn-block" onClick={this.cerrar} >Cerrar</button>                         
+                          <button className="btn btn-danger btn-block" onClick={this.cerrar} >Cerrar</button>                         
                         </div>
                       </div>
                     </div>
@@ -189,4 +194,4 @@ class MaestroContenidoNuevo extends React.Component {
   }
 }
 
-export default withRouter(MaestroContenidoNuevo);
+export default withRouter(DocumentoNuevo);

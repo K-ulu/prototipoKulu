@@ -3,18 +3,23 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import IndividualDocumento from './IndividualDocumento.js';
-import UserDocs from '../api/documentosCol';
+import IndividualArchivoPublico from './IndividualArchivoPublico';
+import IndividualDocumentoPrivado from './IndividualDocumentoPrivado';
+import Libros from '../../../api/libros';
 
 import { Session } from 'meteor/session';
 
-class DocumentoUploadComponent extends Component {
+class ListaLibros extends Component {
   constructor(props) {
     super(props);
   }
 
   // This is our progress bar, bootstrap styled
   // Remove this function if not needed
+
+  componentDidMount(){
+    console.log('lista libros props: ', this.props);
+  }
 
 
   render() {
@@ -26,18 +31,28 @@ class DocumentoUploadComponent extends Component {
       // (make sure the subscription only sends files owned by this user)
       let display = fileCursors.map((aFile, key) => {
         // console.log('A file: ', aFile.link(), aFile.get('name'))
-        let link = UserDocs.findOne({_id: aFile._id}).link();  //The "view/download" link
-        console.log(UserDocs.findOne({_id: aFile._id}));
+        let link = Libros.findOne({_id: aFile._id}).link();  //The "view/download" link
+        console.log(Libros.findOne({_id: aFile._id}));
         console.log(link);
-
-        // Send out components that show details of each file
-        return <IndividualDocumento
+        
+        if(this.props.tipo == 'adminContenido'){
+          // Send out components that show details of each file
+          return <IndividualDocumentoPrivado
             key={'file' + key}
             fileName={aFile.name}
             fileUrl={link}
             fileId={aFile._id}
             fileSize={aFile.size}
-          />
+            />
+        } else {          
+          return <IndividualArchivoPublico
+            key={'file' + key}
+            fileName={aFile.name}
+            fileUrl={link}
+            fileId={aFile._id}
+            fileSize={aFile.size}
+            />
+        }        
         
       })
 
@@ -57,14 +72,21 @@ class DocumentoUploadComponent extends Component {
 //
 export default withTracker( ( props ) => {
   id = Session.get('user')._id;
-  const filesHandle = Meteor.subscribe('documentos.all');
+  const filesHandle = Meteor.subscribe('libros.all');
   console.log(filesHandle);
   const docsReadyYet = filesHandle.ready();
   console.log(docsReadyYet);
-  const files = UserDocs.find({userId: id}, {sort: {name: 1}}).fetch();
+  let pathname = props.history.location.pathname;
+  let files = null;  
+  if(pathname == '/dashboard/libros' || pathname == '/dashboard/libros/'){
+    files = Libros.find( { userId: id } , {sort: {name: 1}}).fetch();
+  } else {
+    files = Libros.find({ "meta.estado": 'publico'}, {sort: {name: 1}}).fetch();
+  }
+
   console.log(files);
   return {
     docsReadyYet,
     files,
   };
-})(DocumentoUploadComponent);
+})(ListaLibros);

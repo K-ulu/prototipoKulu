@@ -36,7 +36,7 @@ class Dashboard extends React.Component {
       //determinamos el dashboard a cargar
       if (tipoUsuario == "docente"){
         dashboard = <MaestroDashboard user={this.state.user}/>;
-      } else if(tipoUsuario == 'adminContenido'){//TODO: mostrar el dashboard apropiado
+      } else if(tipoUsuario == 'adminContenido'){
         dashboard = <AdminContenidoDashboardContainer user={this.state.user}/>;
       } else { 
         dashboard = <UsuarioDashboard user={this.state.user}/>; 

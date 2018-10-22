@@ -1,13 +1,27 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 
-import ContenidoPrincipal from './components/ContenidoPrincipal';
-import ContenidoMultimedia from './MaestroContenidoMultimedia';
+//importando contenido general de la interfaz
 import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
+//importando pagina principal
+import ContenidoPrincipal from './components/ContenidoPrincipal';
+//importando componente explora
+import Explora from './Explora';
+//importando componentes de la biblioteca
+import BibliotecaDocumentos from './BibliotecaDocumentos';
+import BibliotecaElementos from './BibliotecaElementos';
+import BibliotecaLibros from './BibliotecaLibros';
+import BibliotecaMultimedia from './BibliotecaMultimedia';
+import BibliotecaObjetos from './BibliotecaObjetos';
+
+//importando componente para crear nueva sesion
+import NuevaSesionContainer from './NuevaSesionContainer';
+//importando componentes para admin de grupos y alumnos
 import MaestroAlumnos from './MaestroAlumnos';
 import MaestroGrupos from './MaestroGrupos';
-import NuevaSesionContainer from './NuevaSesionContainer';
+//importando componentes privados documentos y cont multimedia
+import MaestroContenidoMultimedia from './MaestroContenidoMultimedia';
 import MaestroDocumentos from './MaestroDocumentos';
 
 class MaestroDashboard extends React.Component {
@@ -23,8 +37,20 @@ class MaestroDashboard extends React.Component {
     
     if(pathname == '/dashboard' || pathname == '/dashboard/'){
       contenido = <ContenidoPrincipal/>;
+    } else if(pathname == '/dashboard/explora' || pathname == '/dashboard/explora/'){
+      contenido = <Explora/>
+    } else if(pathname == '/dashboard/biblioteca/libros' || pathname == '/dashboard/biblioteca/libros/'){
+      contenido = <BibliotecaLibros/>
+    } else if(pathname == '/dashboard/biblioteca/multimedia' || pathname == '/dashboard/biblioteca/multimedia/'){
+      contenido = <BibliotecaMultimedia/>
+    } else if(pathname == '/dashboard/biblioteca/documentos' || pathname == '/dashboard/biblioteca/documentos/'){
+      contenido = <BibliotecaDocumentos/>
+    } else if(pathname == '/dashboard/biblioteca/objetos' || pathname == '/dashboard/biblioteca/objetos/'){
+      contenido = <BibliotecaObjetos/>
+    } else if(pathname == '/dashboard/biblioteca/elementos' || pathname == '/dashboard/biblioteca/elementos/'){
+      contenido = <BibliotecaElementos/>
     } else if(pathname == '/dashboard/multimedia' || pathname == '/dashboard/multimedia/'){
-      contenido = <ContenidoMultimedia/>
+      contenido = <MaestroContenidoMultimedia/>
     } else if(pathname == '/dashboard/documentos' || pathname == '/dashboard/multimedia/'){
       contenido = <MaestroDocumentos/>
     } else if(pathname == '/dashboard/alumnos' || pathname == '/dashboard/alumnos/'){
@@ -45,7 +71,7 @@ class MaestroDashboard extends React.Component {
         <div id="wrapper">
 
           {/*Left Sidebar*/}
-          <LeftSidebar/>
+          <LeftSidebar tipo="maestro"/>
 
           {/*Content*/}
           <div id="page-content-wrapper">
