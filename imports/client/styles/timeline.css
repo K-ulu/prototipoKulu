@@ -1,21 +1,30 @@
-body {
+.linea-Tiempo {
   font-family: -apple-system, "Arial", "sans-serif";
   font-weight: 300;
   color: #313740;
   background: url("https://s3.amazonaws.com/aaron-cdn/background-texture.jpg");
 }
 
-h1{
+h1, h2, h3, h4, h5, p {
+  margin: 0;
+  padding: 0; 
+}
+
+.linea-Tiempo h1, .linea-Tiempo strong{
   font-weight: bold;
   text-align: center;
 }
 
-h3 {
+.linea-Tiempo h2 {
+  font-size: 1.75em; 
+}
+
+.linea-Tiempo h3 {
   font-size: 2em;
   text-align: center;
 }
 
-h5 {
+.linea-Tiempo h5 {
   font-size: 1.5em;
   text-align: center;
 }

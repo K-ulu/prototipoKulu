@@ -83,6 +83,19 @@ const ArrowAndDot = (props) => {
     </div>;
 };
 
+const DotAndArrow = (props) => {
+    return <div className='rt-svg-container'>
+        <svg viewBox="0 0 8 10" className='rt-dot'>
+            <circle cx="4" cy="5" r="3" stroke="none" strokeWidth="0"/>
+        </svg>
+        <svg viewBox="0 0 6 8" className='rt-arrow2'>
+            <g>
+                <path d="M 0 0 L 6 4 L 0 8 L 0 0"/>
+            </g>
+        </svg>
+    </div>;
+};
+
 export default class Timelime extends Component {
     static total=0;
     static displayName = 'Timeline';
@@ -132,12 +145,32 @@ export default class Timelime extends Component {
             </div>
         </div>;
         // Haciendo cambios
-        return <li className={index === this.total ? 'rt-event rt-offset-second' : 'rt-event'} key={index}>
-            <div className='rt-backing'>
-                {content}
-                <ArrowAndDot/>
-            </div>
-        </li>;
+        if (index >= this.total){
+            return(
+                <li className={index === this.total ? 'rt-event rt-offset-second' : 'rt-event rt-offset3'} key={index}>
+                    <div className='rt-backing'>
+                        <DotAndArrow/>
+                        {content}
+                    </div>
+                </li>
+            );
+        }
+        else{
+            return(
+                <li className= 'rt-event' key={index}>
+                    <div className='rt-backing'>
+                        {content}
+                        <ArrowAndDot/>
+                    </div>
+                </li>
+            );
+        }
+        // return <li className={index === this.total ? 'rt-event rt-offset-second' : 'rt-event'} key={index}>
+        //     <div className='rt-backing'>
+        //         {content}
+        //         <ArrowAndDot/>
+        //     </div>
+        // </li>;
     }
 
     content() {

@@ -85,10 +85,10 @@ class PruebasCaro extends React.Component {
               customTextBody={CustomTextBody}
               customFooter={CustomFooter}/>;
         return (
-            <div>
+            <div className="linea-Tiempo">
                 <h1>Linea del Tiempo</h1>
                 <div className="toggle-container">
-                    <h1>Usar Componentes:</h1>
+                    <strong>Usar Componentes:</strong>
                     <input type="checkbox"
                         onChange={this.handleToggle.bind(this)}
                         checked={useCustomComponents}
