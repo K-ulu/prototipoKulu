@@ -10,6 +10,7 @@
   align-items: center;
   display: flex; 
   max-width: 300%;
+  max-height: 300%;
 }
 
 .rt-timeline {
@@ -70,7 +71,7 @@
 }
 
   .rt-event.rt-offset-second {
-    margin-left: 6em; 
+    margin-left: 7em; 
     margin-top: 7em;
   }
 
@@ -107,46 +108,41 @@
     width: 2%;
     z-index: 100; 
     color:red;
-    //object-position: 0 53%; 
   }
 
   .rt-event .rt-dot {
     position: absolute; //probablemente este se active
     margin-left: 7.5%;
-    //margin-top: 1.6em;
+    margin-top: 3.1em;
     fill: currentcolor;
-    // color: #6b81a6;
+    color: #6b81a6;
     width: 2%;
     z-index: 100; 
-    color:red;
-    //object-position: 0 53%; 
   }
+
+  .rt-event .rt-dot2 {
+    position: absolute; //probablemente este se active
+    margin-left: 7.5%;
+    margin-top: -5.1em;
+    fill: currentcolor;
+    color: #6b81a6;
+    width: 2%;
+    z-index: 100; 
+  }
+
     .rt-event .rt-svg-container .rt-arrow,  .rt-event .rt-svg-container .rt-arrow2{
       z-index: 100;
       position: absolute;
       margin-left: 7%;
-      // margin-top: -5%;
       padding:0;
-      // left: -5%;
-      // right: auto;
       fill: currentcolor;
       width: 3%;
       color: #6b81a6; 
     }
 
-      // .rt-event:nth-child(1n+5) .rt-arrow  {
-      //   transform: rotate(270deg);
-      // }
-
-    // .rt-event:nth-child(1n+5) .rt-arrow {
-    //   left: auto;
-    //   margin-top: -38.1%; 
-    // }
-
-    // .rt-event:nth-child(1n+5) .rt-dot {
-    //   left: auto;
-    //   // margin-top: -40.1%;
-    //  }
+    .rt-event .rt-svg-container .rt-arrow2{
+      margin-top: -3.2em;
+    }
 
 .rt-title {
   margin: 4px;

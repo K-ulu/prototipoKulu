@@ -4,16 +4,14 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 // import ActionViewArray from 'material-ui/SvgIcon';
 
-//const Event =  
-propTypes = {
+const Event =  propTypes = {
     date: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func,
     buttonText: PropTypes.string,
-    extras: PropTypes.object,
-    id: PropTypes.string.isRequired
+    extras: PropTypes.object
 };
 
 const DefaultStartLabel = (props) => {
@@ -56,11 +54,8 @@ const DefaultTextBody = (props) => {
 
 const DefaultImageBody = (props) => {
     const {imageUrl} = props.event;
-    const {id} = props.event;
-
-    // return {imageUrl};
     return <div>
-        <img id={id} src={imageUrl} className='rt-image'/>
+        <img src={imageUrl} className='rt-image'/>
     </div>;
 };
 
@@ -90,33 +85,19 @@ const DotAndArrow = (props) => {
     </div>;
 };
 
-// function getURL(props){
-//     const {imageUrl} = props.event;
-//     // console.log({imageUrl})
-//     return {imageUrl};
-// }
-
-// function printURL(url){
-//     console.log(url);
-//     return(
-//         <div>
-//             <img src={url} className='rt-image'/>
-//         </div>
-//     );
-// }
-
 export default class Timelime extends Component {
     static total=0;
     static displayName = 'Timeline';
     static topLabel;
     static bottomLabel;
-
-    // static dataImagenes = "";
-    static idOriginal="";
-    static urlOriginal="";
-
     static propTypes = {
-        reverseOrder: PropTypes.bool
+        reverseOrder: PropTypes.bool,
+        customStartLabel: PropTypes.func,
+        customEndLabel: PropTypes.func,
+        customHeader: PropTypes.func,
+        customImageBody: PropTypes.func,
+        customTextBody: PropTypes.func,
+        customFooter: PropTypes.func
     };
 
     getStateForProps(props) {
@@ -136,52 +117,28 @@ export default class Timelime extends Component {
         this.setState(this.getStateForProps(newProps));
     }
 
-    onDragStart = (ev, props) =>{
-        // const {id} = url.event;
-        this.idOriginal = props.event.id;
-        this.urlOriginal = props.event.imageUrl;
-        console.log(this.idOriginal);
-        console.log(this.urlOriginal);
+    onDragStart = (ev, url) =>{
+        const {id} = url.event;
 
         console.log("dragstart:", ev);
-        // ev.dataTransfer.setData("id", id);
+        ev.dataTransfer.setData("id", id);
     }
     onDragOver = (ev) => {
         ev.preventDefault();
     }
 
     onDrop = (ev,props, cat)=>{
-        console.log(props);
         const {imageUrl} = props.event;
-        const {id} = props.event;
-
         console.log(imageUrl);
-        console.log(props.event.title);
+        console.log(cat);
+        let id = ev.dataTransfer.getData("id");
         console.log(id);
-        // let id = ev.dataTransfer.getData("id");
-        // console.log(id);
-        document.getElementById(this.idOriginal).src = imageUrl;
-        document.getElementById(id).src = this.urlOriginal;
-    //     return <div>
-    //     <img src={imageUrl} className='rt-image'/>
-    // </div>;
+        return <div>
+        <img src={imageUrl} className='rt-image'/>
+    </div>;
     }
 
     contentForEvent(event, index, HeaderClass, ImageBodyClass, TextBodyClass, FooterClass) {
-        // var urlEquis = "";
-        // console.log(this.images);
-        // urlEquis = getURL(event={event});
-        // urlEquis = urlEquis.imageUrl;
-
-        // if (this.dataImagenes == undefined){
-        //     this.dataImagenes = " url: " + urlEquis;
-        // }
-        // else{
-        //     this.dataImagenes+= " url: " + urlEquis;
-        // }
-        
-        // this.dataImagenes = this.dataImagenes.split(" url: ");
-
         const content = <div className='rt-content'>
             <div className="rt-header-container">
                 <HeaderClass event={event}/>
@@ -226,19 +183,33 @@ export default class Timelime extends Component {
 
     content() {
         const {
-            reverseOrder
+            reverseOrder,
+            customStartLabel,
+            customEndLabel,
+            customHeader,
+            customFooter,
+            customTextBody,
+            customImageBody
         } = this.props;
         const {events} = this.state;
+
+        // Determine which component classes to use
+        const StartClass = customStartLabel || DefaultStartLabel;
+        const EndClass = customEndLabel || DefaultEndLabel;
+        const HeaderClass = customHeader || DefaultHeader;
+        const ImageBodyClass = customImageBody || DefaultImageBody;
+        const TextBodyClass = customTextBody || DefaultTextBody;
+        const FooterClass = customFooter || DefaultFooter;
 
         // Build start & end labels
         const startEvent = (reverseOrder ? R.last : R.head)(events);
         const endEvent = (!reverseOrder ? R.last : R.head)(events);
 
         const startLabel = (<div key="start" className="rt-label-container">
-            <DefaultStartLabel event={startEvent}/>
+            <StartClass event={startEvent}/>
         </div>);
         const endLabel = (<div key="end" className="rt-label-container">
-            <DefaultEndLabel event={endEvent}/>
+            <EndClass event={endEvent}/>
         </div>);
 
         this.topLabel = reverseOrder ? endLabel : startLabel;
@@ -249,7 +220,7 @@ export default class Timelime extends Component {
         // Compose labels and events together
         return R.pipe(
             R.addIndex(R.reduce)((accum, event, index) => {
-                const content = this.contentForEvent(event, index, DefaultHeader, DefaultImageBody, DefaultTextBody, DefaultFooter);
+                const content = this.contentForEvent(event, index, HeaderClass, ImageBodyClass, TextBodyClass, FooterClass);
                 return R.append(content, accum);
             },  [clear])
         )(events);
@@ -263,34 +234,16 @@ export default class Timelime extends Component {
             this.total+=.5;
         } 
 
-        //mandamos a llamar a la función content el cual nos permitira crear nuestra línea del tiempo
         const content = (events && events.length) ? this.content() : <div></div>;
         console.log(content);
-
-        // const content1="";
-        // console.log(this.dataImagenes);
-        // if (this.dataImages == undefined){
-        //     console.log("Es indefinido");
-        // }
-        // else{
-        //     console.log(this.dataImagenes);
-        //     content1 = printURL(this.dataImagenes[1]);
-        // }
         return (
-        <div>
-            <div>
-                <h2>Imagenes</h2>
-                {/* {content1} */}
-            </div>
-            <div className='rt-timeline-container'>
-                {this.topLabel}
-                <ul className='rt-timeline'>
-                    {content}
-                </ul>
-                {this.bottomLabel}
-            </div>
+        <div className='rt-timeline-container'>
+            {this.topLabel}
+              <ul className='rt-timeline'>
+                  {content}
+              </ul>
+            {this.bottomLabel}
         </div>
-
         );
     }
 }

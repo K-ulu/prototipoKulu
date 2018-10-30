@@ -25,6 +25,7 @@
             tipo = arregloDeSubCadenas[0];
             if (tipo == "image"){
                 data.push({
+                    id: aFile._id,
                     title:aFile.name,
                     imageUrl:link
                 })

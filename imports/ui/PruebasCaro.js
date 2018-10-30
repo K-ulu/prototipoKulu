@@ -9,43 +9,43 @@ import {getSampleData} from './data';
 require('../client/styles/lineaTiempo.scss');
 require('../client/styles/timeline.css');
 
-const CustomStartLabel = (props) => {
-    return <div className="custom-start-label">
-        <p>Etiqueta de Inicio</p>
-    </div>;
-};
+// const CustomStartLabel = (props) => {
+//     return <div className="custom-start-label">
+//         <p>Etiqueta de Inicio</p>
+//     </div>;
+// };
 
-const CustomEndLabel = (props) => {
-    return <div className="custom-end-label">
-        <p>Etiqueta Final</p>
-    </div>;
-};
+// const CustomEndLabel = (props) => {
+//     return <div className="custom-end-label">
+//         <p>Etiqueta Final</p>
+//     </div>;
+// };
 
-const CustomHeader = (props) => {
-    return <div className="custom-header">
-        <h3>Encabezado</h3>
-    </div>;
-};
+// const CustomHeader = (props) => {
+//     return <div className="custom-header">
+//         <h3>Encabezado</h3>
+//     </div>;
+// };
 
-const CustomFooter = (props) => {
-    return <div className="custom-footer">
-        <h3>Pie</h3>
-    </div>;
-};
+// const CustomFooter = (props) => {
+//     return <div className="custom-footer">
+//         <h3>Pie</h3>
+//     </div>;
+// };
 
-const CustomTextBody = (props) => {
-    return <div className="custom-text-body">
-        <h3>Texto de Cuerpo</h3>
-    </div>;
-};
+// const CustomTextBody = (props) => {
+//     return <div className="custom-text-body">
+//         <h3>Texto de Cuerpo</h3>
+//     </div>;
+// };
 
-const CustomImageBody = (props) => {
-    const {imageUrl} = props.event;
-    return <div className="custom-image-body">
-        <h3 className="image-body-label">Imagen del Cuerpo</h3>
-        <img src={imageUrl} className='rt-image'/>
-    </div>;
-};
+// const CustomImageBody = (props) => {
+//     const {imageUrl} = props.event;
+//     return <div className="custom-image-body">
+//         <h3 className="image-body-label">Imagen del Cuerpo</h3>
+//         <img src={imageUrl} className='rt-image'/>
+//     </div>;
+// };
 
 
 class PruebasCaro extends React.Component {
@@ -56,13 +56,13 @@ class PruebasCaro extends React.Component {
         this.state = {
             contador: 0,
             events: null,
-            useCustomComponents: false
+            // useCustomComponents: false
         };
     }
 
-    handleToggle(event) {
-        this.setState({useCustomComponents: event.target.checked});
-    }
+    // handleToggle(event) {
+    //     this.setState({useCustomComponents: event.target.checked});
+    // }
 
     render() {
         let data = this.props.files;
@@ -75,27 +75,27 @@ class PruebasCaro extends React.Component {
                 }
             )
         }
-        const {events, useCustomComponents} = this.state;
+        const {events/*, useCustomComponents*/} = this.state;
         const timeline = <Timeline events={events}/>;
-        const customTimeline = <Timeline events={events}
-              customStartLabel={CustomStartLabel}
-              customEndLabel={CustomEndLabel}
-              customHeader={CustomHeader}
-              customImageBody={CustomImageBody}
-              customTextBody={CustomTextBody}
-              customFooter={CustomFooter}/>;
+        // const customTimeline = <Timeline events={events}
+        //       customStartLabel={CustomStartLabel}
+        //       customEndLabel={CustomEndLabel}
+        //       customHeader={CustomHeader}
+        //       customImageBody={CustomImageBody}
+        //       customTextBody={CustomTextBody}
+        //       customFooter={CustomFooter}/>;
         return (
             <div className="linea-Tiempo">
                 <h1>Linea del Tiempo</h1>
-                <div className="toggle-container">
+                {/* <div className="toggle-container">
                     <strong>Usar Componentes:</strong>
                     <input type="checkbox"
                         onChange={this.handleToggle.bind(this)}
                         checked={useCustomComponents}
                     />
-                </div>
+                </div> */}
                 <hr/>
-                {useCustomComponents ? customTimeline : timeline}
+                {/*useCustomComponents ? customTimeline :*/ timeline}
             </div>
         );
     }
