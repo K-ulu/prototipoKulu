@@ -13,6 +13,10 @@ import BibliotecaElementos from './BibliotecaElementos';
 import BibliotecaLibros from './BibliotecaLibros';
 import BibliotecaMultimedia from './BibliotecaMultimedia';
 import BibliotecaObjetos from './BibliotecaObjetos';
+//importando componentes de material educativo
+import AdminContenidoMaterias from './AdminContenidoMaterias';
+import AdminContenidoBloques from './AdminContenidoBloques';
+import AdminContenidoTemas from './AdminContenidoTemas';
 
 
 class AdminContenidoDashboard extends React.Component {
@@ -199,7 +203,13 @@ class AdminContenidoDashboard extends React.Component {
       contenido = <BibliotecaObjetos tipo="adminContenido"/>
     } else if(pathname == '/dashboard/biblioteca/elementos' || pathname == '/dashboard/biblioteca/elementos/'){
       contenido = <BibliotecaElementos tipo="adminContenido"/>
-    }  
+    } else if(pathname == '/dashboard/programa/materias' || pathname == '/dashboard/programa/materias/'){
+      contenido = <AdminContenidoMaterias/>
+    } else if(pathname == '/dashboard/programa/bloques' || pathname == '/dashboard/programa/bloques/'){
+      contenido = <AdminContenidoBloques/>
+    } else if(pathname == '/dashboard/programa/temas' || pathname == '/dashboard/programa/temas/'){
+      contenido = <AdminContenidoTemas/>
+    }
 
     return (
       <div id="main" className="enlarged">  
