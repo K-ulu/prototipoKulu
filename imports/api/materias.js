@@ -53,5 +53,13 @@ Meteor.methods({
     check(id, String);
  
     Materias.remove(id);
-  }
+  },
+
+  'materiasRenameFile'(id, name) {
+    Materias.update({
+      _id: id
+    }, {
+        $set: { nombreMateria: name }
+    });
+  },
 });
