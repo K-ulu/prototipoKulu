@@ -13,14 +13,9 @@ class ListaMaterias extends React.Component {
     };  
   }
 
-  componentDidMount(){
-    console.log('lista materias props: ', this.props);
-  }
-
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
 		if(nextProps.materias.length > 0){
-      console.log('lista materias props actualizados: ', nextProps);
 			return {
         materias: nextProps.materias,
         isReady: nextProps.isReady,
@@ -32,7 +27,6 @@ class ListaMaterias extends React.Component {
 
   render(){
     if(this.state.materias.length > 0 && this.state.isReady){
-      console.log('mis props render:', this.state);
       let display = this.state.materias.map((materia) => {
         return <ListItemMateria key={ 'key' + materia._id } materiaId={ materia._id  } nombre={ materia.nombreMateria} grado={ materia.grado } cantBloques={ materia.cantidadBloques }/>
       }); 

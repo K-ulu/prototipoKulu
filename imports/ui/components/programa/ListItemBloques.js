@@ -11,11 +11,14 @@ import 'react-toastify/dist/ReactToastify.css';
 export default class ListItemBloque extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      
-    };
 
     this.removeBloque = this.removeBloque.bind(this);    
+    this.editData = this.editData.bind(this);
+  }
+
+  //funcion para editar informacion de bloque
+  editData(){
+
   }
 
   //funcion para eliminar bloque

@@ -1,6 +1,5 @@
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Tracker } from 'meteor/tracker'; 
 
 import ListItemBloques from './ListItemBloques';
 import { Bloques } from '../../../api/bloques';
