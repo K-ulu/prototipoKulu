@@ -4,13 +4,46 @@
   box-sizing: border-box; 
 }
 
+.rt-container-image{
+    padding: 1em;
+    display: block; 
+    max-width: 300%;
+    min-width: 100%;
+    max-height: 200%;
+    min-height: 100%;
+    float: left;
+    background: url("https://s3.amazonaws.com/aaron-cdn/background-texture.jpg");
+}
+
+.rt-image-Lista {
+  padding: 0em;
+  list-style-type: none;
+  max-height: 200%;
+}
+
+.rt-event-image{
+  clear: right;
+  width: 20%;
+  height: 45%;
+  margin: 1.5em 2em 1.5em 1em;
+  display:block;
+  float:left;
+
+  overflow: hidden; 
+  height: 11em;
+  max-height: 12em;
+}
+
 .rt-timeline-container {
   padding: 1em;
   justify-content: flex-start;
   align-items: center;
   display: flex; 
   max-width: 300%;
+  min-width: 100%;
   max-height: 300%;
+  float: left;
+  background: url("https://s3.amazonaws.com/aaron-cdn/background-texture.jpg");
 }
 
 .rt-timeline {
@@ -170,6 +203,30 @@
   height: 11em;
   max-height: 12em;
   background-color: #6b81a6;
+
+  position: relative; //Para que aparezca el texto de forma dinamica
+}
+
+.rt-image-container p {
+  margin: auto;  
+  color: #fff;
+  text-align: center;
+  
+  // line-height: 180px; /* igual height de la imagen */
+  
+  background: #000;
+  transition: opacity .4s linear;
+  cursor: pointer;  
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.rt-image-container:hover p {
+  opacity: .75;  
 }
 
 .rt-image {
@@ -181,7 +238,7 @@
   width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: 700px; 
+  max-height: 100%; 
 }
 
 .rt-footer-container {

@@ -27,6 +27,25 @@
                 data.push({
                     id: aFile._id,
                     title:aFile.name,
+                    // imageUrl:link
+                })
+            }
+        })
+
+        return data;
+    }
+
+    //almacenamos las imagenes
+    function images(files){
+        var data = [];
+        files.map((aFile) => {
+            let link = ContenidosMultimedia.findOne({_id: aFile._id}).link();  //The "view/download" link
+            let tipo = aFile.type;
+            let arregloDeSubCadenas = tipo.split("/");
+            tipo = arregloDeSubCadenas[0];
+            if (tipo == "image"){
+                data.push({
+                    id: aFile._id,
                     imageUrl:link
                 })
             }
@@ -72,4 +91,15 @@
         return t(orderedCities);
     }
 
+    //Este obtiene las imagenes de manera aleatoria
+    export function getImages(inOrder = true, files) {
+        var data = images(files);
+
+        const t = inOrder ? array => array : shuffled;
+        let imagenes = R.map(city => {
+            return R.merge({
+            }, city);
+        }, t(data));
+        return t(imagenes);
+    }
 
