@@ -8,12 +8,12 @@ export const Bloques = new Mongo.Collection('bloques');
 
 if (Meteor.isServer) {
   Meteor.publish('bloques', function () {
-    return Bloques.find({ userId: this.userId });
+    return Bloques.find();
   });
 }
 
 Meteor.methods({
-  'bloques.insert'(nombreBloque, descripcionBloque, idMateria, idLobby) {
+  'bloques.insert'(nombreBloque, descripcionBloque, numBloque, idMateria) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -22,8 +22,8 @@ Meteor.methods({
       _id: shortid.generate(),
       nombreBloque,
       descripcionBloque,
+      numBloque,
       idMateria,
-      idLobby,
     });
   },
 

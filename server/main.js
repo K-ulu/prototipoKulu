@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Docentes } from '../imports/api/docentes.js';
 import {Alumnos} from '../imports/api/alumnos.js';
+import {Grupos} from '../imports/api/grupos.js';
 import {Libros} from '../imports/api/libros.js';
 import {Articulos} from '../imports/api/articulos.js';
 import {ObjetosAprendizaje} from '../imports/api/objetosAprendizaje.js';
@@ -16,26 +17,32 @@ import {Lobby} from '../imports/api/lobby.js';
 import {Bloques} from '../imports/api/bloques.js';
 import {Materias} from '../imports/api/materias.js';
 import {Escuelas} from '../imports/api/escuelas.js';
-import {Grupos} from '../imports/api/grupos.js';
 import {UsuarioSAprendizaje} from '../imports/api/usuariosSesionAprendizaje.js';
 import {SesionesAprendizaje} from '../imports/api/sesionesAprendizaje.js';
 import {Estadisticas} from '../imports/api/estadisticas.js';
 import {UsuarioLobby} from '../imports/api/usuarioLobby.js';
-import {UserFiles} from '../imports/api/images.js';
 
 import '../imports/api/links';
 import '../imports/api/users';
+import '../imports/api/test';
+import '../imports/api/mensajes';
+import '../imports/api/lobbies';
+import '../imports/api/materias';
+
+import '../imports/api/documentos';
+
 
 Meteor.startup(() => {
   // code to run on server at startup
-  Accounts.onCreateUser(function(datos, user) {
-      if (datos.tipoUsuario)
-          user.tipoUsuario = datos.tipoUsuario;
+    Accounts.onCreateUser(function(datos, user) {
+        if (datos.tipoUsuario)
+            user.tipoUsuario = datos.tipoUsuario;
 
-      if (datos.profile)
-          user.profile = datos.profile;
+        if (datos.profile)
+            user.profile = datos.profile;
 
-      return user;
-  });
+            return user;
+    });
+    
 
 });

@@ -1,13 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { withRouter } from "react-router-dom";
 
 import MaestroDashboard from './MaestroDashboard';
 import UsuarioDashboard from './UsuarioDashboard';
-import MaestroAlumnos from './MaestroAlumnos';
-import MaestroGrupos from './MaestroGrupos';
+import AdminContenidoDashboardContainer from './AdminContenidoDashboardContainer';
 
 class Dashboard extends React.Component {
 
@@ -16,6 +13,10 @@ class Dashboard extends React.Component {
     this.state = {
         user: { }
     };
+  }
+
+  componentDidMount(){
+    console.log('url ', this.props.history.location.pathname);
   }
 
   //actualizamos props y guardamos datos del usuario
@@ -32,26 +33,13 @@ class Dashboard extends React.Component {
     if( this.state.user !== undefined && this.state.user.tipoUsuario !== undefined){
       tipoUsuario = this.state.user.tipoUsuario;
 
-      if (this.props.tipo=="maestroAlumnos"){//Verifica a cual sera redireccionado..
-        dashboard = <MaestroAlumnos user={this.state.user}/>; 
-        //creamos sesion con los datos del usuario logueado
-        Session.set('user', this.state.user);
-      }
-
-      else if (this.props.tipo=="maestroGrupos"){//Verifica a cual sera redireccionado..
-        dashboard = <MaestroGrupos user={this.state.user}/>; 
-        //creamos sesion con los datos del usuario logueado
-        Session.set('user', this.state.user);
-      }
-
-      else if (this.props.tipo=="dashboard"){
-        //determinamos el dashboard a cargar
-        if (tipoUsuario == "docente"){
-          dashboard = <MaestroDashboard user={this.state.user}/>;
-        }  
-        else{
-          dashboard = <UsuarioDashboard user={this.state.user}/>; 
-        }
+      //determinamos el dashboard a cargar
+      if (tipoUsuario == "docente"){
+        dashboard = <MaestroDashboard user={this.state.user}/>;
+      } else if(tipoUsuario == 'adminContenido'){
+        dashboard = <AdminContenidoDashboardContainer user={this.state.user}/>;
+      } else { 
+        dashboard = <UsuarioDashboard user={this.state.user}/>; 
       }
       //creamos sesion con los datos del usuario logueado
       Session.set('user', this.state.user);

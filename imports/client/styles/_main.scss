@@ -52,14 +52,41 @@
   margin-bottom: 0px;
 } 
 
+.card-table2 div {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  max-width: 1000px;
+} 
+
 .row-login{
   display: flex;
   justify-content: center;
 }
 
+.contenido{
+  padding-left: 20px;
+}
+
+
+/* Ajustes en card para visualizar un documento*/
+#document .card-img-top {
+  width: 50%;
+  height: 7vw;
+  object-fit: fill;
+}
+
+#document .no-padding {
+  padding: 0px 2px;
+}
+
+.br-none {
+  padding: 0;
+  margin: 0;
+}
+
 /* importando componentnes */
-@import './components/_carousel';
-@import './components/_homeBand';
+@import './components/carousel';
+@import './components/homeBand';
 
 /*importando estilos de paginas principales*/
 @import './about';
@@ -68,3 +95,4 @@
 @import './soporte';
 @import './teachers';
 @import './elementos';
+@import './nuevaSesion';

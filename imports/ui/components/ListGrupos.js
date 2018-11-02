@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Grupos } from "../../api/grupos";
+import { Grupos } from "../../api/grupos.js";
 import { Session } from 'meteor/session';
 
 import ReactTable from 'react-table'
 import "react-table/react-table.css";
 // import matchSorter from 'match-sorter';
 import Modal from 'react-modal';
+
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+
+//Para las notificaciones!
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const buttonStyle = {
     margin: "10px 10px",
@@ -24,6 +31,23 @@ class ListGrupo extends Component {
     
         this.editar = this.editar.bind(this);
     }
+
+    submit = (eventId) => {
+        confirmAlert({
+            title: 'Confirmación de Eliminación',
+            message: '¿Esta seguro que desea eliminar?.',
+            buttons: [
+            {
+                label: 'Yes',
+                onClick: () => this.handleDelete(eventId)
+            },
+            {
+                label: 'No',
+                onClick: () => alert('Click para cancelar!')
+            }
+            ]
+        })
+    };
 
     componentWillMount(){
         Modal.setAppElement('body');
@@ -74,6 +98,7 @@ class ListGrupo extends Component {
           {
             Header: 'Opciones', // Custom header components!
             accessor: 'id',
+            maxWidth: 300,
             filterMethod: (filter, rows) =>
                 matchSorter(rows, filter.value, { keys: ["id"] }),
                   
@@ -100,7 +125,7 @@ class ListGrupo extends Component {
                             <button
                                 className="btn btn-outline-danger col"
                                 style={buttonStyle}
-                                onClick={() => this.handleDelete(original.id)}
+                                onClick={() => this.submit(original.id)}
                             >
                                 Eliminar
                             </button>   
@@ -141,11 +166,19 @@ class ListGrupo extends Component {
 
     Meteor.call('grupos.update', this.idG, nombreGrupo1, grado1, grupo1, claveEscuela1, (err, res) => {
       if (!err) {
-        alert("editado");
+        return(
+            toast.success('Editado!', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000
+            })
+        );
       } else {
-        alert("ocurrió un error al editar");
-        alert(err.reason);
-        console.log(err.reason);
+        return(
+            console.log(err.reason),
+            toast.error("ocurrió un error al editar", {
+                position: toast.POSITION.TOP_CENTER
+            })
+        );
       }
     });
     this.handleEdit();
@@ -155,8 +188,12 @@ class ListGrupo extends Component {
         console.log(eventId);
         Meteor.call('grupos.remove', eventId, (err, res) => {
             if (!err) {
-                // this.handleModalClose();
-                alert("eliminado!");
+                return(
+                    toast.info('🦄Eliminado!', {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 3000
+                    })
+                );
             } else {
                 this.setState({error: ''});
             }
@@ -180,7 +217,7 @@ class ListGrupo extends Component {
                 />
 
             :
-                <div className="no-events text-center" style={{ padding: "100px 0" }}>NO TIENE ALUMNOS REGISTRADOS!!!</div>
+                <div className="no-events text-center" style={{ padding: "100px 0" }}>NO TIENE GRUPOS REGISTRADOS!!!</div>
             }
 
             <section className="row justify-content-center">
@@ -243,7 +280,7 @@ class ListGrupo extends Component {
                                     </div>                                   
                                 </div>
                                 <div className="row-login">
-                                    <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Regístrar</button>
+                                    <button type="submit" className="btn btn-primary btn-lg text-center btn-block">Editar</button>
                                 </div>
                             </form>
                         </div>
@@ -254,6 +291,11 @@ class ListGrupo extends Component {
                 </Modal>
             </section>
 
+            <ToastContainer
+                hideProgressBar={true}
+                newestOnTop={true}
+                autoClose={5000}
+            />
         </div>
         );
     }
@@ -261,9 +303,10 @@ class ListGrupo extends Component {
 
     export default withTracker(() => {
         id = Session.get('user')._id;
-        console.log(id);
         Meteor.subscribe("grupos", id);
+
         return {
             events: Grupos.find({}). fetch()
         }
+
     })(ListGrupo);
