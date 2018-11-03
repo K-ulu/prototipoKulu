@@ -38,14 +38,14 @@ Meteor.methods({
     });
   },
 
-  'materias.update'( miId, nombreMateria, grado, cantidadBloques ){
+  'materias.update'( miId, nombreMateria, grado ){
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     Materias.update({
       _id: miId
     }, {
-      $set: { nombreMateria, grado, cantidadBloques }
+      $set: { nombreMateria, grado }
     });
   },
 

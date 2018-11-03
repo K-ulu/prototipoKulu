@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ListaMaterias from '../ui/components/programa/ListaMaterias';
+import MateriasForm from './MateriasForm';
 
 export default class AdminContenidoMaterias extends React.Component {
   render(){
@@ -22,8 +23,8 @@ export default class AdminContenidoMaterias extends React.Component {
                   </div>
                   <div className="row justify-content-center">
                     <div className="col-10">
-                      {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}
-                      { /*form*/ }                      
+                      {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}                      
+                      <MateriasForm/>                            
                       {/*Cards 100%..*/}
                       <div className="row section-cards list">
                         <div className="col-12">                            
@@ -32,8 +33,7 @@ export default class AdminContenidoMaterias extends React.Component {
                       </div>                          
                     </div>
                   </div>
-                </div>
-                {/*<div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*/}
+                </div>                
               </div>
             </div>
           </div>

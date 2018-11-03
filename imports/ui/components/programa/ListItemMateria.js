@@ -8,6 +8,8 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import MateriaModal from '../../MateriaModal';
+
 export default class ListItemMateria extends React.Component {
   constructor(props){
     super(props);
@@ -67,7 +69,7 @@ export default class ListItemMateria extends React.Component {
 
   render(){
     return(
-      <div className="col-12 col-md-6 col-lg-4">
+      <div className="col-12 col-md-6">
         <div className="card">
           <div className="card-body br-none">
             <h5 className="card-title">{ this.props.nombre }</h5>  
@@ -79,7 +81,10 @@ export default class ListItemMateria extends React.Component {
             </div>               
             <div className="row">
               <div className="col-6 no-padding">
-                <button onClick={ this.renameMateria } className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>                
+                {/*<button onClick={ this.renameMateria } className="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#modalMateriaNuevo"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>                */}
+                <button type="button" className="btn btn-outline-primary btn-block" data-toggle="modal" data-target={ '#'+this.props.materiaId }>
+                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
               </div>  
               <div className="col-6 no-padding">
                 <button onClick={ this.removeMateria } className="btn btn-outline-danger btn-block"><i className="fa fa-trash-o" aria-hidden="true"></i></button>
@@ -87,6 +92,7 @@ export default class ListItemMateria extends React.Component {
             </div>
           </div>          
         </div>
+        <MateriaModal id={ this.props.materiaId } editing={ true } title="Editar materia" actionName="Editar" {...this.props}/>
         <ToastContainer
           hideProgressBar={true}
           newestOnTop={true}
