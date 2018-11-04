@@ -27,14 +27,14 @@ Meteor.methods({
     });
   },
 
-  'bloques.update'( miId, nombreBloque, descripcionBloque, idMateria, idLobby ){
+  'bloques.update'( miId, nombreBloque, descripcionBloque, idMateria, numBloque ){
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     Bloques.update({
         _id: miId
     }, {
-      $set: {nombreBloque, descripcionBloque, idMateria, idLobby}
+      $set: {nombreBloque, descripcionBloque, idMateria, numBloque}
     });
   },
   

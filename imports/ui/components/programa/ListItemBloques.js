@@ -8,17 +8,13 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import BloqueModal from '../../BloqueModal';
+
 export default class ListItemBloque extends React.Component {
   constructor(props){
     super(props);
 
-    this.removeBloque = this.removeBloque.bind(this);    
-    this.editData = this.editData.bind(this);
-  }
-
-  //funcion para editar informacion de bloque
-  editData(){
-
+    this.removeBloque = this.removeBloque.bind(this); 
   }
 
   //funcion para eliminar bloque
@@ -65,7 +61,10 @@ export default class ListItemBloque extends React.Component {
             </div>               
             <div className="row">
               <div className="col-6 no-padding">
-                <button className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>                
+                {/*<button className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>*/}
+                <button type="button" className="btn btn-outline-primary btn-block" data-toggle="modal" data-target={ '#'+this.props.bloqueId }>
+                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
               </div>  
               <div className="col-6 no-padding">
                 <button onClick={ this.removeBloque } className="btn btn-outline-danger btn-block"><i className="fa fa-trash-o" aria-hidden="true"></i></button>
@@ -73,6 +72,7 @@ export default class ListItemBloque extends React.Component {
             </div>
           </div>          
         </div>
+        <BloqueModal id={ this.props.bloqueId } editing={ true } title="Editar bloque" actionName="Editar" {...this.props}/>
         <ToastContainer
           hideProgressBar={true}
           newestOnTop={true}

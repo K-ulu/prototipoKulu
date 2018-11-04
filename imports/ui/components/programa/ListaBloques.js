@@ -33,7 +33,7 @@ class ListaBloques extends React.Component {
   render(){    
     if(this.state.bloques.length > 0 /*&& this.state.isReadyB*/){
       let display = this.state.bloques.map((bloque) => {
-        return <ListItemBloques key={ 'key' + bloque._id } bloqueId={ bloque._id } numBloque={ bloque.numBloque } nombreBloque={ bloque.nombreBloque } descripcionBloque={ bloque.descripcionBloque }/>
+        return <ListItemBloques key={ 'key' + bloque._id } bloqueId={ bloque._id } numBloque={ bloque.numBloque } nombreBloque={ bloque.nombreBloque } descripcionBloque={ bloque.descripcionBloque } idMateria={ bloque.idMateria }/>
       });
 
       return <div className="row">
@@ -50,7 +50,8 @@ export default withTracker((props) => {
   //obtenemos informacion de bloques
   let handleB = Meteor.subscribe('bloques');
   let isReadyB = handleB.ready();
-  let bloques = Bloques.find({ idMateria: props.claveMat }).fetch();
+  let bloques = Bloques.find({ idMateria: props.claveMat }, {sort: { numBloque: 1 }}).fetch();
+  
   return {
     isReadyB: isReadyB,
     bloques: bloques,

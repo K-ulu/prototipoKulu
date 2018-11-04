@@ -3,6 +3,7 @@ import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import ListaBloques from '../ui/components/programa/ListaBloques';
+import BloquesForm from './BloquesForm';
 
 import { Materias } from '../api/materias';
 import { Bloques } from '../api/bloques';
@@ -71,7 +72,7 @@ class AdminContenidoBloques extends React.Component {
                   <div className="row justify-content-center">
                     <div className="col-10">
                       {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}
-                      { /*form*/ }                      
+                      <BloquesForm/>                                   
                       {/*Cards 100%..*/}
                       <div className="row section-cards list">                        
                         <div className="col-12">  
