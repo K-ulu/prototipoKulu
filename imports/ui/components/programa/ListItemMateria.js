@@ -14,8 +14,7 @@ export default class ListItemMateria extends React.Component {
   constructor(props){
     super(props);
 
-    this.removeMateria = this.removeMateria.bind(this);
-    this.renameMateria = this.renameMateria.bind(this);
+    this.removeMateria = this.removeMateria.bind(this);    
   }
 
   //funcion para eliminar materia
@@ -46,30 +45,11 @@ export default class ListItemMateria extends React.Component {
         }
       ]
     })
-  }
-  //funcion para renombrar materia
-  renameMateria(){
-    let validName = /[^a-zA-Z0-9 \.:\+()\-_%!&]/gi;
-    let prompt    = window.prompt('Nuevo nombre: ', this.props.nombre);
-
-    // Replace any non valid characters, also do this on the server
-    if (prompt) {
-      prompt = prompt.replace(validName, '-');
-      prompt.trim();
-    }   
-
-    if (!_.isEmpty(prompt)) {
-      Meteor.call('materiasRenameFile', this.props.materiaId, prompt, function (err, res) {
-        if (err)
-          console.log(err);
-      })
-    }
-
-  }
+  }  
 
   render(){
     return(
-      <div className="col-12 col-md-6">
+      <div className="col-12 col-lg-6">
         <div className="card">
           <div className="card-body br-none">
             <h5 className="card-title">{ this.props.nombre }</h5>  

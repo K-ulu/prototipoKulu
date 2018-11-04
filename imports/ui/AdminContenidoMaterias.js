@@ -26,7 +26,7 @@ export default class AdminContenidoMaterias extends React.Component {
                       {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}                      
                       <MateriasForm/>                            
                       {/*Cards 100%..*/}
-                      <div className="row section-cards list">
+                      <div className="row">
                         <div className="col-12">                            
                           <ListaMaterias/>
                         </div>                        
