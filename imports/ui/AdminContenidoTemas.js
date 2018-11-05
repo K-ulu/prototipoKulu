@@ -2,6 +2,8 @@ import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import ListaTemas from './components/programa/ListaTemas';
+import TemasForm from './TemasForm';
+
 import { Materias } from '../api/materias';
 import { Bloques } from '../api/bloques';
 
@@ -38,14 +40,12 @@ class AdminContenidoTemas extends React.Component {
     this.setState({ claveMat: event.target.value });  
     //filtramos los blques de acuerdo a la materia seleccionada
 		let bloquesMateria = this.state.bloques.filter(bloque => bloque.idMateria ==  event.target.value);
-    //actualizamos state para mostrar los bloques de acuerdo a la materia seleccionada
-    console.log(' bloques materia: ', bloquesMateria);
+    //actualizamos state para mostrar los bloques de acuerdo a la materia seleccionada    
     this.setState({ optionsBloquesSelect: bloquesMateria });
   }
 
   handleChangeBloque(event){
-    this.setState({ claveBloque: event.target.value }); //id del bloque seleccionado
-    console.log('clave bloque: ', event.target.value);
+    this.setState({ claveBloque: event.target.value }); //id del bloque seleccionado    
   }
 
   //mostramos las materias registradas en el select
@@ -85,7 +85,7 @@ class AdminContenidoTemas extends React.Component {
                 <div className="row justify-content-center">
                   <div className="col-10">
                     {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}
-                    { /*form*/ }                      
+                    <TemasForm/>                   
                     {/*Cards 100%..*/}
                     <div className="row section-cards list">                        
                       <div className="col-12">  

@@ -8,17 +8,13 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import TemaModal from '../../TemaModal';
+
 export default class ListItemTema extends React.Component {
   constructor(props){
     super(props);
 
-    this.removeTema = this.removeTema.bind(this);
-    this.editData = this.editData.bind(this);
-  }
-
-  //funcion para editar informacion de tema
-  editData(){
-
+    this.removeTema = this.removeTema.bind(this);    
   }
 
   //funcion para eliminar tema
@@ -57,7 +53,7 @@ export default class ListItemTema extends React.Component {
       <div className="col-12 col-md-12 col-lg-12">
         <div className="card">
           <div className="card-body br-none">
-            <h5 className="card-title text-left">{ this.props.nombreTema }</h5>  
+            <h5 className="card-title text-left">{ this.props.numTema } - { this.props.nombreTema }</h5>  
             <div className="row">
               <div className="col-12">
                 <p className="card-text text-muted text-left">{ this.props.descripcionTema }</p>                
@@ -65,7 +61,10 @@ export default class ListItemTema extends React.Component {
             </div>               
             <div className="row">
               <div className="col-6 no-padding">
-                <button className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>                
+                {/*<button className="btn btn-outline-primary btn-block"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>*/}
+                <button type="button" className="btn btn-outline-primary btn-block" data-toggle="modal" data-target={ '#'+this.props.temaId }>
+                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
               </div>  
               <div className="col-6 no-padding">
                 <button onClick={ this.removeTema } className="btn btn-outline-danger btn-block"><i className="fa fa-trash-o" aria-hidden="true"></i></button>
@@ -73,6 +72,7 @@ export default class ListItemTema extends React.Component {
             </div>
           </div>          
         </div>
+        <TemaModal id={ this.props.temaId } editing={ true } title="Editar tema" actionName="Editar" {...this.props}/>
         <ToastContainer
           hideProgressBar={true}
           newestOnTop={true}

@@ -30,7 +30,7 @@ class ListaTemas extends React.Component {
   render (){
     if(this.state.temas.length > 0){
       let display = this.state.temas.map((tema) => {
-        return <ListItemTema key={ 'key' + tema._id} temaId={ tema._id } nombreTema={ tema.nombreTema } descripcionTema={ tema.descripcionTema } idBloque={ tema.idBloque }/>
+        return <ListItemTema key={ 'key' + tema._id} temaId={ tema._id } nombreTema={ tema.nombreTema } descripcionTema={ tema.descripcionTema } numTema={ tema.numTema } idBloque={ tema.idBloque }/>
       });
 
       return <div className="row">
@@ -46,7 +46,7 @@ export default withTracker((props) => {
   //obtenemos informacion de bloques
   let handleT = Meteor.subscribe('temas');
   let isReadyT = handleT.ready();
-  let temas = Temas.find({ idBloque: props.claveBloque }).fetch();
+  let temas = Temas.find({ idBloque: props.claveBloque }, {sort: { numTema: 1 }}).fetch();
   return {
     isReadyT: isReadyT,
     temas: temas,

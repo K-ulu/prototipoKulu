@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { withTracker } from 'meteor/react-meteor-data';
 
 import ListaBloques from '../ui/components/programa/ListaBloques';
