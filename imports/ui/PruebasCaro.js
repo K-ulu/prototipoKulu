@@ -7,7 +7,6 @@ import Timeline from './timeline';
 import {getSampleData} from './data';
 import {getImages} from './data';
 require('../client/styles/lineaTiempo.scss');
-require('../client/styles/timeline.css');
 
 class PruebasCaro extends React.Component {
     static displayName = 'TimelineExample';

@@ -4,6 +4,67 @@
   box-sizing: border-box; 
 }
 
+.rt-menu ul{
+  margin:0;
+  padding:0;
+}
+
+.rt-menu li{
+  width:20%;
+  height:50px;
+  float:left;
+  color:#191919;
+  text-align:center;
+  overflow:hidden;
+}
+
+.rt-menu div{
+  color:white;
+  text-decoration:none;
+  font-family:"Lucida Grande", arial, sans-serif;
+  font-size: 20px;
+  padding: 13px;
+}
+
+/*Menu Color Classes*/
+.green{background:#6AA63B;}
+.yellow{background:#FBC700;}
+.red{background:#D52100;}
+.purple{background:#5122B4;}
+.blue{background:#0292C0;}
+
+//css de la linea del tiempo
+.linea-Tiempo {
+  font-family: -apple-system, "Arial", "sans-serif";
+  font-weight: 300;
+  color: #313740;
+  background: url("https://s3.amazonaws.com/aaron-cdn/background-texture.jpg");
+}
+
+.linea-Tiempo h1, .linea-Tiempo h2, .linea-Tiempo h3, .linea-Tiempo h4, .linea-Tiempo h5, .linea-Tiempo p {
+  margin: 0;
+  padding: 0; 
+}
+
+.linea-Tiempo h1, .linea-Tiempo strong{
+  font-weight: bold;
+  text-align: center;
+}
+
+.linea-Tiempo h2 {
+  font-size: 1.75em; 
+}
+
+.linea-Tiempo h3 {
+  font-size: 2em;
+  text-align: center;
+}
+
+.linea-Tiempo h5 {
+  font-size: 1.5em;
+  text-align: center;
+}
+
 .rt-container-image{
     padding: 1em;
     display: block; 
