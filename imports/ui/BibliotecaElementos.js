@@ -1,21 +1,10 @@
 import React from 'react';
 
+import ListaElementos from './components/uploadFiles/ListaElementos';
+import ElementosForm from './ElementosForm';
+
 export default class BibliotecaElementos extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      showComponent: false,
-    }
-
-    this.editar = this.nuevo.bind(this);
-  }
-
-  nuevo = () => {
-    this.setState({
-      showComponent: !this.state.showComponent
-    });
-  };
-
+  
   render(){
     return (
       <div>
@@ -30,34 +19,17 @@ export default class BibliotecaElementos extends React.Component {
                   <div className="row justify-content-center">
                     <div className="col-10">
                       <h1 className="text-center">Elementos de Objetos de Aprendizaje</h1>
+                      <p className="text-center mt-3">Aute id aliqua id consequat proident dolor. Excepteur qui nulla nisi commodo pariatur ea ipsum incididunt mollit et cupidatat fugiat id quis. Nisi irure non nisi amet laborum exercitation. Nostrud proident nostrud commodo laborum non ullamco.</p>
                     </div>     
                   </div>
                   <div className="row justify-content-center">
                     <div className="col-10">
-                      {/*buttons and filter options*/}
-                      <div className="row justify-content-between">
-                        <div className="col-2">
-                          <button className="btn btn-primary btn-block" onClick={this.nuevo}>Nuevo</button>
-                        </div>
-                        <div className="col-2 btn-group" role="group" aria-label="Basic example">
-                          <button  type="button" className="btn btn-secondary"><i className="fa fa-th-large"></i></button>
-                          <button  type="button" className="btn btn-secondary"><i className="fa fa-align-justify"></i></button>                          
-                        </div> 
-                        {/*this.state.showComponent ? <MaestrosDocumentoNuevo nuevo={this.nuevo} /> : null*/}
-                      </div>
-                      {/*Buscador..*/}
-                      <div className="row justify-content-between">
-                        <div className="col-12">
-                          <form className="form-inline">
-                            <input className="form-control mr-4 col-lg-8" type="text" placeholder="Buscar..."/>
-                            <button className="btn btn-outline-success ml-4 col-lg-3" type="submit">Buscar</button>
-                          </form>                  
-                        </div>
-                      </div>
+                      {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}                      
+                      <ElementosForm/>            
                       {/*Cards 100%..*/}
-                      <div className="row section-cards list">
+                      <div className="row ">
                         <div className="col-12">                            
-                          {/*<DocumentoUploadComponent/>*/}
+                          <ListaElementos/>
                         </div>                        
                       </div>                          
                     </div>

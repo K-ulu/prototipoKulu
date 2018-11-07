@@ -84,6 +84,11 @@
   margin: 0;
 }
 
+ .np  span button {
+  padding: 0px;
+  margin: 0px;
+}
+
 /* importando componentnes */
 @import './components/carousel';
 @import './components/homeBand';
