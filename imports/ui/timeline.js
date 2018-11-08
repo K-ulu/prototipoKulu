@@ -296,15 +296,29 @@ export default class Timelime extends Component {
 
         return (
         <div> 
-            <div className = "rt-container-image" >
-                <h2>Imagenes:</h2>
-                <ol className='rt-image-Lista'> {contentImages}</ol>
+            <div className = "rt-menu">
+                <ul>
+                    <li className="green"><div>Limpiar</div></li>
+                    <li className="yellow"><div>Mostrar todo</div></li>
+                    <li className="red"><div>Artefacto</div></li>
+                    <li className="blue"><div>Personaje</div></li>
+                    <li className="purple"><div>evento</div></li>
+                </ul>
             </div>
-            <hr/>
-            <div className='rt-timeline-container'>
-                {this.topLabel}
-                <ul className='rt-timeline'>{content}</ul>
-                {this.bottomLabel}
+            <div>
+                <div>
+                    menu
+                </div>
+                <div className = "rt-container-image" >
+                    <h2>Imagenes:</h2>
+                    <ol className='rt-image-Lista'> {contentImages}</ol>
+                </div>
+                <hr/>
+                <div className='rt-timeline-container'>
+                    {this.topLabel}
+                    <ul className='rt-timeline'>{content}</ul>
+                    {this.bottomLabel}
+                </div>
             </div>
 
             <ToastContainer
