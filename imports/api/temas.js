@@ -13,7 +13,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'temas.insert'(nombreTema, descripcionTema, idBloque) {
+  'temas.insert'(nombreTema, descripcionTema, numTema, idBloque) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -22,18 +22,19 @@ Meteor.methods({
       _id: shortid.generate(),
       nombreTema,
       descripcionTema,
+      numTema,
       idBloque
     });
   },
 
-  'temas.update'( miId, nombreTema, descripcionTema, idBloque){
+  'temas.update'( miId, nombreTema, descripcionTema, numTema, idBloque){
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     Temas.update({
         _id: miId
     }, {
-      $set: { nombreTema, descripcionTema, idBloque}
+      $set: { nombreTema, descripcionTema, numTema, idBloque}
     });
   },
   

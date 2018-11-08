@@ -1,10 +1,9 @@
 import React from 'react';
 
-import ListaElementos from './components/uploadFiles/ListaElementos';
-import ElementosForm from './ElementosForm';
+import ListaMaterias from '../ui/components/programa/ListaMaterias';
+import MateriasForm from './MateriasForm';
 
-export default class BibliotecaElementos extends React.Component {
-  
+export default class AdminContenidoMaterias extends React.Component {
   render(){
     return (
       <div>
@@ -18,24 +17,23 @@ export default class BibliotecaElementos extends React.Component {
                   {/*Card title*/}
                   <div className="row justify-content-center">
                     <div className="col-10">
-                      <h1 className="text-center">Elementos de Objetos de Aprendizaje</h1>
+                      <h1 className="text-center">Materias</h1>
                       <p className="text-center mt-3">Aute id aliqua id consequat proident dolor. Excepteur qui nulla nisi commodo pariatur ea ipsum incididunt mollit et cupidatat fugiat id quis. Nisi irure non nisi amet laborum exercitation. Nostrud proident nostrud commodo laborum non ullamco.</p>
                     </div>     
                   </div>
                   <div className="row justify-content-center">
                     <div className="col-10">
                       {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}                      
-                      <ElementosForm/>            
+                      <MateriasForm/>                            
                       {/*Cards 100%..*/}
-                      <div className="row ">
+                      <div className="row">
                         <div className="col-12">                            
-                          <ListaElementos/>
+                          <ListaMaterias/>
                         </div>                        
                       </div>                          
                     </div>
                   </div>
-                </div>
-                {/*<div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*/}
+                </div>                
               </div>
             </div>
           </div>
