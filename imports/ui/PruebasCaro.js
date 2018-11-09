@@ -1,8 +1,7 @@
-import { withRouter } from "react-router-dom";
 import React, {Component, PropTypes} from 'react';
 
 import { withTracker } from 'meteor/react-meteor-data';
-import ContenidosMultimedia from '../api/contenidosMultimedia.js';
+import ElementosObjetosAprendizaje from '../api/elementosObjetosAprendizaje.js';
 import Timeline from './timeline';
 import {getSampleData} from './data';
 import {getImages} from './data';
@@ -22,12 +21,11 @@ class PruebasCaro extends React.Component {
 
     render() {
         let data = this.props.files;
-    
         if (data.length > 0 && this.state.contador < 1){
             this.setState(
                 {
                     contador: 1,
-                    events:getSampleData(false, data),
+                    events:getSampleData(data),
                     imagenes: getImages(false, data)
                 }
             )
@@ -48,10 +46,9 @@ class PruebasCaro extends React.Component {
 //export default withRouter(PruebasCaro);
 
 export default withTracker(() => {
-    var filesHandle = Meteor.subscribe("contenidosMultimedia.all");//suscripcion a files
-    console.log(filesHandle.ready());
-
+    var filesHandle = Meteor.subscribe("elementos.all");//suscripcion a files
     return {
-        files: ContenidosMultimedia.find({}, {sort: {name: 1}}).fetch(), 
+        // files: ElementosObjetosAprendizaje.find({}, {sort:{name:1}}).fetch());
+        files: ElementosObjetosAprendizaje.find({}).fetch(), 
     }
 })(PruebasCaro);

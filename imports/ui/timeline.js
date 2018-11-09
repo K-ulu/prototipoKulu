@@ -6,15 +6,18 @@ import PropTypes from 'prop-types';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import ScrollMenu from 'react-horizontal-scrolling-menu';
+require('../client/styles/App.css');
+
 propTypes = {
-    date: PropTypes.object.isRequired,
+    dateIF: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
+    descripcion: PropTypes.string.isRequired,
     onClick: PropTypes.func,
     buttonText: PropTypes.string,
-    extras: PropTypes.object,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    fecha: PropTypes.string.isRequired,
 };
 
 const DefaultStartLabel = (props) => {
@@ -32,10 +35,10 @@ const DefaultEndLabel = (props) => {
 };
 
 const DefaultHeader = (props) => {
-    const {date, title} = props.event;
+    const {fecha, title} = props.event;
     return <div>
         <h2 className='rt-title'>{title}</h2>
-        <p className='rt-date'>{moment(date).format('LL')}</p>
+        <p className='rt-date'>{fecha}</p>
     </div>;
 };
 
@@ -58,8 +61,8 @@ const DefaultImageBody = (props) =>{
 };
 
 const DefaultTextBody = (props) => {
-    const {text} = props.event;
-    return <p>{text}</p>
+    const {descripcion} = props.event;
+    return <p>{descripcion}</p>
 };
 
 const ArrowAndDot = (props) => {
@@ -105,7 +108,7 @@ export default class Timelime extends Component {
     getStateForProps(props) {
         const {events,imagenes, reverseOrder} = props;
         const sortedEvents = R.sortBy(R.prop('date'), events || []);
-        const sortedImagenes = R.sortBy(R.prop('id'), imagenes || []); //Este se declara por que son dos variables que mando por props
+        const sortedImagenes = imagenes; //Este se declara por que son dos variables que mando por props
         return {
             events: reverseOrder ? R.reverse(sortedEvents) : sortedEvents,
             imagenes: sortedImagenes //Lo agrego
@@ -139,7 +142,6 @@ export default class Timelime extends Component {
 
        if (id == "idO"+ this.idOriginal){
             document.getElementById(id).src = this.urlOriginal;
-            console.log(cat);
             document.getElementById(divID).remove();
             return(
                 toast.info('🦄Correctoo!', {
@@ -156,21 +158,11 @@ export default class Timelime extends Component {
             })
         );
        }
-       //Estos es en caso de que se hada drag dentro de la misma linea del tiempo 
-       // const {imageUrl} = props.imagen;
-       //document.getElementById(this.idOriginal).src = imageUrl;
     }
-
-    // soltoImagen(e, cat){
-    //     console.log("Solto la imagen!");
-    //     console.log(e);
-    //     console.log(cat);
-    // }
 
     contentForEvent(event, index, HeaderClass, TextBodyClass, FooterClass) {
         var {id} = event;
         id = "idO"+id;
-        console.log(id);
         const content = <div className='rt-content'>
             <div className="rt-header-container">
                 <HeaderClass event={event}/>
@@ -241,13 +233,10 @@ export default class Timelime extends Component {
     }
 
     contentForEventImages(imagen, index, ImageBodyClass) { //este prodia recibir event en vez de imagen pero como se manejan 2 variables en los props
-        console.log(imagen.id);
         var divID = "div"+imagen.id;
         const content = <div className='rt-content'
             onDragStart={(e)=> this.onDragStart(e, {imagen})}                    
             draggable
-            // onDragOver={(e)=>this.onDragOver(e)}
-            // onDrop={(e) => this.soltoImagen(e,"complete")}
         >
                 <ImageBodyClass imagen={imagen}/>
         </div>;
@@ -288,11 +277,8 @@ export default class Timelime extends Component {
         } 
 
         //mandamos a llamar a la función content el cual nos permitira crear nuestra línea del tiempo
-        const content = (events && events.length) ? this.content() : <div></div>;//Comprobamos que tengamos datos
+        const contentInfo = (events && events.length) ? this.content() : <div></div>;//Comprobamos que tengamos datos
         const contentImages = (imagenes && imagenes.length) ? this.contentImages() : <div></div>;
-
-        console.log(content);
-        console.log(contentImages);
 
         return (
         <div> 
@@ -316,8 +302,17 @@ export default class Timelime extends Component {
                 <hr/>
                 <div className='rt-timeline-container'>
                     {this.topLabel}
-                    <ul className='rt-timeline'>{content}</ul>
+                    <ul className='rt-timeline'>{contentInfo}</ul>
                     {this.bottomLabel}
+
+                    
+                    {/* <ScrollMenu
+                        ref={el => this.contentInfo = el}
+                        data={contentInfo}
+                        arrowLeft={this.topLabel}
+                        arrowRight={this.bottomLabel}
+                    /> */}
+
                 </div>
             </div>
 

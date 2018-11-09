@@ -29,6 +29,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 // Pruebas para la linea del tiempo
 import PruebasCaro from '../ui/PruebasCaro';
 
+import AppO from '../ui/prueba1.js';
+
 let isAuthenticated, tipo;
 let user;
 
@@ -99,6 +101,7 @@ export const routes = (
       
       {/* Pruebas para la linea del tiempo */}
       <Route path="/prueba" component={()=>(<PruebasCaro isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/prueba2" component={()=>(<AppO isAuthenticated={isAuthenticated}/>)}/>
 
 
       
