@@ -42,19 +42,24 @@ if (Meteor.isServer) {
   });
 }
 
-Meteor.methods({
-  
+Meteor.methods({  
 
-  /*'elementos.rename'( miId, nombreElemento,descripcionElemento, fechaCarga, idObjetoAprendizaje, idContenidoMultimedia){
+  'elementos.update'( miId, nombreElemento, descripcionElemento, categoriaElemento, categoriaEnObjeto, fechaInicio, fechaFin){
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     ElementosObjetosAprendizaje.update({
-      userId: miId
+      _id: miId
     }, {
-      $set: { nombreElemento, descripcionElemento, fechaCarga, idObjetoAprendizaje, idContenidoMultimedia}
+      $set: { 
+        'meta.nombreElemento': nombreElemento, 
+        'meta.descripcionElemento': descripcionElemento, 
+        'meta.categoriaElemento': categoriaElemento, 
+        'meta.categoriaEnObjeto': categoriaEnObjeto, 
+        'meta.fechaInicio': fechaInicio, 
+        'meta.fechaFin': fechaFin }
     });
-  },*/
+  },
   
   'elementos.remove'(id) {    
     ElementosObjetosAprendizaje.remove({_id: id}, function (error) {

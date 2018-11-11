@@ -1,11 +1,16 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 
 import ListaElementos from './components/uploadFiles/ListaElementos';
 import ElementosForm from './ElementosForm';
 
-export default class BibliotecaElementos extends React.Component {
+class BibliotecaElementos extends React.Component {
   
   render(){
+    let form = null;
+    if(this.props.tipo == 'adminContenido'){
+      form = <ElementosForm/>
+    } 
     return (
       <div>
         {/*Inicio componente */}
@@ -25,11 +30,11 @@ export default class BibliotecaElementos extends React.Component {
                   <div className="row justify-content-center">
                     <div className="col-10">
                       {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}                      
-                      <ElementosForm/>            
+                      { form }        
                       {/*Cards 100%..*/}
                       <div className="row ">
                         <div className="col-12">                            
-                          <ListaElementos/>
+                          <ListaElementos history={ this.props.history } tipo={ this.props.tipo }/>
                         </div>                        
                       </div>                          
                     </div>
@@ -45,3 +50,5 @@ export default class BibliotecaElementos extends React.Component {
     );
   }
 }
+
+export default withRouter(BibliotecaElementos);

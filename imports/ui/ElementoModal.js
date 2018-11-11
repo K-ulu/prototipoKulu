@@ -39,12 +39,12 @@ class ElementoModal extends React.Component {
 
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
-		if(nextProps.isReady && nextProps.isReadyB){      
-			return {
+		if(nextProps.isReady && nextProps.isReadyB){   
+      return {
         materias: nextProps.materias,
         bloques: nextProps.bloques,
-      };
-		}
+      };			
+    } 
 		//retornamos null cuando no sea necesario actualizar state
 		return null;
   }
@@ -84,96 +84,121 @@ class ElementoModal extends React.Component {
       let file = this.state.archivos[0];
       let self = this;
 
-      
-      //verificamos que haya datos en los campos
-      if(file && nombreElemento && descripcionElemento && categoriaElemento && claveMateria && claveBloque && fechaInicio && categoriaEnObjeto){
-        let uploadInstance = ElementosObjetosAprendizaje.insert({
-          file: file,
-          meta: {
-            locator: self.props.fileLocator,
-            userId: Meteor.userId(), // Optional,asignamos el id del usuario que guarda el archivo
-            nombreElemento,
-            descripcionElemento,
-            categoriaElemento,
-            fechaInicio,
-            fechaFin,
-            categoriaEnObjeto,
-            claveMateria,
-            claveBloque,
-            fechaCarga
-          },
-          streams: 'dynamic',
-          chunkSize: 'dynamic',
-          allowWebWorkers: true // If you see issues with uploads, change this to false
-        }, false)
+      //determinamos en que modo se abrio el modal
+      if(this.props.editing){
+        //verificamos que haya valores en los campos que vamos a actualizar
+        if(nombreElemento && descripcionElemento && categoriaElemento && categoriaEnObjeto && fechaInicio && fechaFin){
+          Meteor.call('elementos.update', this.props.id, nombreElemento, descripcionElemento, categoriaElemento, categoriaEnObjeto, fechaInicio, fechaFin, (err, res) => {
+            if(!err){
+              $('#'+this.props.id).modal('hide');
+              //console.log('elemento actualizado');
+              //reseteando los campos de informacion
+              /*this.refs.nombreElemento.value = '';
+              this.refs.descripcionElemento.value = '';
+              this.refs.fechaInicio.value = '';
+              this.refs.fechaFin.value = '';
+              this.refs.categoriaEnObjeto.value = '';
+              this.setState({
+                archivos: [],
+                categoriaElemento: 'seleccione',
+                claveMateria: 'seleccione',
+                claveBloque: 'seleccione',
+              }); */
+            } else {
+              $('#'+this.props.id).modal('hide');
+            }
+          })
+          
 
-        self.setState({
-          uploading: uploadInstance, // guardamos los datos de la variable a upliading
-          inProgress: true // mostramos la barra de progreso
-        });
-
-        // These are the event functions, don't need most of them, it shows where we are in the process
-        uploadInstance.on('start', function () {//Se emplieza a cargar el archivo
-          console.log('Starting');
-        })
-
-        uploadInstance.on('end', function (error, fileObj) {//Se termina de cargar el archivo
-          console.log('On end File Object: ', fileObj);
-        })
-
-        uploadInstance.on('uploaded', function (error, fileObj) {
-          console.log('uploaded: ', fileObj);
-
-          // Resetea los datos para el siguiente
-          self.setState({
-            uploading: [],
-            progress: 0,
-            inProgress: false
-          });
-        })
-
-        uploadInstance.on('error', function (error, fileObj) {
-          console.log('Error during upload: ' + error)
-        });
-
-        uploadInstance.on('progress', function (progress, fileObj) {
-          console.log('Upload Percentage: ' + progress)
-          // Update our progress bar
-          self.setState({
-            progress: progress
-          });
-        });
-
-        uploadInstance.start(); 
-        //ocultamos modal
-        $('#'+this.props.id).modal('hide');
-        //reseteando los campos de informacion
-        this.refs.nombreElemento.value = '';
-        this.refs.descripcionElemento.value = '';
-        this.refs.fechaInicio.value = '';
-        this.refs.fechaFin.value = '';
-        this.refs.categoriaEnObjeto.value = '';
-        this.setState({
-          archivos: [],
-          categoriaElemento: 'seleccione',
-          claveMateria: 'seleccione',
-          claveBloque: 'seleccione',
-        });
-        
-        
-        
-
+        } else {
+          //informamos que faltan campos a llenar para actualizar los datos
+          alert("Faltan campos por llenar");
+        }
       } else {
-        alert("Faltan campos por llenar");
+        //verificamos que haya datos en los campos
+        if(file && nombreElemento && descripcionElemento && categoriaElemento && claveMateria && claveBloque && fechaInicio && categoriaEnObjeto){
+          let uploadInstance = ElementosObjetosAprendizaje.insert({
+            file: file,
+            meta: {
+              locator: self.props.fileLocator,
+              userId: Meteor.userId(), // Optional,asignamos el id del usuario que guarda el archivo
+              nombreElemento,
+              descripcionElemento,
+              categoriaElemento,
+              fechaInicio,
+              fechaFin,
+              categoriaEnObjeto,
+              claveMateria,
+              claveBloque,
+              fechaCarga
+            },
+            streams: 'dynamic',
+            chunkSize: 'dynamic',
+            allowWebWorkers: true // If you see issues with uploads, change this to false
+          }, false)
+
+          self.setState({
+            uploading: uploadInstance, // guardamos los datos de la variable a upliading
+            inProgress: true // mostramos la barra de progreso
+          });
+
+          // These are the event functions, don't need most of them, it shows where we are in the process
+          uploadInstance.on('start', function () {//Se emplieza a cargar el archivo
+            console.log('Starting');
+          })
+
+          uploadInstance.on('end', function (error, fileObj) {//Se termina de cargar el archivo
+            console.log('On end File Object: ', fileObj);
+          })
+
+          uploadInstance.on('uploaded', function (error, fileObj) {
+            console.log('uploaded: ', fileObj);
+
+            // Resetea los datos para el siguiente
+            self.setState({
+              uploading: [],
+              progress: 0,
+              inProgress: false
+            });
+          })
+
+          uploadInstance.on('error', function (error, fileObj) {
+            console.log('Error during upload: ' + error)
+          });
+
+          uploadInstance.on('progress', function (progress, fileObj) {
+            console.log('Upload Percentage: ' + progress)
+            // Update our progress bar
+            self.setState({
+              progress: progress
+            });
+          });
+
+          uploadInstance.start(); 
+          //ocultamos modal
+          $('#'+this.props.id).modal('hide');
+          //reseteando los campos de informacion
+          this.refs.nombreElemento.value = '';
+          this.refs.descripcionElemento.value = '';
+          this.refs.fechaInicio.value = '';
+          this.refs.fechaFin.value = '';
+          this.refs.categoriaEnObjeto.value = '';
+          this.setState({
+            archivos: [],
+            categoriaElemento: 'seleccione',
+            claveMateria: 'seleccione',
+            claveBloque: 'seleccione',
+          });    
+
+        } else {
+          alert("Faltan campos por llenar");
+        }
       }
-        
       
     } else {
       alert("Solo puedes cargar un archivo al elemento");
       return;
-
     }
-    
 
   }  
 
@@ -185,6 +210,18 @@ class ElementoModal extends React.Component {
     $('#fechaFin').datepicker({
       uiLibrary: 'bootstrap4'
     });
+    //si se abrio el modal en modo edicion cargamos los datos
+    if(this.props.editing){
+      console.log('props elementoModal: ', this.props);
+      this.refs.nombreElemento.value = this.props.data.nombreElemento;
+      this.refs.descripcionElemento.value = this.props.data.descripcionElemento;
+      this.refs.fechaInicio.value = this.props.data.fechaInicio;
+      this.refs.fechaFin.value = this.props.data.fechaFin;
+      this.refs.categoriaEnObjeto.value = this.props.data.categoriaEnObjeto;
+      this.setState({ 
+        categoriaElemento: this.props.data.categoriaElemento,
+      });          
+    }
   }
 
   //evento que se ejecuta al escoger un valor del select (determinamos el id de la materia seleccionada)
@@ -228,7 +265,40 @@ class ElementoModal extends React.Component {
 		} 
 	}
 
-  render () {
+  render () {     
+    //mostramos los selects de acuerdo al tipo de modo en que se abrio el modal
+    let selects = (
+      <React.Fragment>
+        <div className="form-group">
+          <label htmlFor="escogeMateria">Seleccione materia: </label>
+          <select value={ this.state.claveMateria } onChange={this.handleChangeMateria} id="escogeMateria" className="form-control form-control rounded">
+            <option value ="seleccione">Seleccione materia</option>																
+            { this.renderMateriasListItems() }                                
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="escogeBloque">Seleccione bloque: </label>
+          <select value={this.state.claveBloque} onChange={this.handleChangeBloque} id="escogeBloque" className="form-control form-control rounded">
+            <option value ="seleccione">Seleccione bloque</option>																
+            { this.renderBloquesListItems() }                               
+          </select>
+        </div>
+      </React.Fragment>
+      );
+    
+    let fileChooser = (
+      <React.Fragment>
+        <div className="form-group">
+            <label htmlFor="inputArchivo">Seleccione imagen</label>
+            <input type="file" className="form-control-file" onChange={this.handleChangeArchivo} id="inputArchivo"/>
+          </div> 
+      </React.Fragment>
+    );
+    //si entro en modo edicion oculto los campos que no voy a mostrar
+    if(this.props.editing){
+      selects = null;
+      fileChooser = null;
+    }
     return (
       <div className="modal fade" id={ this.props.id } tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered" role="document">
@@ -258,20 +328,7 @@ class ElementoModal extends React.Component {
                     <option value ="artefacto">Artefacto</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="escogeMateria">Seleccione materia: </label>
-                  <select value={ this.state.claveMateria } onChange={this.handleChangeMateria} id="escogeMateria" className="form-control form-control rounded">
-                    <option value ="seleccione">Seleccione materia</option>																
-                    { this.renderMateriasListItems() }                                
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="escogeBloque">Seleccione bloque: </label>
-                  <select value={this.state.claveBloque} onChange={this.handleChangeBloque} id="escogeBloque" className="form-control form-control rounded">
-                    <option value ="seleccione">Seleccione bloque</option>																
-                    { this.renderBloquesListItems() }                               
-                  </select>
-                </div>
+                { selects }
                 <div className="form-group">
                 <label htmlFor="categoriaEnObjeto">Categoría en objeto: </label>
                   <input type="text" className="form-control" id="categoriaEnObjeto" ref="categoriaEnObjeto" defaultValue={ this.state.categoriaEnObjeto } placeholder="Civilizacion China..."/>  
@@ -285,11 +342,8 @@ class ElementoModal extends React.Component {
                     <label htmlFor="fechaFin">Fecha fin:</label>
                     <input id="fechaFin" ref="fechaFin" className="form-control form-control rounded"/>
                   </div>          
-                </div>   
-                <div className="form-group">
-                  <label htmlFor="inputArchivo">Seleccione imagen</label>
-                  <input type="file" className="form-control-file" onChange={this.handleChangeArchivo} id="inputArchivo"/>
-                </div>                 
+                </div>  
+                { fileChooser }                                 
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
