@@ -32,8 +32,8 @@ export default class MateriaModal extends React.Component {
         Meteor.call('materias.update', this.props.materiaId, nombre, grado, (err, res) => {
           if (!err) { //mensaje enviado
             $('#'+this.props.id).modal('hide');
-            this.refs.nombreMateria.value = '';
-            this.setState({ gradoMateria: 'seleccione'});           
+            /*this.refs.nombreMateria.value = '';
+            this.setState({ gradoMateria: 'seleccione'});*/           
           } else { //error al enviar mensaje
             console.log(err.reason);
             $('#'+this.props.id).modal('hide');
