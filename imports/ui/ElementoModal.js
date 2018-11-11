@@ -211,8 +211,7 @@ class ElementoModal extends React.Component {
       uiLibrary: 'bootstrap4'
     });
     //si se abrio el modal en modo edicion cargamos los datos
-    if(this.props.editing){
-      console.log('props elementoModal: ', this.props);
+    if(this.props.editing){      
       this.refs.nombreElemento.value = this.props.data.nombreElemento;
       this.refs.descripcionElemento.value = this.props.data.descripcionElemento;
       this.refs.fechaInicio.value = this.props.data.fechaInicio;

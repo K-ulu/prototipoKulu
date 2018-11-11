@@ -13,6 +13,7 @@ import { Materias } from '../../../api/materias';
 import { Bloques } from '../../../api/bloques';
 
 import ElementoModal from '../../ElementoModal';
+import ElementoModalInfo from '../../ElementoModalInfo';
 
 class IndividualElementoAdminCont extends React.Component {
   constructor(props){
@@ -97,7 +98,7 @@ class IndividualElementoAdminCont extends React.Component {
             <p className="card-text text-center">{ numBloque } - { nombreBloque }</p> 
             <div className="row justify-content-center">              
               <div className="col-4 no-padding">
-                <button className="btn btn-outline-success btn-block" target="_blank"><i className="fa fa-fw fa-eye"></i></button>                
+                <button type="button" className="btn btn-outline-success btn-block" data-toggle="modal" data-target={ '#'+this.props.elementoId+'info' }><i className="fa fa-fw fa-eye"></i></button>                
               </div>  
               <div className="col-4 no-padding">
                 <button type="button" className="btn btn-outline-primary btn-block" data-toggle="modal" data-target={ '#'+this.props.elementoId }>
@@ -111,6 +112,7 @@ class IndividualElementoAdminCont extends React.Component {
           </div>
         </div>
         <ElementoModal id={ this.props.elementoId } editing={ true } title="Editar elemento" actionName="Editar" {...this.props}/>
+        <ElementoModalInfo id={ this.props.elementoId+'info' } {...this.props} />
         <ToastContainer
           hideProgressBar={true}
           newestOnTop={true}

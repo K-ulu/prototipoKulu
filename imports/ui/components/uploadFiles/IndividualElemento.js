@@ -4,6 +4,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Materias } from '../../../api/materias';
 import { Bloques } from '../../../api/bloques';
 
+import ElementoModalInfo from '../../ElementoModalInfo';
+
 class IndividualElemento extends React.Component {
   constructor(props){
     super(props);
@@ -55,11 +57,12 @@ class IndividualElemento extends React.Component {
             <p className="card-text text-center">{ numBloque } - { nombreBloque }</p> 
             <div className="row justify-content-center">
               <div className="col-8 no-padding">
-                <button className="btn btn-outline-success btn-block" target="_blank"><i className="fa fa-fw fa-eye"></i></button>                
+                <button type="button" className="btn btn-outline-success btn-block" data-toggle="modal" data-target={ '#'+this.props.elementoId+'info' }><i className="fa fa-fw fa-eye"></i></button>                
               </div>  
             </div>
           </div>
         </div>
+        <ElementoModalInfo id={ this.props.elementoId+'info' } {...this.props} />
       </div>
     );
   }

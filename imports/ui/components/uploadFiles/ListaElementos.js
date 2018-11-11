@@ -26,6 +26,10 @@ class ListaElementos extends React.Component {
 		//retornamos null cuando no sea necesario actualizar state
 		return null;
   }
+
+  componentDidMount(){
+    console.log("didmount ListaElementos: ", this.props);
+  }
   
   render () {
     if(this.state.elementos.length > 0 && this.state.isReady){
@@ -34,16 +38,31 @@ class ListaElementos extends React.Component {
       let display = elementos.map((aFile, key) => {
         // console.log('A file: ', aFile.link(), aFile.get('name'))
         let link = ElementosObjetosAprendizaje.findOne({_id: aFile._id}).link();  //The "view/download" link
-    
-        // Send out components that show details of each file
-        return <IndividualElementoAdminCont
-        key={'file' + key}
-        fileName={aFile.name}
-        fileUrl={link}
-        elementoId={aFile._id}
-        fileSize={aFile.size}
-        data={aFile.meta}        
-      />
+        
+        if(this.props.tipo != 'adminContenido'){
+          // Send out components that show details of each file
+          return <IndividualElemento
+          key={'file' + key}
+          fileName={aFile.name}
+          fileUrl={link}
+          elementoId={aFile._id}
+          fileSize={aFile.size}
+          data={aFile.meta}        
+          />
+
+        } else {
+          // Send out components that show details of each file
+          return <IndividualElementoAdminCont
+          key={'file' + key}
+          fileName={aFile.name}
+          fileUrl={link}
+          elementoId={aFile._id}
+          fileSize={aFile.size}
+          data={aFile.meta}        
+          />
+
+        }
+        
         
                        
       })
