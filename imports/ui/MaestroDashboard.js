@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
 //importando pagina principal
-import ContenidoPrincipal from './components/ContenidoPrincipal';
+import ContenidoPrincipalMaestro from './components/ContenidoPrincipalMaestro';
 //importando componente explora
 import Explora from './Explora';
 //importando componentes de la biblioteca
@@ -36,7 +36,7 @@ class MaestroDashboard extends React.Component {
     let pathname = this.props.history.location.pathname;
     
     if(pathname == '/dashboard' || pathname == '/dashboard/'){
-      contenido = <ContenidoPrincipal/>;
+      contenido = <ContenidoPrincipalMaestro/>;
     } else if(pathname == '/dashboard/explora' || pathname == '/dashboard/explora/'){
       contenido = <Explora/>
     } else if(pathname == '/dashboard/biblioteca/libros' || pathname == '/dashboard/biblioteca/libros/'){

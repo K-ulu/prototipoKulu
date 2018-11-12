@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
 //importando pagina principal
-import ContenidoPrincipal from './components/ContenidoPrincipal';
+import ContenidoPrincipalAdminContenido from './components/ContenidoPrincipalAdminContenido';
 //importando componentes de la biblioteca
 import BibliotecaDocumentos from './BibliotecaDocumentos';
 import BibliotecaElementos from './BibliotecaElementos';
@@ -26,7 +26,7 @@ class AdminContenidoDashboard extends React.Component {
     let pathname = this.props.history.location.pathname;
     
     if(pathname == '/dashboard' || pathname == '/dashboard/'){
-      contenido = <h1>hola principal</h1>;
+      contenido = <ContenidoPrincipalAdminContenido/>;
     } else if(pathname == '/dashboard/biblioteca/libros' || pathname == '/dashboard/biblioteca/libros/'){
       contenido = <BibliotecaLibros tipo="adminContenido"/>
     } else if(pathname == '/dashboard/biblioteca/multimedia' || pathname == '/dashboard/biblioteca/multimedia/'){

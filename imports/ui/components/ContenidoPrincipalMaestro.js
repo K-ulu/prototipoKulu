@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class ContenidoPrincipal extends React.Component {
+export default class ContenidoPrincipalMaestro extends React.Component {
     render(){
         return(
             <div>
