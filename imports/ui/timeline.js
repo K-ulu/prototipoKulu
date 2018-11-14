@@ -6,8 +6,10 @@ import PropTypes from 'prop-types';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import ScrollMenu from 'react-horizontal-scrolling-menu';
-require('../client/styles/App.css');
+// import ScrollMenu from 'react-horizontal-scrolling-menu';
+// require('../client/styles/App.css');
+import Slider from 'react-animated-slider';
+import 'react-animated-slider/build/horizontal.css';
 
 propTypes = {
     dateIF: PropTypes.object.isRequired,
@@ -292,20 +294,21 @@ export default class Timelime extends Component {
                 </ul>
             </div>
             <div>
-                <div>
-                    menu
-                </div>
                 <div className = "rt-container-image" >
                     <h2>Imagenes:</h2>
                     <ol className='rt-image-Lista'> {contentImages}</ol>
                 </div>
                 <hr/>
                 <div className='rt-timeline-container'>
-                    {this.topLabel}
+                    {/* {this.topLabel}
                     <ul className='rt-timeline'>{contentInfo}</ul>
-                    {this.bottomLabel}
+                    {this.bottomLabel} */}
 
-                    
+                    <Slider>
+                    {/* {this.topLabel} */}
+                    <ul className='rt-timeline'>{contentInfo}</ul>
+                    {/* {this.bottomLabel} */}
+                    </Slider>
                     {/* <ScrollMenu
                         ref={el => this.contentInfo = el}
                         data={contentInfo}

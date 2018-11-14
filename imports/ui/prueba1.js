@@ -152,7 +152,7 @@ class AppO extends Component {
           Horizontal scrolling menu example.
           Click arrow or drag items.
         </p>
-
+  {menu}
         <ScrollMenu
           ref={el => this.menu = el}
           data={menu}

@@ -3,13 +3,13 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box; 
 }
-
+//css del menu 
 .rt-menu ul{
   margin:0;
   padding:0;
 }
 
-.rt-menu li{
+.rt-menu li{//El menu es una lista
   width:20%;
   height:50px;
   float:left;
@@ -18,7 +18,7 @@
   overflow:hidden;
 }
 
-.rt-menu div{
+.rt-menu div{//Se encuentra dentro de un div el menu
   color:white;
   text-decoration:none;
   font-family:"Lucida Grande", arial, sans-serif;
@@ -34,7 +34,8 @@
 .blue{background:#0292C0;}
 
 //css de la linea del tiempo
-.linea-Tiempo {
+
+.linea-Tiempo {//Contenedor linea del tiempo
   font-family: -apple-system, "Arial", "sans-serif";
   font-weight: 300;
   color: #313740;
@@ -154,8 +155,8 @@
 
 .rt-event {
   clear: right;
-  width: 14%;
-  height: 20%;
+  width: 20%;
+  height: 25%;
   margin: 1.5em 1% 1.5em 1%;
   display:block;
   float:left;
