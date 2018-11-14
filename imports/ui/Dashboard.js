@@ -11,18 +11,21 @@ class Dashboard extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-        user: { }
+        user: { },
+        isReady: false,
     };
   }
 
-  componentDidMount(){
-    console.log('url ', this.props.history.location.pathname);
-  }
-
-  //actualizamos props y guardamos datos del usuario
-  componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
-    this.setState({ user: this.props.user});
+  //actualizamos props
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if(nextProps.isReady){
+      return {
+        user: nextProps.user,
+        isReady: nextProps.isReady,
+      };
+    }    
+		//retornamos null cuando no sea necesario actualizar state
+		return null;
   }
 
   render () {
@@ -30,7 +33,7 @@ class Dashboard extends React.Component {
     let tipoUsuario, dashboard;
     
     //cargamos el tipo de usuario una vez que se carguen los datos
-    if( this.state.user !== undefined && this.state.user.tipoUsuario !== undefined){
+    if( this.state.isReady ){
       tipoUsuario = this.state.user.tipoUsuario;
 
       //determinamos el dashboard a cargar
