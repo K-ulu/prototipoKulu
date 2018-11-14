@@ -89,6 +89,12 @@
   margin: 0px;
 }
 
+/* Ajustes en card para visualizar un elemento*/
+#element .no-padding {
+  padding: 0px 2px;
+}
+
+
 /* importando componentnes */
 @import './components/carousel';
 @import './components/homeBand';

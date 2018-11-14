@@ -60,7 +60,7 @@ class ElementoModalInfo extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-md-8 col-lg-6 mt-lg-3">
+                  <div className="col-8 col-md-8 col-lg-6 mt-lg-3">
                     <div className="row">
                       <div className="col-12 text-sm-center text-lg-left">
                         <p className="text-muted">Descripción:</p>     
@@ -74,11 +74,11 @@ class ElementoModalInfo extends React.Component {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-12 text-xs-center text-lg-left">
+                      <div className="col-12 text-sm-center text-lg-left">
                         <p className="text-muted">Bloque:</p>  
                         <p>{ numBloque } - { nombreBloque }</p> 
                       </div>
-                      <div className="col-12 text-xs-center text-lg-left">
+                      <div className="col-12 text-sm-center text-lg-left">
                         <p className="card-text"> { this.props.data.fechaInicio } - { this.props.data.fechaFin } </p>
                       </div>
                     </div>                    

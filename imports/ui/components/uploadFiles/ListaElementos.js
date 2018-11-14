@@ -26,10 +26,6 @@ class ListaElementos extends React.Component {
 		//retornamos null cuando no sea necesario actualizar state
 		return null;
   }
-
-  componentDidMount(){
-    console.log("didmount ListaElementos: ", this.props);
-  }
   
   render () {
     if(this.state.elementos.length > 0 && this.state.isReady){

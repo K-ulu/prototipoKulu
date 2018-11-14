@@ -45,7 +45,7 @@ class IndividualElemento extends React.Component {
       numBloque = this.state.bloques[0].numBloque;
     }
     return (
-      <div className="col-md-4 ">
+      <div className="col-md-6 col-lg-4 ">
         <div className="card" id="document">
           <div className="text-center">
             <img className="card-img-top " src={ this.props.fileUrl} alt="pdf image"/>
