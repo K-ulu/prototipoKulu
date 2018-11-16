@@ -75,6 +75,27 @@
   object-fit: fill;
 }
 
+@media only screen and (max-width: 480px) {
+  #document .card-img-top {
+    width: 80%;
+    height: 38vw;
+  }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 481px) {
+  #document .card-img-top {
+    width: 50%;
+    height: 40vw;
+  }
+}
+
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  #document .card-img-top {
+    width: 50%;
+    height: 15vw;
+  }
+}
+
 #document .no-padding {
   padding: 0px 2px;
 }

@@ -35,55 +35,55 @@ class IndividualArchivoPublico extends Component {
     if(pathname == '/dashboard/biblioteca/libros' || pathname == '/dashboard/biblioteca/libros/'){
       if(extension.includes("pdf")){
         image = <img className="card-img-top " src="/images/book.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">PDF</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">PDF</p>
       }      //si estamos en la url de contenido multimedia
     } else if(pathname == '/dashboard/biblioteca/multimedia' || pathname == '/dashboard/biblioteca/multimedia/'){
       if(extension.includes("mp3") || extension.includes("wav") || extension.includes("wma")){
         image = <img className="card-img-top " src="/images/audio.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Audio</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Audio</p>
       } else if(extension.includes("mp4") || extension.includes("3gp") || extension.includes("avi") || extension.includes("flv") || extension.includes("wmv")){
         image = <img className="card-img-top " src="/images/video.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Vídeo</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Vídeo</p>
       } else if(extension.includes("jpg") || extension.includes("JPG") || extension.includes("png") || extension.includes("PNG") || extension.includes("bmp") || extension.includes("gif")){
         image = <img className="card-img-top " src="/images/picture.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Imagen</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Imagen</p>
       }     //si estamos en la url de contenido documentos
     } else if(pathname == '/dashboard/biblioteca/documentos' || pathname == '/dashboard/biblioteca/documentos/'){
       if(extension.includes("docx") || extension.includes("doc")){
         image = <img className="card-img-top " src="/images/word.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Texto</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Texto</p>
       } else if(extension.includes("pptx") || extension.includes("ppt")){
         image = <img className="card-img-top " src="/images/powerp.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Presentación</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Presentación</p>
       } else if(extension.includes("pdf")){
         image = <img className="card-img-top " src="/images/pdf.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">PDF</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">PDF</p>
       }
     } else {
       if(extension.includes("docx") || extension.includes("doc")){
         image = <img className="card-img-top " src="/images/word.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Texto</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Texto</p>
       } else if(extension.includes("pptx") || extension.includes("ppt")){
         image = <img className="card-img-top " src="/images/powerp.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Presentación</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Presentación</p>
       } else if(extension.includes("pdf")){
         image = <img className="card-img-top " src="/images/pdf.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">PDF</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">PDF</p>
       }
       if(extension.includes("mp3") || extension.includes("wav") || extension.includes("wma")){
         image = <img className="card-img-top " src="/images/audio.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Audio</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Audio</p>
       } else if(extension.includes("mp4") || extension.includes("3gp") || extension.includes("avi") || extension.includes("flv") || extension.includes("wmv")){
         image = <img className="card-img-top " src="/images/video.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Vídeo</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Vídeo</p>
       } else if(extension.includes("jpg") || extension.includes("JPG") || extension.includes("png") || extension.includes("PNG") || extension.includes("bmp") || extension.includes("gif")){
         image = <img className="card-img-top " src="/images/picture.png" alt="pdf image"/>
-        etiquetaTipoArchivo = <p className="card-text text-muted">Imagen</p>
+        etiquetaTipoArchivo = <p className="card-text text-muted text-center">Imagen</p>
       } 
     }
 
     return (
-      <div className="col-md-3">
+      <div className="col-md-4 col-lg-3">
         <div className="card" id="document">
           <div className="text-center">
             { image }

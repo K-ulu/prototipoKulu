@@ -80,7 +80,7 @@ class MaestroDashboard extends React.Component {
                 <div className="row">
                   <div className="col-xl-12">
                     <div className="breadcrumb-holder">
-                      <h1 className="main-title float-left">{ this.props.history.location.pathname }</h1>
+                      <h1 className="main-title float-left d-none d-md-block">{ this.props.history.location.pathname }</h1>
                       <ol className="breadcrumb float-right">
                         <li className="breadcrumb-item">Home</li>
                         <li className="breadcrumb-item active">Dashboard</li>

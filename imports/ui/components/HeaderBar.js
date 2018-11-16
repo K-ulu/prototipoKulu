@@ -45,8 +45,8 @@ class HeaderBar extends React.Component {
                 </div>
                 
                 <nav className="navbar-custom">                              
-                    <ul className="list-inline float-right mb-0">    
-                        <li className="list-inline-item dropdown notif">
+                    <ul className="list-inline float-right mb-0 d-none d-md-block">    
+                        <li className="list-inline-item dropdown notif ">
                             <a className="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <i className="fa fa-fw fa-question-circle"></i>
                             </a>
@@ -196,27 +196,21 @@ class HeaderBar extends React.Component {
                                 {/*<!-- item-->*/}
                                 <div className="dropdown-item noti-title">
                                     <h5 className="text-overflow">
-                                        <small>Hello, { Session.get('user').profile.nickname } </small>
+                                        <small>Hola, { Session.get('user').profile.nickname } </small>
                                     </h5>
                                 </div>
                 
                                 {/*<!-- item-->*/}
                                 <a href="pro-profile.html" className="dropdown-item notify-item">
                                     <i className="fa fa-user"></i>
-                                    <span>Profile</span>
+                                    <span>Mi perfil</span>
                                 </a>    
                                 
                                 {/*<!-- item-->*/}
                                 <button onClick={this.onLogout.bind(this)} className="dropdown-item notify-item">
                                     <i className="fa fa-power-off"></i>
-                                    <span>Logout</span>
+                                    <span>Cerrar sesión</span>
                                 </button>
-                
-                                {/*<!-- item-->*/}
-                                <a target="_blank" href="https://www.pikeadmin.com" className="dropdown-item notify-item">
-                                    <i className="fa fa-external-link"></i>
-                                    <span>Pike Admin</span>
-                                </a>
                             </div>
                         </li>
             

@@ -78,7 +78,7 @@ class Explora extends React.Component {
                 <div className="row justify-content-center">
                   <div className="col-8">
                     <h1 className="text-center">Explora</h1>
-                    <p className="mt-3">Exercitation nuldeserunt id eiusmod magna culpa tempor excepteur officia labore nulla do in.</p>
+                    <p className="mt-3 text-center">Exercitation nuldeserunt id eiusmod magna culpa tempor excepteur officia labore nulla do in.</p>
                   </div>     
                 </div>
                 <div className="row justify-content-center">
