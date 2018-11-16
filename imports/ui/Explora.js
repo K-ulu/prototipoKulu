@@ -31,18 +31,6 @@ class Explora extends React.Component {
         libros: nextProps.libros,
       };
     } 
-    /*if(nextProps.multimedia.length > 0){
-      console.log('mis nuevos props: ', nextProps);
-      return {
-        multimedia: nextProps.multimedia,
-      };
-    } 
-    if(nextProps.libros.length > 0){
-      console.log('mis nuevos props: ', nextProps);
-      return {
-        libros: nextProps.libros,
-      };
-    }*/
 		//retornamos null cuando no sea necesario actualizar state
 		return null;
   }
@@ -87,14 +75,10 @@ class Explora extends React.Component {
                       { this.renderContentMultimedia() }
                       { this.renderContentLibros() }
                       { this.renderContentDocumentos() }
-                      {/*<ContenidoTarjeta title="Contenido Multimedia" description="Descubre el nuevo contenido multimedia que tenemos para ti, audio-historias, imágenes y vídeos interesantes." files={ this.state.documentos } />                     
-                      <ContenidoTarjeta title="Libros" description="Mira los nuevos libros que tenemos para ti. Una asombrosa colección divertida y entretenida."/>       
-                      <ContenidoTarjeta title="Documentos" description="Enteráte de los últimos documentos compartidos por maestros. Juega, lee y aprende."/>       */}
                     </div>                                                                       
                   </div>
                 </div>
               </div>
-              {/*<div className="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*/}
             </div>
           </div>
 
@@ -121,9 +105,6 @@ export default withTracker( ( props ) => {
   const librosReadyYet = librosHandle.ready();  
   libros = Libros.find({ "meta.estado": 'publico'}, {sort: {name: 1}, limit: 4}).fetch();
   
-  console.log('documentos explora', documentos);
-  console.log('multimedia explora', multimedia);
-  console.log('libros explora', libros);
   return {
     documentos,
     multimedia,

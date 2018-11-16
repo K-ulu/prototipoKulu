@@ -68,7 +68,7 @@ export default class LeftSidebarAlumno extends React.Component {
             </ul>
           </li> 
 
-          <li className="submenu">
+          {/*<li className="submenu">
             <a href="#">
               <i className="fa fa-fw fa-headphones"></i>
               <span> Mi Cont. Mult. </span>
@@ -80,7 +80,7 @@ export default class LeftSidebarAlumno extends React.Component {
               <i className="fa fa-fw fa-file-text-o"></i>
               <span> Mis Documentos </span>
             </a>
-          </li>
+          </li>*/}
           
         </ul>
       </div>
