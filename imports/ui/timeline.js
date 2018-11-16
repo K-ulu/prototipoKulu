@@ -6,10 +6,8 @@ import PropTypes from 'prop-types';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// import ScrollMenu from 'react-horizontal-scrolling-menu';
-// require('../client/styles/App.css');
-import Slider from 'react-animated-slider';
-import 'react-animated-slider/build/horizontal.css';
+require('../client/styles/lineaTiempo.scss');
+import Whirligig from 'react-whirligig'; //Para que se desplace la linea del tiempo
 
 propTypes = {
     dateIF: PropTypes.object.isRequired,
@@ -54,8 +52,8 @@ const DefaultFooter = (props) => {
 };
 
 const DefaultImageBody = (props) =>{
-    const {imageUrl} = props.imagen; //=props.event
-    const {id} = props.imagen; //=props.event
+    const {imageUrl} = props.imagen; 
+    const {id} = props.imagen; 
 
     return <div>         
         <img id={id} src={imageUrl} className='rt-image'/>
@@ -69,7 +67,7 @@ const DefaultTextBody = (props) => {
 
 const ArrowAndDot = (props) => {
     return <div className='rt-svg-container'>
-        <svg viewBox="0 0 6 8" className='rt-arrow'>
+        <svg viewBox="0 0 8 11" className='rt-arrow'>
             <g>
                 <path d="M 0 0 L 6 4 L 0 8 L 0 0"/>
             </g>
@@ -85,7 +83,7 @@ const DotAndArrow = (props) => {
         <svg viewBox="0 0 8 10" className='rt-dot2'>
             <circle cx="4" cy="5" r="3" stroke="none" strokeWidth="0"/>
         </svg>
-        <svg viewBox="0 0 6 8" className='rt-arrow2'>
+        <svg viewBox="0 0 8 11" className='rt-arrow2'>
             <g>
                 <path d="M 0 0 L 6 4 L 0 8 L 0 0"/>
             </g>
@@ -94,12 +92,10 @@ const DotAndArrow = (props) => {
 };
 
 export default class Timelime extends Component {
-    static total=0;
     static displayName = 'Timeline';
     static topLabel;
     static bottomLabel;
 
-    // static dataImagenes = "";
     static idOriginal="";
     static urlOriginal="";
 
@@ -127,8 +123,8 @@ export default class Timelime extends Component {
     }
 
     onDragStart = (ev, props) =>{
-        this.idOriginal = props.imagen.id; //=props.event.id
-        this.urlOriginal = props.imagen.imageUrl; ////=props.event.imageUrl
+        this.idOriginal = props.imagen.id; 
+        this.urlOriginal = props.imagen.imageUrl; 
         console.log("dragstart:", ev);
     }
     
@@ -180,10 +176,9 @@ export default class Timelime extends Component {
                 <FooterClass event={event}/>
             </div>
         </div>;
-        // Haciendo cambios
-        if (index >= this.total){
+        if (index % 2 === 1){
             return(
-                <li className={index === this.total ? 'rt-event rt-offset-second' : 'rt-event rt-offset3'} key={index}>
+                <li className='rt-event rt-offset-second' key={index}>
                     <div className='rt-backing'>
                         <DotAndArrow/>
                         {content}
@@ -213,12 +208,14 @@ export default class Timelime extends Component {
         const startEvent = (reverseOrder ? R.last : R.head)(events);
         const endEvent = (!reverseOrder ? R.last : R.head)(events);
 
-        const startLabel = (<div key="start" className="rt-label-container">
-            <DefaultStartLabel event={startEvent}/>
-        </div>);
-        const endLabel = (<div key="end" className="rt-label-container">
-            <DefaultEndLabel event={endEvent}/>
-        </div>);
+        // const startLabel = (<div key="start" className="rt-label-container">
+        //     <DefaultStartLabel event={startEvent}/>
+        // </div>);
+        // const endLabel = (<div key="end" className="rt-label-container">
+        //     <DefaultEndLabel event={endEvent}/>
+        // </div>);
+        const startLabel = <DefaultStartLabel event={startEvent}/>;
+        const endLabel = <DefaultEndLabel event={endEvent}/>;
 
         this.topLabel = reverseOrder ? endLabel : startLabel;
         this.bottomLabel = !reverseOrder ? endLabel : startLabel;
@@ -234,7 +231,7 @@ export default class Timelime extends Component {
         )(events);
     }
 
-    contentForEventImages(imagen, index, ImageBodyClass) { //este prodia recibir event en vez de imagen pero como se manejan 2 variables en los props
+    contentForEventImages(imagen, index, ImageBodyClass) { 
         var divID = "div"+imagen.id;
         const content = <div className='rt-content'
             onDragStart={(e)=> this.onDragStart(e, {imagen})}                    
@@ -255,7 +252,7 @@ export default class Timelime extends Component {
             reverseOrder
         } = this.props;
 
-        const {imagenes} = this.state; //const {events} se declararia pero como aqui solo sirve para las imagenes
+        const {imagenes} = this.state; 
 
         const clear = <li key='clear' className='rt-clear'>{}</li>;
 
@@ -265,34 +262,32 @@ export default class Timelime extends Component {
                 const content = this.contentForEventImages(imagen, index, DefaultImageBody);
                 return R.append(content, accum);
             }, [clear])
-        )(imagenes); //podria mandar events pero mando imagenes por que ahi tengo almacenadas las url
+        )(imagenes); 
     }
 
     render() {
         const {events} = this.state;
         const {imagenes} = this.state;
+        let contentInfo = [];
+        let contentImages = [];
 
-        this.total = events.length;
-        this.total = this.total/2;
-        if (this.total % 1 != 0) {
-            this.total+=.5;
-        } 
+        let whirligig;
+        const next = () => whirligig.next();
+        const prev = () => whirligig.prev();
 
-        //mandamos a llamar a la función content el cual nos permitira crear nuestra línea del tiempo
-        const contentInfo = (events && events.length) ? this.content() : <div></div>;//Comprobamos que tengamos datos
-        const contentImages = (imagenes && imagenes.length) ? this.contentImages() : <div></div>;
+        if ((events && events.length) && (imagenes && imagenes.length)){
+            console.log("holi");
+            contentInfo = this.content();
+            contentInfo.shift();
+            contentImages = this.contentImages();
+        }
+        else{
+            contentInfo = <div></div>;
+            contentImages = <div></div>;
+        }
 
         return (
         <div> 
-            <div className = "rt-menu">
-                <ul>
-                    <li className="green"><div>Limpiar</div></li>
-                    <li className="yellow"><div>Mostrar todo</div></li>
-                    <li className="red"><div>Artefacto</div></li>
-                    <li className="blue"><div>Personaje</div></li>
-                    <li className="purple"><div>evento</div></li>
-                </ul>
-            </div>
             <div>
                 <div className = "rt-container-image" >
                     <h2>Imagenes:</h2>
@@ -300,22 +295,19 @@ export default class Timelime extends Component {
                 </div>
                 <hr/>
                 <div className='rt-timeline-container'>
-                    {/* {this.topLabel}
-                    <ul className='rt-timeline'>{contentInfo}</ul>
-                    {this.bottomLabel} */}
-
-                    <Slider>
-                    {/* {this.topLabel} */}
-                    <ul className='rt-timeline'>{contentInfo}</ul>
-                    {/* {this.bottomLabel} */}
-                    </Slider>
-                    {/* <ScrollMenu
-                        ref={el => this.contentInfo = el}
-                        data={contentInfo}
-                        arrowLeft={this.topLabel}
-                        arrowRight={this.bottomLabel}
-                    /> */}
-
+                    <div key="start" className="rt-label-container" onClick = {prev}>
+                        {this.topLabel}
+                    </div>
+                    <Whirligig className='rt-timeline'
+                        visibleSlides={5}
+                        gutter="0.5em"
+                        ref={(_whirligigInstance) => { whirligig = _whirligigInstance}}
+                    >
+                        {contentInfo}
+                    </Whirligig>
+                    <div key="end" className="rt-label-container" onClick = {next}>
+                        {this.bottomLabel}
+                    </div>
                 </div>
             </div>
 

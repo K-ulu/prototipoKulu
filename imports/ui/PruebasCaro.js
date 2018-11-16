@@ -37,6 +37,15 @@ class PruebasCaro extends React.Component {
             <div className="linea-Tiempo">
                 <h1>Linea del Tiempo</h1>
                 <hr/>
+                <div className = "rt-menu">
+                    <ul>
+                        <li className="green"><div>Limpiar</div></li>
+                        <li className="yellow"><div>Mostrar todo</div></li>
+                        <li className="red"><div>Artefacto</div></li>
+                        <li className="blue"><div>Personaje</div></li>
+                        <li className="purple"><div>evento</div></li>
+                    </ul>
+                </div>
                 {timeline}
             </div>
         );
