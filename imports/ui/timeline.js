@@ -290,7 +290,7 @@ export default class Timelime extends Component {
         <div> 
             <div>
                 <div className = "rt-container-image" >
-                    <h2>Imagenes:</h2>
+                    <h3>Imagenes:</h3>
                     <ol className='rt-image-Lista'> {contentImages}</ol>
                 </div>
                 <hr/>

@@ -28,8 +28,7 @@
 }
 
 .linea-Tiempo h3 {
-  font-size: 1em;
-  text-align: center;
+  font-size: 1.5em;
 }
 
 .linea-Tiempo h5 {
@@ -48,17 +47,16 @@
   width:20%;
   height:50px;
   float:left;
-  color:#191919;
   text-align:center;
   overflow:hidden;
+  color:white; //Color de letra
 }
 
 .rt-menu div{ //Damos estilos al div
-  color:white; //Color de letra
   text-decoration:none; //Quitamos las viñetas
   font-family:"Lucida Grande", arial, sans-serif;
   font-size: 20px; //tamanio de letra
-  padding: 13px; //Se centra
+  padding: 10px; //Se centra
 }
 
 /*Menu Color Classes (Para que el menu se vea colorido)*/
@@ -67,6 +65,13 @@
 .red{background:#D52100;}
 .purple{background:#5122B4;}
 .blue{background:#0292C0;}
+
+.activa{
+  background-color:darkorange;
+  font-style: italic;
+  border-style: solid;
+  border-color:white;
+}
 
 /*** css para las imagenes***/
 //Contenedor principal para guardar las imagenes

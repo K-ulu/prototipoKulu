@@ -7,7 +7,15 @@ import {getSampleData} from './data';
 import {getImages} from './data';
 require('../client/styles/lineaTiempo.scss');
 
+$( document ).ready(function() {
+    $(".rt-menu li").on("click", function(){
+      $(".rt-menu").find(".activa").removeClass("activa");
+      $(this).addClass("activa");
+    });
+});
+
 class PruebasCaro extends React.Component {
+
     static displayName = 'TimelineExample';
     static propTypes = {};
     constructor(props) {
@@ -19,6 +27,9 @@ class PruebasCaro extends React.Component {
         };
     }
 
+    datos (e){
+        console.log(e);
+    }
     render() {
         let data = this.props.files;
         if (data.length > 0 && this.state.contador < 1){
@@ -40,7 +51,7 @@ class PruebasCaro extends React.Component {
                 <div className = "rt-menu">
                     <ul>
                         <li className="green"><div>Limpiar</div></li>
-                        <li className="yellow"><div>Mostrar todo</div></li>
+                        <li className="yellow activa"><div>Mostrar todo</div></li>
                         <li className="red"><div>Artefacto</div></li>
                         <li className="blue"><div>Personaje</div></li>
                         <li className="purple"><div>evento</div></li>
