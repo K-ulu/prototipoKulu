@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 //importando contenido general de la interfaz
 import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
+//importando contenido principal
+import ContenidoPrincipalUser from './components/ContenidoPrincipalUser';
 //importando componente explora
 import Explora from './Explora';
 //importando componentes de la biblioteca
@@ -21,7 +23,7 @@ class UsuarioDashboard extends React.Component {
     let pathname = this.props.history.location.pathname;
 
     if(pathname == '/dashboard' || pathname == '/dashboard/'){
-      contenido = <h1>contenido principal alumno</h1>;
+      contenido = <ContenidoPrincipalUser/>
     } else if(pathname == '/dashboard/explora' || pathname == '/dashboard/explora/'){
       contenido = <Explora/>
     } else if(pathname == '/dashboard/biblioteca/libros' || pathname == '/dashboard/biblioteca/libros/'){

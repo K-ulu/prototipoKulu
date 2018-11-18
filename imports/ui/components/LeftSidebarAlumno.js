@@ -8,7 +8,7 @@ export default class LeftSidebarAlumno extends React.Component {
         <ul className="sidebar-nav">
 
           <li className="submenu">
-            <a className="active" href="/teachers">
+            <a className="active" href="/dashboard">
               <i className="fa fa-fw fa-bars"></i>
               <span> Dashboard </span>
             </a>
