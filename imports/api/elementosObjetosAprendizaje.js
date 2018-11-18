@@ -66,6 +66,14 @@ Meteor.methods({
     });     
   }, 
 
+  'elemento.usado'(id) {
+    ElementosObjetosAprendizaje.update({
+      _id: id
+    }, {
+        $set: { 'meta.$.usado': true }
+    });
+  }, 
+
 });
 
 // Export FilesCollection instance, so it can be imported in other files

@@ -135,12 +135,22 @@ export default class Timelime extends Component {
     onDrop = (e,props, cat)=>{
         var {id} = props.event;
 
+        console.log(id);
         var divID = "div"+id;
         id ="idO"+id;
 
        if (id == "idO"+ this.idOriginal){
             document.getElementById(id).src = this.urlOriginal;
             document.getElementById(divID).remove();
+
+            Meteor.call('elemento.usado', id,  (err, res) => {
+                if (!err) {
+                  console.log("editado en elementos");
+                } else {
+                  console.log(err.reason);
+                }
+            });
+
             return(
                 toast.info('🦄Correctoo!', {
                     position: toast.POSITION.TOP_CENTER,
@@ -276,7 +286,6 @@ export default class Timelime extends Component {
         const prev = () => whirligig.prev();
 
         if ((events && events.length) && (imagenes && imagenes.length)){
-            console.log("holi");
             contentInfo = this.content();
             contentInfo.shift();
             contentImages = this.contentImages();
@@ -288,7 +297,7 @@ export default class Timelime extends Component {
 
         return (
         <div> 
-            <div>
+            {/* <div> */}
                 <div className = "rt-container-image" >
                     <h3>Imagenes:</h3>
                     <ol className='rt-image-Lista'> {contentImages}</ol>
@@ -309,7 +318,7 @@ export default class Timelime extends Component {
                         {this.bottomLabel}
                     </div>
                 </div>
-            </div>
+            {/* </div> */}
 
             <ToastContainer
                 hideProgressBar={true}
