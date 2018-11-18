@@ -33,17 +33,17 @@ class ContenidoPrincipalAdminContenido extends React.Component {
   }
 
   render () {
+    //contadores en pantalla
     let countDocumentos = null;
     let countContMult = null;
     let countLibros = null;
     let countElementos = null;
 
-    if(this.state.documentos.length > 0 && this.state.contenidosMultimedia.length > 0 && this.state.libros.length > 0 && this.state.elementos.length > 0){
-      countDocumentos = this.state.documentos.length;
-      countContMult = this.state.contenidosMultimedia.length;
-      countLibros = this.state.libros.length;
-      countElementos = this.state.elementos.length;
-    }
+    //asignando datos segun datos
+    countDocumentos = (this.state.documentos.length > 0)? this.state.documentos.length : 0;
+    countContMult = (this.state.contenidosMultimedia.length > 0)? this.state.contenidosMultimedia.length : 0; 
+    countLibros = (this.state.libros.length > 0)? this.state.libros.length : 0;
+    countElementos = (this.state.elementos.length > 0)? this.state.elementos.length : 0;
 
     return (
       <div>
