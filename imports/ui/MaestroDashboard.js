@@ -25,11 +25,6 @@ import MaestroContenidoMultimedia from './MaestroContenidoMultimedia';
 import MaestroDocumentos from './MaestroDocumentos';
 
 class MaestroDashboard extends React.Component {
-
-  componentDidMount(){    
-    console.log(' didMount', this.props);   
-  }
-
   render () {
     //variable que almacena el contenido segun la url visitada
     let contenido = null;
