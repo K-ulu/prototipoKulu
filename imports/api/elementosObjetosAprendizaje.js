@@ -70,7 +70,9 @@ Meteor.methods({
     ElementosObjetosAprendizaje.update({
       _id: id
     }, {
-        $set: { 'meta.$.usado': true }
+        $set: { 
+          'meta.usado': "true" 
+        }
     });
   }, 
 

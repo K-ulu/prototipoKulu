@@ -37,14 +37,27 @@ class PruebasCaro extends React.Component {
 
         try {
             if (dataType == "all"){
-                // this.images = ElementosObjetosAprendizaje.find({"meta.usado":false}).fetch();
-                const {events} = this.state;
-                const {imagenes} = this.state;
+                this.images = ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch();
+                this.setState(
+                    {
+                        events:getSampleData(this.data),
+                        imagenes: getImages(false, this.images)
+                    }
+                )
             }
+            else{
+                this.images = ElementosObjetosAprendizaje.find({"meta.categoriaElemento": dataType, "meta.usado":"false"}).fetch();
+                console.log(this.images.length);
 
-            // this.setState({
-            //     imagenes: getImages(false, this.images)
-            // })
+                if (this.images.length > 0 ){
+                    this.setState(
+                        {
+                            events:getSampleData(this.data),
+                            imagenes: getImages(false, this.images)
+                        }
+                    )
+                }
+            }
 
           } catch (error) {
             console.log(error);
@@ -69,9 +82,10 @@ class PruebasCaro extends React.Component {
             )
         }
         console.log("hola3");
+        const {contador} = this.state;
         const {events} = this.state;
         const {imagenes} = this.state;
-        this.timeline = <Timeline events={events} imagenes={imagenes}/>;
+        this.timeline = <Timeline events={events} imagenes={imagenes} />;
         console.log("hola4");
         return (
             <div className="linea-Tiempo">
@@ -80,10 +94,10 @@ class PruebasCaro extends React.Component {
                 <div className = "rt-menu">
                     <ul>
                         <li className="green"><div>Limpiar</div></li>
-                        <li className="activa yellow" onClick={() => this.datos("all")}><div>Mostrar todo</div></li>
-                        <li className="red"><div>Artefacto</div></li>
-                        <li className="blue"><div>Personaje</div></li>
-                        <li className="purple"><div>evento</div></li>
+                        <li className="yellow activa" onClick={() => this.datos("all")}><div>Mostrar todo</div></li>
+                        <li className="red" onClick={() => this.datos("artefacto")}><div>Artefacto</div></li>
+                        <li className="blue" onClick={() => this.datos("personaje")}><div>Personaje</div></li>
+                        <li className="purple" onClick={() => this.datos("evento")}><div>evento</div></li>
                     </ul>
                 </div>
                 {this.timeline}
@@ -98,7 +112,7 @@ export default withTracker(() => {
     var filesHandle = Meteor.subscribe("elementos.all");//suscripcion a files
     return {
         // files: ElementosObjetosAprendizaje.find({}, {sort:{name:1}}).fetch());
-        images: ElementosObjetosAprendizaje.find({"meta.usado":false}).fetch(),
+        images: ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch(),
         data: ElementosObjetosAprendizaje.find({}).fetch(),
         listo: filesHandle.ready(),
     }
