@@ -60,9 +60,9 @@ class BloqueModal extends React.Component {
       Meteor.call('bloques.update', this.props.id, nombreBloque, descripcionBloque, idMateria, numBloque, (err, res) => {
         if(!err){
           $('#'+this.props.id).modal('hide');
-          this.refs.nombreBloque.value = '';
+          /*this.refs.nombreBloque.value = '';
           this.refs.descripcionBloque.value = '';
-          this.setState({ numBloque: 'seleccione', claveMateria: 'seleccione' });
+          this.setState({ numBloque: 'seleccione', claveMateria: 'seleccione' });*/
         } else {
           console.log(err.reason);
           $('#'+this.props.id).modal('hide');

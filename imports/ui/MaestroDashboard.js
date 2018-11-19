@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
 //importando pagina principal
-import ContenidoPrincipal from './components/ContenidoPrincipal';
+import ContenidoPrincipalMaestro from './components/ContenidoPrincipalMaestro';
 //importando componente explora
 import Explora from './Explora';
 //importando componentes de la biblioteca
@@ -25,18 +25,13 @@ import MaestroContenidoMultimedia from './MaestroContenidoMultimedia';
 import MaestroDocumentos from './MaestroDocumentos';
 
 class MaestroDashboard extends React.Component {
-
-  componentDidMount(){    
-    console.log(' didMount', this.props);   
-  }
-
   render () {
     //variable que almacena el contenido segun la url visitada
     let contenido = null;
     let pathname = this.props.history.location.pathname;
     
     if(pathname == '/dashboard' || pathname == '/dashboard/'){
-      contenido = <ContenidoPrincipal/>;
+      contenido = <ContenidoPrincipalMaestro/>;
     } else if(pathname == '/dashboard/explora' || pathname == '/dashboard/explora/'){
       contenido = <Explora/>
     } else if(pathname == '/dashboard/biblioteca/libros' || pathname == '/dashboard/biblioteca/libros/'){
@@ -80,7 +75,7 @@ class MaestroDashboard extends React.Component {
                 <div className="row">
                   <div className="col-xl-12">
                     <div className="breadcrumb-holder">
-                      <h1 className="main-title float-left">{ this.props.history.location.pathname }</h1>
+                      <h1 className="main-title float-left d-none d-md-block">{ this.props.history.location.pathname }</h1>
                       <ol className="breadcrumb float-right">
                         <li className="breadcrumb-item">Home</li>
                         <li className="breadcrumb-item active">Dashboard</li>

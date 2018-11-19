@@ -15,13 +15,6 @@ export default class LeftSidebarAdminContenido extends React.Component {
 					</li>
 
 					<li className="submenu">
-						<a className="nuevaSesion" href="/dashboard/nueva-sesion">
-							<i className="fa fa-fw fa-play"></i>
-							<span> Nueva Sesión </span>
-						</a>
-					</li>
-
-					<li className="submenu">
 						<a href="#">
 							<i className="fa fa-fw fa-book"></i>
 							<span> Biblioteca </span>
@@ -87,21 +80,7 @@ export default class LeftSidebarAdminContenido extends React.Component {
 								</a>
 							</li>         
 						</ul>
-					</li> 
-
-					<li className="submenu">
-						<a href="/dashboard/alumnos">
-							<i className="fa fa-fw fa-user"></i>
-							<span> Mis Alumnos </span>
-						</a>
-					</li>            
-
-					<li className="submenu">
-						<a href="/dashboard/grupos">
-							<i className="fa fa-fw fa-users"></i>
-							<span> Mis Grupos </span>
-						</a>
-					</li>		 
+					</li> 	 
 					
         </ul>
 			

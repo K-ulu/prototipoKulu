@@ -22,23 +22,15 @@ class BibliotecaLibros extends React.Component {
                 <div className="card-body">
                   {/*Card title*/}
                   <div className="row justify-content-center">
-                    <div className="col-6">
+                    <div className="col-12 col-lg-10">
                       <h1 className="text-center">Libros</h1>
+                      <p className="text-center mt-3">Anim culpa eu in non laboris reprehenderit veniam quis fugiat. Cillum enim aliqua aliquip officia laboris incididunt velit sunt adipisicing elit dolore anim magna. Est ea sint quis commodo et ad elit consectetur ipsum aliqua deserunt id laborum dolor. velit laboris occaecat. Et excepteur exercitation officia nulla velit et consectetur culpa mollit cillum quis.</p>
                     </div>     
                   </div>
                   <div className="row justify-content-center">
                     <div className="col-10">
                       {/*form para agregar un nuevo elemento (disponible solo para admin de contenido)..*/}
                       { form }
-                      {/*Buscador..*/}
-                      <div className="row justify-content-between">
-                        <div className="col-12">
-                          <form className="form-inline">
-                            <input className="form-control mr-4 col-lg-8" type="text" placeholder="Buscar..."/>
-                            <button className="btn btn-outline-success ml-4 col-lg-3" type="submit">Buscar</button>
-                          </form>                  
-                        </div>
-                      </div>
                       {/*Cards 100%..*/}
                       <div className="row section-cards list">
                         <div className="col-12">                            

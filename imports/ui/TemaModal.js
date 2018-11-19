@@ -63,10 +63,9 @@ class TemaModal extends React.Component {
       Meteor.call('temas.update', this.props.id, nombreTema, descripcionTema, numTema, claveBloque, (err, res) => {
         if(!err){
           $('#'+this.props.id).modal('hide');
-          //console.log('tema actualizado');
-          this.refs.nombreTema.value = '';
+          /*this.refs.nombreTema.value = '';
           this.refs.descripcionTema.value = '';
-          this.setState({ claveBloque: 'seleccione', numTema: 'seleccione' });
+          this.setState({ claveBloque: 'seleccione', numTema: 'seleccione' });*/
         } else {
           $('#'+this.props.id).modal('hide');
           //console.log(err.reason + ' error al insertar tema');

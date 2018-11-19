@@ -4,7 +4,6 @@ import ContenidosMultimedia from '../../api/contenidosMultimedia';
 import Libros from '../../api/libros';
 import Documentos from '../../api/documentos';
 
-
 import IndividualArchivoPublico from './uploadFiles/IndividualArchivoPublico';
 
 export default class ContenidoTarjeta extends React.Component {
@@ -32,8 +31,8 @@ export default class ContenidoTarjeta extends React.Component {
 
     return <div className="col-12">
       <h3>{ this.props.title } <span className="badge badge-secondary"><i className="fa fa-star" aria-hidden="true"></i>   Nuevo</span></h3>
-      <p>{ this.props.description }</p>
-      <div className="row">
+      <p className="text-center">{ this.props.description }</p>
+      <div className="row justify-content-center">
         { display }
       </div> 
     </div>
@@ -60,8 +59,8 @@ export default class ContenidoTarjeta extends React.Component {
 
     return <div className="col-12">
       <h3>{ this.props.title } <span className="badge badge-secondary"><i className="fa fa-star" aria-hidden="true"></i>   Nuevo</span></h3>
-      <p>{ this.props.description }</p>
-      <div className="row">
+      <p className="text-center">{ this.props.description }</p>
+      <div className="row justify-content-center">
         { display }
       </div> 
     </div>
@@ -89,8 +88,8 @@ export default class ContenidoTarjeta extends React.Component {
 
     return <div className="col-12">
       <h3>{ this.props.title } <span className="badge badge-secondary"><i className="fa fa-star" aria-hidden="true"></i>   Nuevo</span></h3>
-      <p>{ this.props.description }</p>
-      <div className="row">
+      <p className="text-center">{ this.props.description }</p>
+      <div className="row justify-content-center">
         { display }
       </div> 
     </div>
