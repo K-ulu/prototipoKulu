@@ -17,14 +17,9 @@ class Explora extends React.Component {
     };  
   }
 
-  componentDidMount(){
-    console.log('mis props: ', this.props);
-  }
-
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
-		if(nextProps.documentos.length > 0 || nextProps.multimedia.length > 0 || nextProps.libros.length > 0){      
-      console.log('mis nuevos props: ', nextProps);
+		if(nextProps.documentos.length > 0 || nextProps.multimedia.length > 0 || nextProps.libros.length > 0){            
 			return {
         documentos: nextProps.documentos,
         multimedia: nextProps.multimedia,

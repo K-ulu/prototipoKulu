@@ -46,6 +46,7 @@ class Dashboard extends React.Component {
       }
       //creamos sesion con los datos del usuario logueado
       Session.set('user', this.state.user);
+      Session.set('tipoUsuario', tipoUsuario);
     }
 
     return (

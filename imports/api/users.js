@@ -54,6 +54,20 @@ Meteor.methods({
           }
       );
     },
+
+    'user.update.profile'(_id, nombre, apellidoP, apellidoM, curp){
+      if (!this.userId) {
+        throw new Meteor.Error('not-authorized');
+      }
+      Meteor.users.update(
+        {
+          _id: _id
+        },
+        {
+          $set: { "profile.nombre" : nombre, "profile.apellidoP" : apellidoP, "profile.apellidoM" : apellidoM, "profile.curp" : curp }
+        }
+    );
+    },
     
     'users.remove'(id) {
       check(id, String);

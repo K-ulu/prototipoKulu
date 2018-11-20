@@ -14,6 +14,8 @@ import BibliotecaElementos from './BibliotecaElementos';
 import BibliotecaLibros from './BibliotecaLibros';
 import BibliotecaMultimedia from './BibliotecaMultimedia';
 import BibliotecaObjetos from './BibliotecaObjetos';
+//importando pagina perfil
+import Perfil from './Perfil';
 
 class UsuarioDashboard extends React.Component {  
 
@@ -36,6 +38,8 @@ class UsuarioDashboard extends React.Component {
       contenido = <BibliotecaObjetos/>
     } else if(pathname == '/dashboard/biblioteca/elementos' || pathname == '/dashboard/biblioteca/elementos/'){
       contenido = <BibliotecaElementos/>
+    } else if(pathname == '/dashboard/perfil' || pathname == '/dashboard/perfil/'){
+      contenido = <Perfil/>
     }
 
 
