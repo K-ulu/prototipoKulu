@@ -33,8 +33,6 @@ class PruebasCaro extends React.Component {
     }
 
     datos (dataType){
-        console.log("Hola", dataType);
-
         try {
             if (dataType == "all"){
                 this.images = ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch();
@@ -47,8 +45,6 @@ class PruebasCaro extends React.Component {
             }
             else{
                 this.images = ElementosObjetosAprendizaje.find({"meta.categoriaElemento": dataType, "meta.usado":"false"}).fetch();
-                console.log(this.images.length);
-
                 if (this.images.length > 0 ){
                     this.setState(
                         {
@@ -66,10 +62,7 @@ class PruebasCaro extends React.Component {
 
     render() {
         let listo = this.props.listo;
-        console.log("hola");
-
         if (listo === true && this.state.contador < 1){
-            console.log("Es menor");
             this.data = this.props.data;
             this.images = this.props.images;
 
@@ -81,12 +74,9 @@ class PruebasCaro extends React.Component {
                 }
             )
         }
-        console.log("hola3");
-        const {contador} = this.state;
         const {events} = this.state;
         const {imagenes} = this.state;
         this.timeline = <Timeline events={events} imagenes={imagenes} />;
-        console.log("hola4");
         return (
             <div className="linea-Tiempo">
                 <h1>Linea del Tiempo</h1>

@@ -72,6 +72,7 @@ Meteor.methods({
   }, 
 
   'elemento.usado'(id) {
+    console.log(id);
     ElementosObjetosAprendizaje.update({
       _id: id
     }, {
@@ -80,7 +81,6 @@ Meteor.methods({
         }
     });
   }, 
-
 });
 
 // Export FilesCollection instance, so it can be imported in other files

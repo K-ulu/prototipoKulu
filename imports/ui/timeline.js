@@ -134,8 +134,6 @@ export default class Timelime extends Component {
 
     onDrop = (e,props, cat)=>{
         var {id} = props.event;
-
-        console.log(id);
         var divID = "div"+id;
         id ="idO"+id;
 
@@ -143,7 +141,7 @@ export default class Timelime extends Component {
             document.getElementById(id).src = this.urlOriginal;
             document.getElementById(divID).remove();
 
-            Meteor.call('elemento.usado', id,  (err, res) => {
+            Meteor.call('elemento.usado', this.idOriginal,  (err, res) => {
                 if (!err) {
                   console.log("editado en elementos");
                 } else {
