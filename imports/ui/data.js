@@ -6,7 +6,6 @@
     function datos(files){
         var data = [];
         files.map((aFile) => {
-            console.log(aFile.meta.fechaInicio);
             data.push({
                 id: aFile._id,
                 title:aFile.meta.nombreElemento,
@@ -20,7 +19,6 @@
 
     //almacenamos las imagenes
     function images(files){
-        console.log(files);
         var data = [];
         files.map((aFile) => {
             let link = ElementosObjetosAprendizaje.findOne({_id: aFile._id}).link();  //The "view/download" link      
