@@ -130,7 +130,8 @@ class ElementoModal extends React.Component {
               categoriaEnObjeto,
               claveMateria,
               claveBloque,
-              fechaCarga
+              fechaCarga,
+              usado: "false"
             },
             streams: 'dynamic',
             chunkSize: 'dynamic',

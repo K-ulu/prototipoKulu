@@ -38,8 +38,9 @@ class PruebasCaro extends React.Component {
                 this.images = ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch();
                 this.setState(
                     {
-                        events:getSampleData(this.data),
-                        imagenes: getImages(false, this.images)
+                        // events:getSampleData(this.data),
+                        imagenes: getImages(false, this.images),
+                        contador: 2
                     }
                 )
             }
@@ -48,11 +49,23 @@ class PruebasCaro extends React.Component {
                 if (this.images.length > 0 ){
                     this.setState(
                         {
-                            events:getSampleData(this.data),
-                            imagenes: getImages(false, this.images)
+                            // events:getSampleData(this.data),
+                            imagenes: getImages(false, this.images),
+                            contador: 2
                         }
                     )
                 }
+                else{
+                    this.setState(
+                        {
+                            // events:getSampleData(this.data),
+                            imagenes: "",
+                            contador: 2
+                        }
+                    )
+                }
+
+
             }
 
           } catch (error) {
@@ -74,9 +87,10 @@ class PruebasCaro extends React.Component {
                 }
             )
         }
+        const {contador} = this.state;
         const {events} = this.state;
         const {imagenes} = this.state;
-        this.timeline = <Timeline events={events} imagenes={imagenes} />;
+        this.timeline = <Timeline events={events} imagenes={imagenes} contador={contador}/>;
         return (
             <div className="linea-Tiempo">
                 <h1>Linea del Tiempo</h1>

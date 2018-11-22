@@ -99,6 +99,7 @@ export default class Timelime extends Component {
     static idOriginal="";
     static urlOriginal="";
 
+    static boolActivado = false;
     static propTypes = {
         reverseOrder: PropTypes.bool
     };
@@ -106,10 +107,9 @@ export default class Timelime extends Component {
     getStateForProps(props) {
         const {events,imagenes, reverseOrder} = props;
         const sortedEvents = R.sortBy(R.prop('date'), events || []);
-        const sortedImagenes = imagenes; //Este se declara por que son dos variables que mando por props
         return {
             events: reverseOrder ? R.reverse(sortedEvents) : sortedEvents,
-            imagenes: sortedImagenes //Lo agrego
+            imagenes: imagenes //Lo agrego
         };
     }
 
@@ -119,13 +119,26 @@ export default class Timelime extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState(this.getStateForProps(newProps));
+        if (newProps.events != null && newProps.imagenes != null && newProps.contador!=null){
+            if (newProps.contador==2){
+                this.boolActivado = false;
+                this.setState ({
+                    imagenes: newProps.imagenes
+                });
+            }
+            else{
+                if (this.boolActivado == false || this.boolActivado == undefined){
+                    console.log("Aqui entro");
+                    this.setState(this.getStateForProps(newProps));
+                }
+            }
+        }
     }
 
     onDragStart = (ev, props) =>{
         this.idOriginal = props.imagen.id; 
         this.urlOriginal = props.imagen.imageUrl; 
-        console.log("dragstart:", ev);
+        // console.log("dragstart:", ev);
     }
     
     onDragOver = (ev) => {
@@ -134,13 +147,9 @@ export default class Timelime extends Component {
 
     onDrop = (e,props, cat)=>{
         var {id} = props.event;
-        var divID = "div"+id;
         id ="idO"+id;
 
        if (id == "idO"+ this.idOriginal){
-            document.getElementById(id).src = this.urlOriginal;
-            document.getElementById(divID).remove();
-
             Meteor.call('elemento.usado', this.idOriginal,  (err, res) => {
                 if (!err) {
                   console.log("editado en elementos");
@@ -149,6 +158,18 @@ export default class Timelime extends Component {
                 }
             });
 
+            document.getElementById(id).src = this.urlOriginal;
+            let newImages = this.state.imagenes;
+            
+            const result = newImages.filter(word => word.id != this.idOriginal);
+
+            console.log(result);
+            this.setState ({
+                imagenes: result
+            });
+            this.boolActivado = true;
+
+            // console.log(this.state.imagenes);
             return(
                 toast.info('🦄Correctoo!', {
                     position: toast.POSITION.TOP_CENTER,
@@ -216,12 +237,6 @@ export default class Timelime extends Component {
         const startEvent = (reverseOrder ? R.last : R.head)(events);
         const endEvent = (!reverseOrder ? R.last : R.head)(events);
 
-        // const startLabel = (<div key="start" className="rt-label-container">
-        //     <DefaultStartLabel event={startEvent}/>
-        // </div>);
-        // const endLabel = (<div key="end" className="rt-label-container">
-        //     <DefaultEndLabel event={endEvent}/>
-        // </div>);
         const startLabel = <DefaultStartLabel event={startEvent}/>;
         const endLabel = <DefaultEndLabel event={endEvent}/>;
 
@@ -261,7 +276,6 @@ export default class Timelime extends Component {
         } = this.props;
 
         const {imagenes} = this.state; 
-
         const clear = <li key='clear' className='rt-clear'>{}</li>;
 
         // Compose labels and events together
@@ -288,6 +302,11 @@ export default class Timelime extends Component {
             contentInfo.shift();
             contentImages = this.contentImages();
         }
+        else if ((events && events.length) && !(imagenes && imagenes.length)){
+            contentInfo = this.content();
+            contentInfo.shift();
+            contentImages = <div>No hay imagenes en esta categoria!</div>;
+        }
         else{
             contentInfo = <div></div>;
             contentImages = <div></div>;
@@ -295,28 +314,26 @@ export default class Timelime extends Component {
 
         return (
         <div> 
-            {/* <div> */}
-                <div className = "rt-container-image" >
-                    <h3>Imagenes:</h3>
-                    <ol className='rt-image-Lista'> {contentImages}</ol>
+            <div className = "rt-container-image" >
+                <h3>Imagenes:</h3>
+                <ol className='rt-image-Lista'> {contentImages}</ol>
+            </div>
+            <hr/>
+            <div className='rt-timeline-container'>
+                <div key="start" className="rt-label-container" onClick = {prev}>
+                    {this.topLabel}
                 </div>
-                <hr/>
-                <div className='rt-timeline-container'>
-                    <div key="start" className="rt-label-container" onClick = {prev}>
-                        {this.topLabel}
-                    </div>
-                    <Whirligig className='rt-timeline'
-                        visibleSlides={5}
-                        gutter="0.5em"
-                        ref={(_whirligigInstance) => { whirligig = _whirligigInstance}}
-                    >
-                        {contentInfo}
-                    </Whirligig>
-                    <div key="end" className="rt-label-container" onClick = {next}>
-                        {this.bottomLabel}
-                    </div>
+                <Whirligig className='rt-timeline'
+                    visibleSlides={5}
+                    gutter="0.5em"
+                    ref={(_whirligigInstance) => { whirligig = _whirligigInstance}}
+                >
+                    {contentInfo}
+                </Whirligig>
+                <div key="end" className="rt-label-container" onClick = {next}>
+                    {this.bottomLabel}
                 </div>
-            {/* </div> */}
+            </div>
 
             <ToastContainer
                 hideProgressBar={true}
