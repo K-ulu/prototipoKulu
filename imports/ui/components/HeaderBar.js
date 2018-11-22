@@ -201,7 +201,7 @@ class HeaderBar extends React.Component {
                                 </div>
                 
                                 {/*<!-- item-->*/}
-                                <a href="pro-profile.html" className="dropdown-item notify-item">
+                                <a href="/dashboard/perfil" className="dropdown-item notify-item">
                                     <i className="fa fa-user"></i>
                                     <span>Mi perfil</span>
                                 </a>    

@@ -14,6 +14,8 @@ import BibliotecaElementos from './BibliotecaElementos';
 import BibliotecaLibros from './BibliotecaLibros';
 import BibliotecaMultimedia from './BibliotecaMultimedia';
 import BibliotecaObjetos from './BibliotecaObjetos';
+//importando pagina perfil
+import Perfil from './Perfil';
 
 //importando componente para crear nueva sesion
 import NuevaSesionContainer from './NuevaSesionContainer';
@@ -54,6 +56,8 @@ class MaestroDashboard extends React.Component {
       contenido = <MaestroGrupos/>;
     } else if(pathname == '/dashboard/nueva-sesion' || pathname == '/dashboard/nueva-sesion/'){
       contenido = <NuevaSesionContainer/>;
+    } else if(pathname == '/dashboard/perfil' || pathname == '/dashboard/perfil/'){
+      contenido = <Perfil/>
     }
 
     return (
