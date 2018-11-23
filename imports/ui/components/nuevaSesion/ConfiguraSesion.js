@@ -1,11 +1,20 @@
 import React from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 
-import Chat from './Chat'
-import ConfiguraSesion from '../ui/components/nuevaSesion/ConfiguraSesion';
+import Chat from  '../../Chat';
 
-export default class NuevaSesion extends React.Component {
+import { Materias } from '../../../api/materias';
+import { Bloques } from '../../../api/bloques';
+import { Temas } from '../../../api/temas';
+import { Grupos } from '../../../api/grupos';
+import { Alumnos } from '../../../api/alumnos';
+import { Lobbies } from '../../../api/lobbies';
+import { Mensajes } from '../../../api/mensajes';
 
-	constructor(props){
+class ConfiguraSesion extends React.Component {
+
+  constructor(props){
 		super(props);
 		this.state = {
       materias: [], //guarda todas las materias registradas
@@ -26,33 +35,34 @@ export default class NuevaSesion extends React.Component {
 			mensajes: [], //almacena todos los mensajes
 			allUsers: [], //alamcena todos los usuarios
     };
-	}
-
-	//habilitamos el primer tab cuando se carga el componente
+  }
+  
+  //habilitamos el primer tab cuando se carga el componente
 	componentDidMount(){
-		document.getElementById("default").click();		
-	}
-
-	//actualizamos props
+    document.getElementById("default").click();		
+    console.log("Configura sesion mounted");
+  }
+  
+  //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
-	if(nextProps.materias.length > 0 && nextProps.bloques.length > 0 && nextProps.temas.length > 0){
-			//console.log('nuevos props de gera: ', nextProps);
-			return {
+    if(nextProps.materias.length > 0 && nextProps.bloques.length > 0 && nextProps.temas.length > 0){
+      //console.log('nuevos props de gera: ', nextProps);
+      return {
         materias: nextProps.materias,
-				bloques: nextProps.bloques,
-				temas: nextProps.temas,
-				grupos: nextProps.grupos,
-				alumnos: nextProps.alumnos,
-				lobbies: nextProps.lobbies,
-				mensajes: nextProps.mensajes,
-				allUsers: nextProps.allUsers,
+        bloques: nextProps.bloques,
+        temas: nextProps.temas,
+        grupos: nextProps.grupos,
+        alumnos: nextProps.alumnos,
+        lobbies: nextProps.lobbies,
+        mensajes: nextProps.mensajes,
+        allUsers: nextProps.allUsers,
       };
-		}
-		//retornamos null cuando no sea necesario actualizar state
-		return null;
-	}
+    }
+    //retornamos null cuando no sea necesario actualizar state
+    return null;
+  }
 
-	//evento select materia
+  //evento select materia
 	handleChangeMateria(event){
 		//guardamos el id de la materia seleccionada
     this.setState({ valueMateria: event.target.value });
@@ -70,9 +80,9 @@ export default class NuevaSesion extends React.Component {
 		let temasBloque = this.state.temas.filter(tema => tema.idBloque == event.target.value);
 		//acutalizamos state para mostrar los temas de acuerdo a el bloque seleccionado
 		this.setState({ optionsTemasSelect:  temasBloque });
-	}
-	
-	//evento select tema
+  }
+  
+  //evento select tema
 	handleChangeTema(event){
 		//guardamos el id del tema seleccionado
 		this.setState({ valueTema: event.target.value });
@@ -91,10 +101,9 @@ export default class NuevaSesion extends React.Component {
 		console.log("alumnos del grupo: ", alumnosGrupo);
 		// actualizamos state para mostrar los alumnos que estan registrados en ese grupo
 		this.setState({ alumnosGrupo  });
-	}
-	
-
-	//evento que se dispara cuando cambias de tab
+  }
+  
+  //evento que se dispara cuando cambias de tab
 	handleEvent(params, e){
 		//Declare all variables
 		let i, tabcontent, tablinks;
@@ -185,10 +194,10 @@ export default class NuevaSesion extends React.Component {
 			});
 		} 
 	}
-
-	render (){
-		return (
-			<div>
+  
+  render () {
+    return (
+      <div>
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 						
@@ -378,7 +387,45 @@ export default class NuevaSesion extends React.Component {
             </div>
 					</div>
 				</div>			
-			</div>			
-		);
-	}
+			</div>	
+    );
+  }
 }
+
+export default withTracker(() => {
+  Meteor.subscribe("materias");
+  Meteor.subscribe("bloques");
+  Meteor.subscribe('temas');
+  Meteor.subscribe('grupos');
+  Meteor.subscribe('alumnos');
+  let materias = Materias.find().fetch();
+  let bloques = Bloques.find().fetch();
+  let temas = Temas.find().fetch();
+  let grupos = Grupos.find().fetch();
+  let alumnos = Alumnos.find().fetch();
+
+  Meteor.subscribe('lobbies');
+  let lobbies = Lobbies.find().fetch();		
+  
+  Meteor.subscribe('mensajes', Session.get('lobby'));
+  let mensajes = Mensajes.find().fetch();		
+  
+  let users = Meteor.subscribe('allUsers');	
+  let todos;
+  if (users.ready()) {
+    todos = Meteor.users.find().fetch(); // will return all users
+    //return todos[0].profile.nickname;
+  }
+
+  return {
+    materias: materias,
+    bloques: bloques,
+    temas: temas,
+    grupos: grupos,
+    alumnos: alumnos,
+    lobbies: lobbies,
+    mensajes: mensajes,
+    allUsers: todos,
+  };
+
+})(ConfiguraSesion);
