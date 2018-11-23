@@ -13,6 +13,7 @@ export default class NuevaSesion extends React.Component {
 			temas: [], //guarda todos los temas registrados
 			grupos: [], //guarda todos los grupos registrados por el usuario logueado
 			alumnos: [], //guarda todos los grupos registrados por el usuario logueado
+			alumnosGrupo: [], //guarda los alumnos filtrados y los muestra en el select segun el grupo
 			valueMateria: '', //valor de la materia seleccionado en el select
 			valueBloque: '', //valor del bloque seleccionado en el select
 			valueTema: '', //valor del tema seleccionado en el select
@@ -83,8 +84,12 @@ export default class NuevaSesion extends React.Component {
 		//guardamos el id del grupo seleccionado
 		this.setState({ valueGrupo: event.target.value });
 		//TODO: filtramos los alumnos disponibles de acuerdo al grupo escogido
-		console.log(event.target.value);
-		// FIXME: por ahora muestra todos los alumnos pero es necesario hacer el filtro (preguntar a norma como los registra al grupo a los alumnos)
+		console.log('id del grupo seleccionado', event.target.value);
+		console.log('alumnos ', this.state.alumnos);
+		let alumnosGrupo = this.state.alumnos.filter( alumno => alumno.idGrupo == event.target.value);
+		console.log("alumnos del grupo: ", alumnosGrupo);
+		// actualizamos state para mostrar los alumnos que estan registrados en ese grupo
+		this.setState({ alumnosGrupo  });
 	}
 	
 
@@ -173,9 +178,9 @@ export default class NuevaSesion extends React.Component {
 	
 	//metodo que se encarga de cargar los alumnos en el select
 	renderAlumnosListItems(){
-		if(this.state.alumnos.length > 0 ){
-			return this.state.alumnos.map((alumno) => {
-				return <option key={alumno._id} value={alumno._id}>{alumno.nombre} {alumno.apellidoP}</option>
+		if(this.state.alumnosGrupo.length > 0 ){
+			return this.state.alumnosGrupo.map((alumno) => {
+				return <option key={alumno._id} value={alumno._id}>{alumno.correo}</option>
 			});
 		} 
 	}
@@ -357,8 +362,7 @@ export default class NuevaSesion extends React.Component {
 										</div>
 
 										<div id="lobby" className="row tab-content">
-											<div className="col-12">  
-												
+											<div className="col-6">  												
 												<Chat lobbies={this.state.lobbies} mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>
 											</div>
 										</div>

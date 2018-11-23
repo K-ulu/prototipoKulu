@@ -11,7 +11,7 @@ export default class MensajesListItem extends React.Component {
 	}
 
 	componentDidMount(){
-		console.log('props list item' , this.props);
+		//console.log('props list item' , this.props);
 	}
 
 	// //actualizamos props
@@ -44,10 +44,10 @@ export default class MensajesListItem extends React.Component {
 		// 	let todos = Meteor.users.find({_id: id}).fetch(); // will return all users
 		// 	return todos[0].profile.nickname;
 		// }
-		console.log('todos los usuarios ' , this.props.allUsers);
+		//console.log('todos los usuarios ' , this.props.allUsers);
 		let nickname = this.props.allUsers.filter(user => user._id ==  id);
 		
-		console.log(nickname[0].profile.nickname);
+		//console.log(nickname[0].profile.nickname);
 		return nickname[0].profile.nickname
 	}
 
