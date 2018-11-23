@@ -26,8 +26,8 @@ import SelectList from '../ui/SelectList';
 
 import { withTracker } from 'meteor/react-meteor-data';
 
-// Pruebas para la linea del tiempo
-import PruebasCaro from '../ui/PruebasCaro';
+// inclusión de TimeLine
+import TimeLinePrincipal from '../ui/TimeLinePrincipal';
 
 let isAuthenticated, tipo;
 let user;
@@ -98,7 +98,7 @@ export const routes = (
       <Route path="/mat" component={()=>(<SelectList isAuthenticated={isAuthenticated}/>)}/>
       
       {/* Pruebas para la linea del tiempo */}
-      <Route path="/prueba" component={()=>(<PruebasCaro isAuthenticated={isAuthenticated}/>)}/>
+      <Route path="/timeLine" component={()=>(<TimeLinePrincipal isAuthenticated={isAuthenticated}/>)}/>
 
       
       <Route path="*" component={()=>(<NotFound isAuthenticated={isAuthenticated}/>)}/>

@@ -2,9 +2,15 @@ import React, {Component, PropTypes} from 'react';
 
 import { withTracker } from 'meteor/react-meteor-data';
 import ElementosObjetosAprendizaje from '../api/elementosObjetosAprendizaje.js';
-import Timeline from './timeline';
-import {getSampleData} from './data';
-import {getImages} from './data';
+import Timeline from './timeline.js';
+import {getSampleData} from '../api/dataTimeline.js';
+import {getImages} from '../api/dataTimeline.js';
+
+
+import { Lobbies } from '../api/lobbies';
+import { Mensajes } from '../api/mensajes';
+import Chat from './Chat';
+
 require('../client/styles/lineaTiempo.scss');
 
 $( document ).ready(function() {
@@ -14,7 +20,7 @@ $( document ).ready(function() {
     });
 });
 
-class PruebasCaro extends React.Component {
+class TimeLinePrincipal extends React.Component {
 
     static displayName = 'TimelineExample';
     static propTypes = {};
@@ -30,6 +36,22 @@ class PruebasCaro extends React.Component {
             imagenes: null
         };
         this.datos = this.datos.bind(this);
+    }
+
+    	//actualizamos props
+	static getDerivedStateFromProps(nextProps, prevState) {
+        if(true){
+        //if (lobbies > 0){ 
+            //console.log('nuevos props de gera: ', nextProps);
+            return {
+        
+                lobbies: nextProps.lobbies,
+                mensajes: nextProps.mensajes,
+                allUsers: nextProps.allUsers,
+            };
+        }
+        //retornamos null cuando no sea necesario actualizar state
+        return null;
     }
 
     datos (dataType){
@@ -105,19 +127,44 @@ class PruebasCaro extends React.Component {
                     </ul>
                 </div>
                 {this.timeline}
+
+                <div>
+                {/* <div className = "container"> */}
+                    {/* <div id="lobby" className="row"> */}
+                        
+                        {/* <div className="col-12">   */}
+                        <h3>Chat</h3>
+                            <Chat lobbies={this.state.lobbies} mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>
+                        {/* </div> */}
+                    {/* </div> */}
+                {/* </div> */}
+                </div>
             </div>
         );
     }
 }
 
-//export default withRouter(PruebasCaro);
+//export default withRouter(TimeLinePrincipal);
 
 export default withTracker(() => {
     var filesHandle = Meteor.subscribe("elementos.all");//suscripcion a files
+
+    Meteor.subscribe('lobbies');
+    Meteor.subscribe('mensajes', Session.get('lobby'));
+    users = Meteor.subscribe('allUsers');
+    let todos;
+    if (users.ready()) {
+        todos = Meteor.users.find().fetch(); // will return all users
+    }
+        
     return {
         // files: ElementosObjetosAprendizaje.find({}, {sort:{name:1}}).fetch());
         images: ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch(),
         data: ElementosObjetosAprendizaje.find({}).fetch(),
         listo: filesHandle.ready(),
+
+        lobbies: Lobbies.find().fetch(),
+        mensajes: Mensajes.find().fetch(),
+        allUsers: todos,
     }
-})(PruebasCaro);
+})(TimeLinePrincipal);
