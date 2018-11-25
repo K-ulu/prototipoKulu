@@ -10,6 +10,7 @@ import Simplert from 'react-simplert'
 require('../client/styles/lineaTiempo.scss');
 import Whirligig from 'react-whirligig'; //Para que se desplace la linea del tiempo
 import ElementosObjetosAprendizaje from '../api/elementosObjetosAprendizaje.js';
+import { DH_UNABLE_TO_CHECK_GENERATOR } from 'constants';
 
 propTypes = {
     dateIF: PropTypes.object.isRequired,
@@ -317,9 +318,8 @@ export default class Timelime extends Component {
     }
 
     render() {
-        let { showAlert, typeAlert, titleAlert, messageAlert } = this.state
-        const {events} = this.state;
-        const {imagenes} = this.state;
+        console.log(this.state);
+        const {events, imagenes, showAlert, typeAlert, titleAlert, messageAlert } = this.state;
         let contentInfo = [];
         let contentImages = [];
 
