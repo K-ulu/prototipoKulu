@@ -33,20 +33,47 @@ class ConfiguraSesion extends React.Component {
 
 			lobbies: [], //almacena todos los lobbies 
 			mensajes: [], //almacena todos los mensajes
-			allUsers: [], //alamcena todos los usuarios
+      allUsers: [], //alamcena todos los usuarios
+
+      
     };
+
+    this.onSubmitConfiguracion = this.onSubmitConfiguracion.bind(this);
+    this.handleChangeMateria = this.handleChangeMateria.bind(this);
+    this.handleChangeBloque = this.handleChangeBloque.bind(this);
+    this.handleChangeTema = this.handleChangeTema.bind(this);    
+    this.handleConfigTab = this.handleConfigTab.bind(this);
+    this.handleChangeGrupo = this.handleChangeGrupo.bind(this);    
+    this.onAgregar = this.onAgregar.bind(this);
+    this.onQuitar = this.onQuitar.bind(this);
+    
   }
   
   //habilitamos el primer tab cuando se carga el componente
 	componentDidMount(){
     document.getElementById("default").click();		
     console.log("Configura sesion mounted");
+    console.log("props config", this.props);
+
+    //agregamos usuario logueado a la lista de pariticipantes de forma hidden
+    this.agregarPropietario();    
+  }
+  
+  //agregamos al propietario de la partida a la lista de participantes
+  agregarPropietario(){
+    let seleccionados = document.querySelector('#seleccionados');        
+    let option = document.createElement('option');
+    option.textContent = Session.get('user').profile.nombre +  ' ' + Session.get('user').profile.apellidoP; //creamos nuestro objeto option
+    option.id = Session.get('user')._id + 'seleccionado';
+    option.value = Session.get('user')._id;    
+    option.hidden = true;
+    seleccionados.appendChild(option);
   }
   
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.materias.length > 0 && nextProps.bloques.length > 0 && nextProps.temas.length > 0){
-      //console.log('nuevos props de gera: ', nextProps);
+      console.log('nuevos props de gera: ', nextProps);
       return {
         materias: nextProps.materias,
         bloques: nextProps.bloques,
@@ -93,13 +120,24 @@ class ConfiguraSesion extends React.Component {
 	//evento select grupo (mostramos los alumnos)
 	handleChangeGrupo(event){
 		//guardamos el id del grupo seleccionado
-		this.setState({ valueGrupo: event.target.value });
-		//TODO: filtramos los alumnos disponibles de acuerdo al grupo escogido
-		console.log('id del grupo seleccionado', event.target.value);
-		console.log('alumnos ', this.state.alumnos);
-		let alumnosGrupo = this.state.alumnos.filter( alumno => alumno.idGrupo == event.target.value);
-		console.log("alumnos del grupo: ", alumnosGrupo);
-		// actualizamos state para mostrar los alumnos que estan registrados en ese grupo
+    this.setState({ valueGrupo: event.target.value });
+    //filtramos los alumnos de acuerdo al grupo seleccionado    
+    let alumnosGrupoData = this.state.alumnos.filter( alumno => alumno.idGrupo == event.target.value);
+    let alumnosGrupo = []; //contendra la informacion del usuario
+    //recorremos de acuerdo a cuantos alumnos hay en el grupo    
+    for(let i = 0; i < alumnosGrupoData.length; i++){
+      //recorremos entre los datos de los usuarios
+      let correoAlumno = alumnosGrupoData[i].correo;
+      for(let j = 0; j < this.state.allUsers.length; j ++){
+        //comparamos correo
+        let correoUsuario = this.state.allUsers[j].emails[0].address;
+        if(correoAlumno == correoUsuario){
+          alumnosGrupo.push(this.state.allUsers[j]); //guardamos la info de los usuarios en un nuevo arreglo
+        }
+      }
+    }
+    //datos del usuario filtrados 
+		// actualizamos state para mostrar los alumnos que estan registrados en ese grupo (info de usuarios)
 		this.setState({ alumnosGrupo  });
   }
   
@@ -189,11 +227,77 @@ class ConfiguraSesion extends React.Component {
 	//metodo que se encarga de cargar los alumnos en el select
 	renderAlumnosListItems(){
 		if(this.state.alumnosGrupo.length > 0 ){
-			return this.state.alumnosGrupo.map((alumno) => {
-				return <option key={alumno._id} value={alumno._id}>{alumno.correo}</option>
+			return this.state.alumnosGrupo.map( (usuario) => {
+				return <option key={ usuario._id } value={ usuario._id } id={ usuario._id }> { usuario.profile.nombre } { usuario.profile.apellidoP }</option>
 			});
 		} 
-	}
+  }
+  
+  //cuando se le da clic a continuar para crear la nueva sesion
+  onSubmitConfiguracion(e){
+    e.preventDefault();    
+    console.log(this.props);
+    this.props.completarConfiguracion();    
+
+  }
+
+
+  //cuando le damos clic al boton de agregar para agregar alumno
+  onAgregar(e){
+    e.preventDefault();
+
+    //obtenemos nodos
+    const selected = document.querySelectorAll('#opciones option:checked');
+    //creamos array a patir de la lista de nodos
+    const alumnos = Array.from(selected).map((el) => {
+      let obj = { };
+      obj.id = el.id + 'seleccionado';
+      obj.value = el.value;
+      obj.texto = el.textContent; 
+      return obj;
+    }); 
+
+    //seleccionamos nuestro select
+    let seleccionados = document.querySelector('#seleccionados');
+    for(let i = 0; i < alumnos.length; i ++){
+      //buscamos el elemento para verificar si ya esta agregado
+      let elemento = document.querySelector('#'+alumnos[i].id);
+      if(elemento == null){ //si no existe en nuestra lista lo agregamos       
+        let option = document.createElement('option');
+        option.textContent = alumnos[i].texto; //creamos nuestro objeto option
+        option.id = alumnos[i].id;
+        option.value = alumnos[i].id;
+        seleccionados.appendChild(option);
+      } else { //mostramos mensaje si ya fue agregado
+        alert('Solo puedes agregar al alumno una vez');
+      }    
+    }
+  }
+
+  //cuando le damos al boton quitar para eliminar un alumno
+  onQuitar(e){
+    e.preventDefault();
+
+    //obtenemos nodos
+    const selected = document.querySelectorAll('#seleccionados option:checked');
+    //creamos array a patir de la lista de nodos
+    const alumnos = Array.from(selected).map((el) => {
+      let obj = { };
+      obj.id = el.id;
+      obj.value = el.value;
+      obj.texto = el.textContent; 
+      return obj;
+    }); 
+
+    //seleccionamos nuestro select
+    let seleccionados = document.querySelector('#seleccionados');
+    for(let i = 0; i < alumnos.length; i ++){
+      //buscamos el elemento para verificar si ya esta agregado
+      let elemento = document.querySelector('#'+alumnos[i].id);
+      //eliminamos al hijo
+      seleccionados.removeChild(elemento);
+    }
+  }
   
   render () {
     return (
@@ -210,9 +314,9 @@ class ConfiguraSesion extends React.Component {
 									<li className="nav-item">
 										<a onClick={ this.handleEvent.bind(this, 'participantes') } className="nav-link tablinks" href="#">Participantes</a>
 									</li>
-									<li className="nav-item">
+									{/*<li className="nav-item">
 										<a onClick={ this.handleEvent.bind(this, 'lobby') } className="nav-link tablinks" href="#">Lobby</a>
-									</li>
+									</li>*/}
 								</ul>
 							</div>
               <div className="card-body">
@@ -227,162 +331,151 @@ class ConfiguraSesion extends React.Component {
 								<div className="row justify-content-center">
 									<div className="col-10">		
 
-										
-										<div id="configuracion" className="row tab-content">
-											<div className="col-12">   
+                    <form onSubmit={ this.onSubmitConfiguracion }>
 
-												<form>
-													{/* Materia */}
-													<div className="form-group row justify-content-center">
-														<div className="col-2">
-															<label htmlFor="materia" className="col-form-label">Materia: </label>
-														</div>
-														<div className="col-7">
-															<select value={this.state.valueMateria} onChange={this.handleChangeMateria.bind(this)} className="form-control rounded">
-																<option value ="seleccione">Seleccione materia</option>
-																	{ this.renderMateriasListItems() }                              
-															</select> 
-														</div>
-													</div>		
+                      <div id="configuracion" className="row tab-content">
+                        <div className="col-12">												
+                          {/* Materia */}
+                          <div className="form-group row justify-content-center">
+                            <div className="col-2">
+                              <label htmlFor="materia" className="col-form-label">Materia: </label>
+                            </div>
+                            <div className="col-7">
+                              <select value={ this.state.valueMateria } onChange={ this.handleChangeMateria } className="form-control rounded">
+                                <option value ="seleccione">Seleccione materia</option>
+                                  { this.renderMateriasListItems() }                              
+                              </select> 
+                            </div>
+                          </div>		
 
-													{/* Bloque */}
-													<div className="form-group row justify-content-center">
-														<div className="col-2">
-															<label htmlFor="bloque" className="col-form-label">Bloque: </label>
-														</div>
-														<div className="col-7">
-															<select value={this.state.valueBloque} onChange={this.handleChangeBloque.bind(this)} id="bloque" className="form-control">
-																<option value ="seleccione">Seleccione bloque</option>
-																{ this.renderBloquesListItems() }
-															</select>
-														</div>
-													</div>
+                          {/* Bloque */}
+                          <div className="form-group row justify-content-center">
+                            <div className="col-2">
+                              <label htmlFor="bloque" className="col-form-label">Bloque: </label>
+                            </div>
+                            <div className="col-7">
+                              <select value={ this.state.valueBloque } onChange={ this.handleChangeBloque } id="bloque" className="form-control">
+                                <option value ="seleccione">Seleccione bloque</option>
+                                { this.renderBloquesListItems() }
+                              </select>
+                            </div>
+                          </div>
 
-													{/* Tema */}
-													<div className="form-group row justify-content-center">
-														<div className="col-2">
-															<label htmlFor="tema" className="col-form-label">Tema: </label>
-														</div>
-														<div className="col-7">
-															<select value={this.state.valueTema} onChange={this.handleChangeTema.bind(this)} id="tema" className="form-control">
-																<option value ="seleccione">Seleccione tema</option>
-																{ this.renderTemasListItems() }
-															</select>
-														</div>
-													</div>
+                          {/* Tema */}
+                          <div className="form-group row justify-content-center">
+                            <div className="col-2">
+                              <label htmlFor="tema" className="col-form-label">Tema: </label>
+                            </div>
+                            <div className="col-7">
+                              <select value={ this.state.valueTema } onChange={ this.handleChangeTema } id="tema" className="form-control">
+                                <option value ="seleccione">Seleccione tema</option>
+                                { this.renderTemasListItems() }
+                              </select>
+                            </div>
+                          </div>
 
-													{/* Tipo */}
-													<div className="form-group row justify-content-center">
-														<div className="col-2">
-															<label htmlFor="tipo" className="col-form-label">Tipo: </label>
-														</div>
-														<div className="col-7">
-															<select id="tipo" className="form-control">
-																<option value="seleccione">Seleccione tipo</option>
-																<option>Línea del tiempo</option>
-																<option>Cuerpo humano</option>
-																<option>Mapas</option>
-															</select>
-														</div>
-													</div>
+                          {/* Tipo */}
+                          <div className="form-group row justify-content-center">
+                            <div className="col-2">
+                              <label htmlFor="tipo" className="col-form-label">Tipo: </label>
+                            </div>
+                            <div className="col-7">
+                              <select id="tipo" className="form-control">
+                                <option value="seleccione">Seleccione tipo</option>
+                                <option>Línea del tiempo</option>
+                                <option>Cuerpo humano</option>
+                                <option>Mapas</option>
+                              </select>
+                            </div>
+                          </div>
 
-													{/* Objeto */}
-													<div className="form-group row justify-content-center">
-														<div className="col-2">
-															<label htmlFor="objeto" className="col-form-label">Objeto: </label>
-														</div>
-														<div className="col-7">
-															<select id="objeto" className="form-control">
-																<option value="seleccione">Seleccione objeto</option>
-																<option>...</option>
-															</select>
-														</div>
-													</div>
+                          {/* Objeto */}
+                          <div className="form-group row justify-content-center">
+                            <div className="col-2">
+                              <label htmlFor="objeto" className="col-form-label">Objeto: </label>
+                            </div>
+                            <div className="col-7">
+                              <select id="objeto" className="form-control">
+                                <option value="seleccione">Seleccione objeto</option>
+                                <option>...</option>
+                              </select>
+                            </div>
+                          </div>
 
-													<div className="form-group row justify-content-end">
-														<div className="col-2">
-															<button onClick={this.handleConfigTab.bind(this)} className="btn btn-primary btn-block">Continuar</button>
-														</div>
-														
-													</div>
+                          <div className="form-group row justify-content-end">
+                            <div className="col-2">
+                              <button onClick={ this.handleConfigTab } className="btn btn-primary btn-block">Continuar</button>
+                            </div>
+                            
+                          </div>
+                                            
+                        </div>                       
+                      </div>
 
-												</form>  
-																					
-											</div>                       
-										</div>
+                      <div id="participantes" className="row tab-content">
+                        <div className="col-12">   												
+                          {/* Seleccion de grupos*/}
+                          <div className="form-group row justify-content-center">
+                            <div className="col-10">
+                              <label htmlFor="grupos" className="col-form-label">Alumnos: </label>
+                            </div>
+                            <div className="col-10">
+                              <select value={ this.state.valueGrupo } onChange={ this.handleChangeGrupo } id="grupos" className="form-control">
+                                <option value ="seleccione">Seleccione grupo</option>
+                                { this.renderGruposListItems() }
+                              </select>
+                              <small id="ayuda" className="form-text text-muted">Selecciona un grupo para ver tus alumnos.</small>
+                            </div>														
+                          </div>
 
+                          <div className="form-group row">
+                            <div className="col-5">
+                              <select id="opciones" multiple className="custom-select" size="10">
+                                { this.renderAlumnosListItems() }
+                              </select>
+                            </div>
+                            <div className="col-2">
+                              <div className="row">
+                                <div className="col">
+                                  <button onClick={ this.onAgregar } className="btn btn-success btn-block">Agregar</button>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col">
+                                  <button onClick={ this.onQuitar } className="btn btn-danger btn-block">Quitar</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-5">
+                              <select id="seleccionados" multiple className="custom-select" size="10">
+                              </select>
+                            </div>
+                          </div>
+                          
+                          
+                          <div className="form-group row justify-content-end">
+                            <div className="col-2">
+                              <button type="button" className="btn btn-outline-danger btn-block">Regresar</button>
+                            </div>													
+                            <div className="col-2">
+                              <button className="btn btn-primary btn-block">Continuar</button>
+                            </div>														
+                          </div>
+                                            
+                        </div>                       
+                      </div>
 
-										<div id="participantes" className="row tab-content">
-											<div className="col-12">   
-
-												<form>
-													{/* Seleccion de grupos*/}
-													<div className="form-group row justify-content-center">
-														<div className="col-10">
-															<label htmlFor="grupos" className="col-form-label">Alumnos: </label>
-														</div>
-														<div className="col-10">
-															<select value={this.state.valueGrupo} onChange={this.handleChangeGrupo.bind(this)} id="grupos" className="form-control">
-																<option value ="seleccione">Seleccione grupo</option>
-																{ this.renderGruposListItems() }
-															</select>
-															<small id="ayuda" className="form-text text-muted">Selecciona un grupo para ver tus alumnos.</small>
-														</div>														
-													</div>
-
-													<div className="form-group row">
-														<div className="col-5">
-															<select multiple className="custom-select" size="10">
-																{ this.renderAlumnosListItems() }
-															</select>
-														</div>
-														<div className="col-2">
-															<div className="row">
-																<div className="col">
-																	<button className="btn btn-success btn-block">Agregar</button>
-																</div>
-															</div>
-															<div className="row">
-																<div className="col">
-																	<button className="btn btn-danger btn-block">Quitar</button>
-																</div>
-															</div>
-														</div>
-														<div className="col-5">
-															<select multiple className="custom-select" size="10">
-															</select>
-														</div>
-													</div>
-													
-													
-													<div className="form-group row justify-content-end">
-														<div className="col-2">
-															<button type="button" className="btn btn-outline-danger btn-block">Regresar</button>
-														</div>													
-														<div className="col-2">
-															<button className="btn btn-primary btn-block">Continuar</button>
-														</div>														
-													</div>
-
-
-
-												</form>  
-																					
-											</div>                       
-										</div>
-
-										<div id="lobby" className="row tab-content">
+                      {/*<div id="lobby" className="row tab-content">
 											<div className="col-6">  												
 												<Chat lobbies={this.state.lobbies} mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>
 											</div>
-										</div>
+										</div>*/}
 
+                    </form>
 
 
 									</div>
 								</div>  
-
-
               </div>                            
             </div>
 					</div>
@@ -402,7 +495,7 @@ export default withTracker(() => {
   let bloques = Bloques.find().fetch();
   let temas = Temas.find().fetch();
   let grupos = Grupos.find().fetch();
-  let alumnos = Alumnos.find().fetch();
+  let alumnos = Alumnos.find({ idDocente: Meteor.userId(), estatus: 'registrado' }).fetch();
 
   Meteor.subscribe('lobbies');
   let lobbies = Lobbies.find().fetch();		
