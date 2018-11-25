@@ -129,15 +129,8 @@ class TimeLinePrincipal extends React.Component {
                 {this.timeline}
 
                 <div>
-                {/* <div className = "container"> */}
-                    {/* <div id="lobby" className="row"> */}
-                        
-                        {/* <div className="col-12">   */}
-                        <h3>Chat</h3>
-                            <Chat lobbies={this.state.lobbies} mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>
-                        {/* </div> */}
-                    {/* </div> */}
-                {/* </div> */}
+                    <h3>Chat</h3>
+                    <Chat lobbies={this.state.lobbies} mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>
                 </div>
             </div>
         );

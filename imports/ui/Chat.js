@@ -2,7 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 
 import MensajesList from './MensajesList';
-import LobbiesList from './LobbiesList';
+// import LobbiesList from './LobbiesList';
 
 export default class Chat extends React.Component {
 
@@ -75,11 +75,11 @@ export default class Chat extends React.Component {
     return (
       <div>        
 
-        <LobbiesList lobbies={this.state.lobbies}/>
+        {/* <LobbiesList lobbies={this.state.lobbies}/>
         <form onSubmit={this.lobby.bind(this)}>
           <input type="text" ref="nombre" placeholder="nuevo lobby"/>
           <button>Agregar</button>                
-        </form> 
+        </form>  */}
         
         <MensajesList allUsers={this.state.allUsers} mensajes={this.state.mensajes}/>
         <p>Agregar un mensaje</p>

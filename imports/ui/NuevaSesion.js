@@ -34,6 +34,7 @@ export default class NuevaSesion extends React.Component {
 
 	//actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
+		console.log("props", nextProps);
 	if(nextProps.materias.length > 0 && nextProps.bloques.length > 0 && nextProps.temas.length > 0){
 			//console.log('nuevos props de gera: ', nextProps);
 			return {
@@ -142,6 +143,7 @@ export default class NuevaSesion extends React.Component {
 
 	//metodo que se encarga de cargar la materias en el select segun los datos del state
 	renderMateriasListItems(){
+		console.log("state",this.state);
 		if(this.state.materias.length > 0){
 			return this.state.materias.map((materia) => {
 				return <option key={materia._id} value={materia._id}>{materia.nombreMateria}</option>

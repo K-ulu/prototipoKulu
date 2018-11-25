@@ -11,6 +11,7 @@
                 title:aFile.meta.nombreElemento,
                 fecha: aFile.meta.fechaInicio,
                 descripcion:aFile.meta.descripcionElemento,
+                usado: aFile.meta.usado
             })
         })
 

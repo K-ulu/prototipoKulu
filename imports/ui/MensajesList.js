@@ -41,7 +41,7 @@ export default class MensajesList extends React.Component {
 	render() {
 		return (
 			<div>			
-				<p>MensajesList</p>
+				{/* <p>MensajesList</p> */}
 				{ this.renderMensajesListItems() }
 			</div>
 		);

@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 //Para las notificaciones!
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Simplert from 'react-simplert'
 
 require('../client/styles/lineaTiempo.scss');
 import Whirligig from 'react-whirligig'; //Para que se desplace la linea del tiempo
+import ElementosObjetosAprendizaje from '../api/elementosObjetosAprendizaje.js';
 
 propTypes = {
     dateIF: PropTypes.object.isRequired,
@@ -18,6 +20,7 @@ propTypes = {
     buttonText: PropTypes.string,
     id: PropTypes.string.isRequired,
     fecha: PropTypes.string.isRequired,
+    usado: PropTypes.string.isRequired
 };
 
 const DefaultStartLabel = (props) => {
@@ -109,7 +112,12 @@ export default class Timelime extends Component {
         const sortedEvents = R.sortBy(R.prop('date'), events || []);
         return {
             events: reverseOrder ? R.reverse(sortedEvents) : sortedEvents,
-            imagenes: imagenes //Lo agrego
+            imagenes: imagenes, //Lo agrego
+
+            showAlert: false,
+            typeAlert: 'success',
+            titleAlert: 'Felicidades',
+            messageAlert: 'Victoria!!!!!'
         };
     }
 
@@ -128,11 +136,20 @@ export default class Timelime extends Component {
             }
             else{
                 if (this.boolActivado == false || this.boolActivado == undefined){
-                    console.log("Aqui entro");
                     this.setState(this.getStateForProps(newProps));
                 }
             }
         }
+    }
+
+      // Events
+    openAlert = (title, message, type) =>{
+        this.setState({
+        showAlert: true,
+        titleAlert: title,
+        messageAlert: message,
+        typeAlert: type
+        });
     }
 
     onDragStart = (ev, props) =>{
@@ -163,19 +180,26 @@ export default class Timelime extends Component {
             
             const result = newImages.filter(word => word.id != this.idOriginal);
 
-            console.log(result);
+            console.log(result.length);
             this.setState ({
                 imagenes: result
             });
             this.boolActivado = true;
-
-            // console.log(this.state.imagenes);
-            return(
-                toast.info('🦄Correctoo!', {
-                    position: toast.POSITION.TOP_CENTER,
-                    autoClose: 3000
-                })
-            );
+            if (result.length == 0){
+                this.openAlert(
+                    'VICTORIA!!!',
+                    'Felicidades su equipo a ganado!',
+                    'success'
+                )
+            }
+            else{
+                return(
+                    toast.info('🦄Correctoo!', {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 3000
+                    })
+                );                
+            }
        }
        else{
         return(
@@ -188,7 +212,12 @@ export default class Timelime extends Component {
     }
 
     contentForEvent(event, index, HeaderClass, TextBodyClass, FooterClass) {
+        var {usado} = event;
+        // console.log(usado);
         var {id} = event;
+        let link = ElementosObjetosAprendizaje.findOne({_id: id}).link();  //The "view/download" link
+        // console.log(link);
+
         id = "idO"+id;
         const content = <div className='rt-content'>
             <div className="rt-header-container">
@@ -198,7 +227,7 @@ export default class Timelime extends Component {
                 onDragOver={(e)=>this.onDragOver(e)}
                 onDrop={(e) => this.onDrop(e,{event},"complete")}
             >
-                <img id={id} src="" className='rt-image'/>
+            {usado == "true" ? <img id={id} src= {link} className='rt-image'/> : <img id={id} src="" className='rt-image'/> }
                 <TextBodyClass event={event}/>
             </div>
             <div className='rt-footer-container'>
@@ -288,6 +317,7 @@ export default class Timelime extends Component {
     }
 
     render() {
+        let { showAlert, typeAlert, titleAlert, messageAlert } = this.state
         const {events} = this.state;
         const {imagenes} = this.state;
         let contentInfo = [];
@@ -339,6 +369,13 @@ export default class Timelime extends Component {
                 hideProgressBar={true}
                 newestOnTop={true}
                 autoClose={5000}
+            />
+
+            <Simplert
+                showSimplert={showAlert}
+                type={typeAlert}
+                title={titleAlert}
+                message={messageAlert}
             />
         </div>
         );
