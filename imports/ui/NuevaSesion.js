@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 
 import Chat from './Chat'
 import ConfiguraSesion from '../ui/components/nuevaSesion/ConfiguraSesion';
@@ -10,13 +11,27 @@ export default class NuevaSesion extends React.Component {
 		super(props);
 		this.state = {
 			configuracion: false,
+			lobby: '',
+
 		};
 		
 		this.completarConfiguracion = this.completarConfiguracion.bind(this);
+		this.crearLobby = this.crearLobby.bind(this);
 	}
 
 	completarConfiguracion(){
 		this.setState({ configuracion: true })
+	}
+
+	crearLobby(idLobby, participantes){
+		/*Meteor.call('lobbies.insert', nombre, (err, res) => {
+			if (!err) { //mensaje enviado
+				this.refs.nombre.value = '';
+			} else { //error al enviar mensaje
+				console.log(err.reason);
+			}
+		});*/
+
 	}
 
 	render (){

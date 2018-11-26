@@ -11,6 +11,7 @@ import { Grupos } from '../../../api/grupos';
 import { Alumnos } from '../../../api/alumnos';
 import { Lobbies } from '../../../api/lobbies';
 import { Mensajes } from '../../../api/mensajes';
+import shortid from 'shortid';
 
 class ConfiguraSesion extends React.Component {
 
@@ -26,7 +27,9 @@ class ConfiguraSesion extends React.Component {
 			alumnosGrupo: [], //guarda los alumnos filtrados y los muestra en el select segun el grupo
 			valueMateria: '', //valor de la materia seleccionado en el select
 			valueBloque: '', //valor del bloque seleccionado en el select
-			valueTema: '', //valor del tema seleccionado en el select
+      valueTema: '', //valor del tema seleccionado en el select
+      valueTipo: '', //valor del tipo de objeto de aprendizaje
+      valueObjeto: '', //valor del objeto seleccionado de la bd
 			valueGrupo: '', //valor del tema seleccionado en el select
 			optionsBloquesSelect: [], //guarda los bloques de acuerdo a la materia seleccionada
 			optionsTemasSelect: [], //guarda los temas de acuerdo al bloque seleccioando
@@ -41,11 +44,14 @@ class ConfiguraSesion extends React.Component {
     this.onSubmitConfiguracion = this.onSubmitConfiguracion.bind(this);
     this.handleChangeMateria = this.handleChangeMateria.bind(this);
     this.handleChangeBloque = this.handleChangeBloque.bind(this);
-    this.handleChangeTema = this.handleChangeTema.bind(this);    
+    this.handleChangeTema = this.handleChangeTema.bind(this);   
+    this.handleChangeTipo = this.handleChangeTipo.bind(this); 
+    this.handleChangeObjeto = this.handleChangeObjeto.bind(this);
     this.handleConfigTab = this.handleConfigTab.bind(this);
     this.handleChangeGrupo = this.handleChangeGrupo.bind(this);    
     this.onAgregar = this.onAgregar.bind(this);
     this.onQuitar = this.onQuitar.bind(this);
+    this.obtenerListaParticipantes = this.obtenerListaParticipantes.bind(this);
     
   }
   
@@ -115,7 +121,19 @@ class ConfiguraSesion extends React.Component {
 		this.setState({ valueTema: event.target.value });
 		//TODO: filtramos los objetos disponibles de acuerdo al tema
 		// console.log(event.target.value);
-	}
+  }
+  
+  //evento select tipo
+
+  handleChangeTipo(event){
+    //guardamos el valor
+    this.setState({ valueTipo: event.target.value });
+  }
+
+  handleChangeObjeto(event){
+    //guardamos valor del objeto
+    this.setState({ valueObjeto: event.target.value });
+  }
 
 	//evento select grupo (mostramos los alumnos)
 	handleChangeGrupo(event){
@@ -231,15 +249,62 @@ class ConfiguraSesion extends React.Component {
 				return <option key={ usuario._id } value={ usuario._id } id={ usuario._id }> { usuario.profile.nombre } { usuario.profile.apellidoP }</option>
 			});
 		} 
-  }
+  }  
   
   //cuando se le da clic a continuar para crear la nueva sesion
   onSubmitConfiguracion(e){
     e.preventDefault();    
-    console.log(this.props);
+    //console.log(this.props);
+    //recolectando valores para crear el objeto sesion 
+    //let bloquesMateria = this.state.bloques.filter(bloque => bloque.idMateria ==  event.target.value);
+    let materia = this.state.materias.filter( materia => materia._id == this.state.valueMateria);
+    let bloque = this.state.bloques.filter( bloque => bloque._id == this.state.valueBloque);
+    let tema = this.state.temas.filter( tema => tema._id == this.state.valueTema);
+    let tipo = this.state.valueTipo;
+    let objeto = this.state.valueObjeto;
+    let participantes = this.obtenerListaParticipantes();
+    
+    console.log('materia: ', materia[0]);
+    console.log('bloque: ', bloque[0]);
+    console.log('tema: ', tema[0]);
+    console.log('tipo: ', tipo);
+    console.log('objeto: ', objeto);
+    console.log('participantes: ', participantes);
+
+    console.log(shortid.generate());
     this.props.completarConfiguracion();    
 
   }
+
+  obtenerListaParticipantes(){
+    let participantes = [];
+    //obtenemos nodos
+    const selected = document.querySelectorAll('#seleccionados option');
+    //creamos array a patir de la lista de nodos
+    const alumnos = Array.from(selected).map((el) => {
+      let obj = { };
+      obj.id = el.id;
+      obj.value = el.value;
+      obj.texto = el.textContent; 
+      return obj;
+    }); 
+    
+    //recolectanod informacion de los participantes
+    for(let i = 0; i < alumnos.length; i++){
+      for(let j = 0; j < this.state.allUsers.length; j ++){
+        //agregamos a nuestra lista de participantes los los alumnos (user data)
+        let split = alumnos[i].id.split('seleccionado'); // quitamos de la cadena 'seleccionado'
+        let id = split[0];
+        if(id == this.state.allUsers[j]._id){
+          participantes.push(this.state.allUsers[j]);
+        }
+      }
+    }    
+
+    return participantes;
+  }
+
+  
 
 
   //cuando le damos clic al boton de agregar para agregar alumno
@@ -380,11 +445,11 @@ class ConfiguraSesion extends React.Component {
                               <label htmlFor="tipo" className="col-form-label">Tipo: </label>
                             </div>
                             <div className="col-7">
-                              <select id="tipo" className="form-control">
+                              <select value={ this.state.valueTipo } onChange={ this.handleChangeTipo } id="tipo" className="form-control">
                                 <option value="seleccione">Seleccione tipo</option>
-                                <option>Línea del tiempo</option>
-                                <option>Cuerpo humano</option>
-                                <option>Mapas</option>
+                                <option value="linea del tiempo">Línea del tiempo</option>
+                                {/*<option>Cuerpo humano</option>
+                                <option>Mapas</option>*/}
                               </select>
                             </div>
                           </div>
@@ -395,9 +460,9 @@ class ConfiguraSesion extends React.Component {
                               <label htmlFor="objeto" className="col-form-label">Objeto: </label>
                             </div>
                             <div className="col-7">
-                              <select id="objeto" className="form-control">
+                              <select value={ this.state.valueObjeto } onChange={ this.handleChangeObjeto } id="objeto" className="form-control">
                                 <option value="seleccione">Seleccione objeto</option>
-                                <option>...</option>
+                                <option value="someID">Objeto historia</option>
                               </select>
                             </div>
                           </div>
