@@ -128,6 +128,7 @@ export default class Timelime extends Component {
     }
 
     componentWillReceiveProps(newProps) {
+        console.log("nuevos props", newProps);
         if (newProps.events != null && newProps.imagenes != null && newProps.contador!=null){
             if (newProps.contador==2){
                 this.boolActivado = false;
