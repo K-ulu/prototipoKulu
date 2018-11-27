@@ -103,7 +103,7 @@ export default class Timelime extends Component {
     static idOriginal="";
     static urlOriginal="";
 
-    static boolActivado = false;
+    // static boolActivado = false;
     static propTypes = {
         reverseOrder: PropTypes.bool
     };
@@ -128,19 +128,11 @@ export default class Timelime extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log("nuevos props", newProps);
-        if (newProps.events != null && newProps.imagenes != null && newProps.contador!=null){
-            if (newProps.contador==2){
-                this.boolActivado = false;
-                this.setState ({
-                    imagenes: newProps.imagenes
-                });
-            }
-            else{
-                if (this.boolActivado == false || this.boolActivado == undefined){
-                    this.setState(this.getStateForProps(newProps));
-                }
-            }
+        if (newProps.events != null && newProps.imagenes != null){
+            this.setState ({
+                events: newProps.events,
+                imagenes: newProps.imagenes
+            });
         }
     }
 
@@ -157,7 +149,6 @@ export default class Timelime extends Component {
     onDragStart = (ev, props) =>{
         this.idOriginal = props.imagen.id; 
         this.urlOriginal = props.imagen.imageUrl; 
-        // console.log("dragstart:", ev);
     }
     
     onDragOver = (ev) => {
@@ -181,12 +172,7 @@ export default class Timelime extends Component {
             let newImages = this.state.imagenes;
             
             const result = newImages.filter(word => word.id != this.idOriginal);
-
-            console.log(result.length);
-            this.setState ({
-                imagenes: result
-            });
-            this.boolActivado = true;
+            
             if (result.length == 0){
                 this.openAlert(
                     'VICTORIA!!!',
@@ -215,10 +201,8 @@ export default class Timelime extends Component {
 
     contentForEvent(event, index, HeaderClass, TextBodyClass, FooterClass) {
         var {usado} = event;
-        // console.log(usado);
         var {id} = event;
         let link = ElementosObjetosAprendizaje.findOne({_id: id}).link();  //The "view/download" link
-        // console.log(link);
 
         id = "idO"+id;
         const content = <div className='rt-content'>
@@ -319,7 +303,6 @@ export default class Timelime extends Component {
     }
 
     render() {
-        console.log(this.state);
         const {events, imagenes, showAlert, typeAlert, titleAlert, messageAlert } = this.state;
         let contentInfo = [];
         let contentImages = [];

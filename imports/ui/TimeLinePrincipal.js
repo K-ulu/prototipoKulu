@@ -21,98 +21,85 @@ $( document ).ready(function() {
 });
 
 class TimeLinePrincipal extends React.Component {
-
-    static displayName = 'TimelineExample';
     static propTypes = {};
-    static timeline;
-    static data; 
-    static images;
 
     constructor(props) {
         super(props);
         this.state = {
-            contador: 0,
             events: null,
-            imagenes: null
+            imagenes: null,
+
+            lobbies: null,
+            mensajes: null,
+            allUsers: null,
+            nuevo: null,
         };
         this.datos = this.datos.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
     }
 
     	//actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
+        console.log(nextProps);
+        console.log(prevState);
         if(true){
-        //if (lobbies > 0){ 
-            //console.log('nuevos props de gera: ', nextProps);
-            return {
-        
-                lobbies: nextProps.lobbies,
-                mensajes: nextProps.mensajes,
-                allUsers: nextProps.allUsers,
-            };
+            if (prevState.nuevo == null || prevState.nuevo == true){
+                return {
+                    events:getSampleData(nextProps.data),
+                    imagenes: getImages(false, nextProps.images),
+
+                    lobbies: nextProps.lobbies,
+                    mensajes: nextProps.mensajes,
+                    allUsers: nextProps.allUsers,
+                    nuevo: true,
+                };
+            }
+            else{
+                console.log(prevState);
+                return{
+                    nuevo: true,
+                }
+            }
+            
         }
         //retornamos null cuando no sea necesario actualizar state
         return null;
     }
+      
+    datos (event, dataType){
+        console.log(event);
+        let newImages = "";
+        console.log(this.state.imagenes);
 
-    datos (dataType){
-        try {
-            if (dataType == "all"){
-                this.images = ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch();
-                this.setState(
-                    {
-                        // events:getSampleData(this.data),
-                        imagenes: getImages(false, this.images),
-                        contador: 2
-                    }
-                )
-            }
-            else{
-                this.images = ElementosObjetosAprendizaje.find({"meta.categoriaElemento": dataType, "meta.usado":"false"}).fetch();
-                if (this.images.length > 0 ){
-                    this.setState(
-                        {
-                            // events:getSampleData(this.data),
-                            imagenes: getImages(false, this.images),
-                            contador: 2
-                        }
-                    )
-                }
-                else{
-                    this.setState(
-                        {
-                            // events:getSampleData(this.data),
-                            imagenes: "",
-                            contador: 2
-                        }
-                    )
-                }
+        if (dataType == "all"){
+            newImages = ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch();
+        }
+        else{
+            newImages = ElementosObjetosAprendizaje.find({"meta.categoriaElemento": dataType, "meta.usado":"false"}).fetch();
+            console.log(newImages);
+        }
 
-
-            }
-
-          } catch (error) {
-            console.log(error);
-          }
+        if (newImages.length > 0 ){
+            // this.setState = {
+            //     imagenes: getImages(false, newImages)
+            // }
+            this.setState({ imagenes: getImages(false, newImages ), nuevo: false })
+        }
+        else{
+            this.setState({ imagenes: newImages, nuevo:false })
+        }
     }
 
-    render() {
-        let listo = this.props.listo;
-        if (listo === true && this.state.contador < 1){
-            this.data = this.props.data;
-            this.images = this.props.images;
+    // handleChange(event){
+    //     console.log(event);
+    //     this.edit = true;
+    //     this.setState({imagenes:""});
+    // }
 
-            this.setState(
-                {
-                    contador: 1,
-                    events:getSampleData(this.data),
-                    imagenes: getImages(false, this.images)
-                }
-            )
-        }
-        const {contador} = this.state;
-        const {events} = this.state;
-        const {imagenes} = this.state;
-        this.timeline = <Timeline events={events} imagenes={imagenes} contador={contador}/>;
+    render() {   
+        let {events} = this.state;
+        let {imagenes} = this.state;
+        // let timeline = <Timeline events={events} imagenes={imagenes}/>;
         return (
             <div className="linea-Tiempo">
                 <h1>Linea del Tiempo</h1>
@@ -120,13 +107,13 @@ class TimeLinePrincipal extends React.Component {
                 <div className = "rt-menu">
                     <ul>
                         <li className="green"><div>Limpiar</div></li>
-                        <li className="yellow activa" onClick={() => this.datos("all")}><div>Mostrar todo</div></li>
-                        <li className="red" onClick={() => this.datos("artefacto")}><div>Artefacto</div></li>
-                        <li className="blue" onClick={() => this.datos("personaje")}><div>Personaje</div></li>
-                        <li className="purple" onClick={() => this.datos("evento")}><div>evento</div></li>
+                        <li className="yellow activa" onClick={(e) => this.datos(e, "all")}><div>Mostrar todo</div></li>
+                        <li className="red" onClick={(e) => this.datos(e,"artefacto")}><div>Artefacto</div></li>
+                        <li className="blue" onClick={(e) => this.datos(e,"personaje")}><div>Personaje</div></li>
+                        <li className="purple" onClick={(e) => this.datos(e,"evento")}><div>evento</div></li>
                     </ul>
                 </div>
-                {this.timeline}
+                <Timeline events={events} imagenes={imagenes}/>
 
                 <div>
                     <h3>Chat</h3>
@@ -140,10 +127,10 @@ class TimeLinePrincipal extends React.Component {
 //export default withRouter(TimeLinePrincipal);
 
 export default withTracker(() => {
-    var filesHandle = Meteor.subscribe("elementos.all");//suscripcion a files
-
+    Meteor.subscribe("elementos.all");//suscripcion a files
     Meteor.subscribe('lobbies');
     Meteor.subscribe('mensajes', Session.get('lobby'));
+
     users = Meteor.subscribe('allUsers');
     let todos;
     if (users.ready()) {
@@ -154,10 +141,11 @@ export default withTracker(() => {
         // files: ElementosObjetosAprendizaje.find({}, {sort:{name:1}}).fetch());
         images: ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch(),
         data: ElementosObjetosAprendizaje.find({}).fetch(),
-        listo: filesHandle.ready(),
 
         lobbies: Lobbies.find().fetch(),
         mensajes: Mensajes.find().fetch(),
         allUsers: todos,
+
+        nuevo: true,
     }
 })(TimeLinePrincipal);
