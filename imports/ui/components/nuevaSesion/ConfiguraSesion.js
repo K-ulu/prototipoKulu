@@ -267,14 +267,26 @@ class ConfiguraSesion extends React.Component {
     //primer paso es crear el lobby
     Meteor.call('lobbies.insert', _id, participantes, (err, res) => {
       if (!err) { // una vez creado el lobby creamos el objeto sesion con la informacion recolectada
+        //creamos la variaable del idLobby para inserta en objeto SesionAprendizaje
+        let idLobby = _id;
+        let idSesion = shortid.generate();
         //creamos objeto sesion
+        Meteor.call('sesionesAprendizaje.insert', idSesion,  materia[0], bloque[0], tema[0], tipo, objeto, idLobby, participantes, (err, res) => {
+          if(!err){
+            //guardamos el id de la sesion en la Sesion del navegador  
+            Session.set('idSesion', idSesion);
+            //guardamos el id del lobby en la sesion del navegador
+            Session.set('idLobby', idLobby);
+            //actualizamos state a componente Padre (Nueva Sesion)
+            this.props.setLobby(_id);    
+            this.props.setSesion(idSesion);
+            this.props.completarConfiguracion(); 
 
-        //guardamos el objeto sesion en la Sesion del navegador        
-        
-        //actualizamos state a componente Padre (Nueva Sesion)
-        this.props.setLobby(_id);    
-        //this.props.setSesion();
-        this.props.completarConfiguracion(); 
+          } else {
+            console.log(err.reason);
+          }
+
+        });        
          
       } else { //error al enviar mensaje
         console.log(err.reason);

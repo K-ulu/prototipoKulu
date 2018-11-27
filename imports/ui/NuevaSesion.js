@@ -12,7 +12,7 @@ export default class NuevaSesion extends React.Component {
 		this.state = {
 			configuracion: false,
 			claveLobby: '',
-			sesion: { },
+			claveSesion: '',
 
 		};
 		
@@ -33,12 +33,12 @@ export default class NuevaSesion extends React.Component {
 		this.setState({ claveLobby });
 	}
 
-	setSesion(sesion){
-		this.setState({ sesion });
+	setSesion(claveSesion){
+		this.setState({ claveSesion });
 	}
 
 	render(){
-		let configuracion = <ConfiguraSesion valor={ this.state.configuracion } completarConfiguracion={ this.completarConfiguracion } setLobby={ this.setLobby }/>;
+		let configuracion = <ConfiguraSesion valor={ this.state.configuracion } completarConfiguracion={ this.completarConfiguracion } setLobby={ this.setLobby } setSesion={ this.setSesion }/>;
 		let lobby = null;
 		if(this.state.configuracion){
 			configuracion = null;
