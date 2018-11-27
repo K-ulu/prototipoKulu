@@ -116,12 +116,13 @@ class Signup extends React.Component {
   
     var userId = Accounts.createUser(datos, (err) => {
       if(err){
-        this.setState({error: err.reason});
-        
+        this.setState({error: err.reason});                
       } else {
         this.setState({error: ''});
       }
     });
+
+    console.log('id del nuevo usuario: ', Meteor.userId());
 
     //insertamos los datos de acuerdo al tipo de usuario
     console.log(opcion);
@@ -145,7 +146,7 @@ class Signup extends React.Component {
         Meteor.call('alumnos.insert', matricula, claveEscuela, email,"no registrado", (err, res) => {
           if (!err) {
             // this.handleModalClose();
-            alert("insertado");
+            //alert("insertado");
           } else {
             // this.setState({ error: err.reason });
             alert("ocurrió un error al insertar");

@@ -8,8 +8,7 @@ export default class Chat extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {
-      lobbies: [], //almacena los lobbies
+    this.state = {      
       mensajes: [], //almacena los mensajes
       allUsers: [],  //almacena todos los usuarios 
     };
@@ -23,7 +22,7 @@ export default class Chat extends React.Component {
     e.preventDefault();    
     //verificamos si existe el mensaje
     if(msj){
-      Meteor.call('mensajes.insert', msj, Session.get('lobby'), (err, res) => {
+      Meteor.call('mensajes.insert', msj, this.props.lobby, (err, res) => {
         if (!err) { //mensaje enviado
           this.refs.mensaje.value = '';
         } else { //error al enviar mensaje
@@ -54,10 +53,9 @@ export default class Chat extends React.Component {
 
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
-    if(nextProps.lobbies.length > 0){
-        console.log('nuevos props de chat: ', nextProps);
+    if(nextProps.mensajes.length > 0){
+        //console.log('nuevos props de chat: ', nextProps);
         return {
-          lobbies: nextProps.lobbies,
           mensajes: nextProps.mensajes,
           allUsers: nextProps.allUsers,
         };
@@ -68,18 +66,18 @@ export default class Chat extends React.Component {
 
   componentDidMount() {
     //console.log('status: ', Meteor.status());
-    console.log('props chat', this.props);
+    //console.log('props chat', this.props);
   }
 
   render () {      
     return (
       <div>        
 
-        {/* <LobbiesList lobbies={this.state.lobbies}/>
+        {/*<LobbiesList lobbies={this.state.lobbies}/>
         <form onSubmit={this.lobby.bind(this)}>
           <input type="text" ref="nombre" placeholder="nuevo lobby"/>
           <button>Agregar</button>                
-        </form>  */}
+        </form>*/ }
         
         <MensajesList allUsers={this.state.allUsers} mensajes={this.state.mensajes}/>
         <p>Agregar un mensaje</p>

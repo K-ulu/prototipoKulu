@@ -13,12 +13,13 @@ export default class MensajesList extends React.Component {
 	}
 
 	componentDidMount(){
-		console.log("props mensajes list", this.props);
+		//console.log("props mensajes list", this.props);
 	}
 
 	//actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.mensajes != prevState.mensajes){
+        //console.log('nuevos props de mensajes list: ', nextProps);
         return {
 					mensajes: nextProps.mensajes,
 					allUsers: nextProps.allUsers,

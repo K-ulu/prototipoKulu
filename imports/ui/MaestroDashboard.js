@@ -19,6 +19,8 @@ import Perfil from './Perfil';
 
 //importando componente para crear nueva sesion
 import NuevaSesionContainer from './NuevaSesionContainer';
+import NuevaSesion from './NuevaSesion';
+import ConfiguraSesion from './components/nuevaSesion/ConfiguraSesion';
 //importando componentes para admin de grupos y alumnos
 import MaestroAlumnos from './MaestroAlumnos';
 import MaestroGrupos from './MaestroGrupos';
@@ -55,7 +57,8 @@ class MaestroDashboard extends React.Component {
     } else if(pathname == '/dashboard/grupos' || pathname == '/dashboard/grupos/'){
       contenido = <MaestroGrupos/>;
     } else if(pathname == '/dashboard/nueva-sesion' || pathname == '/dashboard/nueva-sesion/'){
-      contenido = <NuevaSesionContainer/>;
+      contenido = <NuevaSesion/>;
+      //contenido = <ConfiguraSesion/>;
     } else if(pathname == '/dashboard/perfil' || pathname == '/dashboard/perfil/'){
       contenido = <Perfil/>
     }

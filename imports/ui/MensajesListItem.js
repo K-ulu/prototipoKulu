@@ -45,10 +45,11 @@ export default class MensajesListItem extends React.Component {
 		// 	return todos[0].profile.nickname;
 		// }
 		//console.log('todos los usuarios ' , this.props.allUsers);
-		let nickname = this.props.allUsers.filter(user => user._id ==  id);
+		//let nickname = this.props.allUsers.filter(user => user._id ==  id);
 		
 		//console.log(nickname[0].profile.nickname);
-		return nickname[0].profile.nickname
+		//return nickname[0].profile.nickname
+		return 'hola;'
 	}
 
 	render(){
