@@ -12,13 +12,17 @@ export default class NuevaSesion extends React.Component {
 		this.state = {
 			configuracion: false,
 			claveLobby: '',
+			lobbyObjeto: { },
 			claveSesion: '',
+			sesionObjeto: { },
 
 		};
 		
 		this.completarConfiguracion = this.completarConfiguracion.bind(this);
 		this.setLobby = this.setLobby.bind(this);
+		this.setLobbyObjeto = this.setLobbyObjeto.bind(this);
 		this.setSesion = this.setSesion.bind(this);
+		this.setSesionObjeto = this.setSesionObjeto.bind(this);
 	}
 
 	componentDidMount(){
@@ -33,23 +37,30 @@ export default class NuevaSesion extends React.Component {
 		this.setState({ claveLobby });
 	}
 
+	setLobbyObjeto(lobbyObjeto){
+		this.setState({ lobbyObjeto });
+	}
+
 	setSesion(claveSesion){
 		this.setState({ claveSesion });
 	}
 
+	setSesionObjeto(sesionObjeto){
+		this.setState({ sesionObjeto });
+	}
+
 	render(){
-		let configuracion = <ConfiguraSesion valor={ this.state.configuracion } completarConfiguracion={ this.completarConfiguracion } setLobby={ this.setLobby } setSesion={ this.setSesion }/>;
+		let configuracion = <ConfiguraSesion valor={ this.state.configuracion } completarConfiguracion={ this.completarConfiguracion } setLobby={ this.setLobby } setSesion={ this.setSesion } setLobbyObjeto={ this.setLobbyObjeto } setSesionObjeto={ this.setSesionObjeto }/>;
 		let lobby = null;
 		if(this.state.configuracion){
 			configuracion = null;
-			lobby = <LobbySesion valor={ this.state.configuracion } lobby={ this.state.claveLobby }/>;
+			lobby = <LobbySesion valor={ this.state.configuracion } lobby={ this.state.claveLobby } lobbyObjeto={ this.state.lobbyObjeto } sesionObjeto={ this.state.sesionObjeto }/>;
 		}
+
 		return (
 			<div>	
 				{ configuracion }
 				{ lobby }
-				{/*<ConfiguraSesion valor={ this.state.configuracion } completarConfiguracion={ this.completarConfiguracion }/>
-				<LobbySesion valor={ this.state.configuracion }/>*/}
 			</div>			
 		);
 	}

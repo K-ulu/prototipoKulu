@@ -273,13 +273,33 @@ class ConfiguraSesion extends React.Component {
         //creamos objeto sesion
         Meteor.call('sesionesAprendizaje.insert', idSesion,  materia[0], bloque[0], tema[0], tipo, objeto, idLobby, participantes, (err, res) => {
           if(!err){
+            let sesion = {
+              _id: idSesion,
+              materia: materia[0], 
+              bloque: bloque[0],
+              tema: tema[0],
+              tipo,
+              objeto,
+              idLobby,
+              participantes
+            }
+
+            let lobby = {
+              _id: idLobby,
+              participantes
+            }
+
             //guardamos el id de la sesion en la Sesion del navegador  
             Session.set('idSesion', idSesion);
+            Session.set('sesion', sesion);
             //guardamos el id del lobby en la sesion del navegador
             Session.set('idLobby', idLobby);
+            Session.set('lobby', lobby);
             //actualizamos state a componente Padre (Nueva Sesion)
-            this.props.setLobby(_id);    
+            this.props.setLobby(_id);   
+            this.props.setLobbyObjeto(lobby);
             this.props.setSesion(idSesion);
+            this.props.setSesionObjeto(sesion);
             this.props.completarConfiguracion(); 
 
           } else {
