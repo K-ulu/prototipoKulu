@@ -9,8 +9,6 @@ import { Bloques } from '../../../api/bloques';
 import { Temas } from '../../../api/temas';
 import { Grupos } from '../../../api/grupos';
 import { Alumnos } from '../../../api/alumnos';
-import { Lobbies } from '../../../api/lobbies';
-import { Mensajes } from '../../../api/mensajes';
 import shortid from 'shortid';
 
 class ConfiguraSesion extends React.Component {
@@ -34,10 +32,7 @@ class ConfiguraSesion extends React.Component {
 			optionsBloquesSelect: [], //guarda los bloques de acuerdo a la materia seleccionada
 			optionsTemasSelect: [], //guarda los temas de acuerdo al bloque seleccioando
 
-			lobbies: [], //almacena todos los lobbies 
-			mensajes: [], //almacena todos los mensajes
       allUsers: [], //alamcena todos los usuarios
-
       
     };
 
@@ -86,8 +81,6 @@ class ConfiguraSesion extends React.Component {
         temas: nextProps.temas,
         grupos: nextProps.grupos,
         alumnos: nextProps.alumnos,
-        lobbies: nextProps.lobbies,
-        mensajes: nextProps.mensajes,
         allUsers: nextProps.allUsers,
       };
     }
@@ -254,9 +247,7 @@ class ConfiguraSesion extends React.Component {
   //cuando se le da clic a continuar para crear la nueva sesion
   onSubmitConfiguracion(e){
     e.preventDefault();    
-    //console.log(this.props);
-    //recolectando valores para crear el objeto sesion 
-    //let bloquesMateria = this.state.bloques.filter(bloque => bloque.idMateria ==  event.target.value);
+    //recolectando valores para crear el objeto sesion     
     let materia = this.state.materias.filter( materia => materia._id == this.state.valueMateria);
     let bloque = this.state.bloques.filter( bloque => bloque._id == this.state.valueBloque);
     let tema = this.state.temas.filter( tema => tema._id == this.state.valueTema);
@@ -271,8 +262,24 @@ class ConfiguraSesion extends React.Component {
     console.log('objeto: ', objeto);
     console.log('participantes: ', participantes);
 
-    console.log(shortid.generate());
-    this.props.completarConfiguracion();    
+    //creamos el nuevo lobby
+    const _id = shortid.generate();
+    //primer paso es crear el lobby
+    Meteor.call('lobbies.insert', _id, participantes, (err, res) => {
+      if (!err) { // una vez creado el lobby creamos el objeto sesion con la informacion recolectada
+        //creamos objeto sesion
+
+        //guardamos el objeto sesion en la Sesion del navegador        
+        
+        //actualizamos state a componente Padre (Nueva Sesion)
+        this.props.setLobby(_id);    
+        //this.props.setSesion();
+        this.props.completarConfiguracion(); 
+         
+      } else { //error al enviar mensaje
+        console.log(err.reason);
+      }
+    });
 
   }
 
@@ -302,10 +309,7 @@ class ConfiguraSesion extends React.Component {
     }    
 
     return participantes;
-  }
-
-  
-
+  } 
 
   //cuando le damos clic al boton de agregar para agregar alumno
   onAgregar(e){
@@ -561,12 +565,6 @@ export default withTracker(() => {
   let temas = Temas.find().fetch();
   let grupos = Grupos.find().fetch();
   let alumnos = Alumnos.find({ idDocente: Meteor.userId(), estatus: 'registrado' }).fetch();
-
-  Meteor.subscribe('lobbies');
-  let lobbies = Lobbies.find().fetch();		
-  
-  Meteor.subscribe('mensajes', Session.get('lobby'));
-  let mensajes = Mensajes.find().fetch();		
   
   let users = Meteor.subscribe('allUsers');	
   let todos;
@@ -581,8 +579,6 @@ export default withTracker(() => {
     temas: temas,
     grupos: grupos,
     alumnos: alumnos,
-    lobbies: lobbies,
-    mensajes: mensajes,
     allUsers: todos,
   };
 

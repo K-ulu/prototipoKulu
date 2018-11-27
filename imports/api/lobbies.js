@@ -9,7 +9,7 @@ if(Meteor.isServer){
 }
 
 Meteor.methods({
-  'lobbies.insert'(nombre) {
+  'lobbies.insert'(_id, participantes) {
 		//en caso de no haber usuario logueado, negamos la operacion
 		if (!this.userId) {
 			throw new Meteor.Error('not-authorized');
@@ -17,7 +17,8 @@ Meteor.methods({
 
 		//insertamos nuevo lobby
 		Lobbies.insert({
-			nombre  
+			_id,
+			participantes
 		});
 
   }    

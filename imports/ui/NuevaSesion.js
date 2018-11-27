@@ -11,35 +11,38 @@ export default class NuevaSesion extends React.Component {
 		super(props);
 		this.state = {
 			configuracion: false,
-			lobby: '',
+			claveLobby: '',
+			sesion: { },
 
 		};
 		
 		this.completarConfiguracion = this.completarConfiguracion.bind(this);
-		this.crearLobby = this.crearLobby.bind(this);
+		this.setLobby = this.setLobby.bind(this);
+		this.setSesion = this.setSesion.bind(this);
+	}
+
+	componentDidMount(){
+		//console.log('state nueva sesion ', this.state);
 	}
 
 	completarConfiguracion(){
 		this.setState({ configuracion: true })
 	}
 
-	crearLobby(idLobby, participantes){
-		/*Meteor.call('lobbies.insert', nombre, (err, res) => {
-			if (!err) { //mensaje enviado
-				this.refs.nombre.value = '';
-			} else { //error al enviar mensaje
-				console.log(err.reason);
-			}
-		});*/
-
+	setLobby(claveLobby){		
+		this.setState({ claveLobby });
 	}
 
-	render (){
-		let configuracion = <ConfiguraSesion valor={ this.state.configuracion } completarConfiguracion={ this.completarConfiguracion }/>;
+	setSesion(sesion){
+		this.setState({ sesion });
+	}
+
+	render(){
+		let configuracion = <ConfiguraSesion valor={ this.state.configuracion } completarConfiguracion={ this.completarConfiguracion } setLobby={ this.setLobby }/>;
 		let lobby = null;
 		if(this.state.configuracion){
 			configuracion = null;
-			lobby = <LobbySesion valor={ this.state.configuracion }/>
+			lobby = <LobbySesion valor={ this.state.configuracion } lobby={ this.state.claveLobby }/>;
 		}
 		return (
 			<div>	
