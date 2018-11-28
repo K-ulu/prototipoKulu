@@ -57,7 +57,7 @@ class TimeLinePrincipal extends React.Component {
             else{
                 console.log(prevState);
                 return{
-                    nuevo: true,
+                    nuevo: false,
                 }
             }
             
