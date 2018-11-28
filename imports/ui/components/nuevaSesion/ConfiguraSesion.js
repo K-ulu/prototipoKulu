@@ -2,8 +2,6 @@ import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
-import Chat from  '../../Chat';
-
 import { Materias } from '../../../api/materias';
 import { Bloques } from '../../../api/bloques';
 import { Temas } from '../../../api/temas';
@@ -53,9 +51,6 @@ class ConfiguraSesion extends React.Component {
   //habilitamos el primer tab cuando se carga el componente
 	componentDidMount(){
     document.getElementById("default").click();		
-    console.log("Configura sesion mounted");
-    console.log("props config", this.props);
-
     //agregamos usuario logueado a la lista de pariticipantes de forma hidden
     this.agregarPropietario();    
   }
@@ -73,8 +68,7 @@ class ConfiguraSesion extends React.Component {
   
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
-    if(nextProps.materias.length > 0 && nextProps.bloques.length > 0 && nextProps.temas.length > 0){
-      console.log('nuevos props de gera: ', nextProps);
+    if(nextProps.materias.length > 0 && nextProps.bloques.length > 0 && nextProps.temas.length > 0){      
       return {
         materias: nextProps.materias,
         bloques: nextProps.bloques,
@@ -254,13 +248,6 @@ class ConfiguraSesion extends React.Component {
     let tipo = this.state.valueTipo;
     let objeto = this.state.valueObjeto;
     let participantes = this.obtenerListaParticipantes();
-    
-    console.log('materia: ', materia[0]);
-    console.log('bloque: ', bloque[0]);
-    console.log('tema: ', tema[0]);
-    console.log('tipo: ', tipo);
-    console.log('objeto: ', objeto);
-    console.log('participantes: ', participantes);
 
     //creamos el nuevo lobby
     const _id = shortid.generate();
@@ -335,7 +322,13 @@ class ConfiguraSesion extends React.Component {
         let split = alumnos[i].id.split('seleccionado'); // quitamos de la cadena 'seleccionado'
         let id = split[0];
         if(id == this.state.allUsers[j]._id){
-          participantes.push(this.state.allUsers[j]);
+          //agregamos campo anfitrion a cada participante
+          //determinamos el valor
+          let esAnfitrion = (this.state.allUsers[j]._id == Meteor.userId())? true : false;
+          //anexamos el campo
+          this.state.allUsers[j].esAnfitrion = esAnfitrion;
+          //anexamos al usuario con el campo agregado
+          participantes.push(this.state.allUsers[j]);          
         }
       }
     }    
