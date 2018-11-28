@@ -8,23 +8,25 @@ export const Notificaciones = new Mongo.Collection('notificaciones');
 
 if (Meteor.isServer) {
   Meteor.publish('notificaciones', function () {
-    return Libros.find({ userId: this.userId });
+    return Notificaciones.find({ userId: this.userId });
   });
 }
 
 Meteor.methods({
-  'notificaciones.insert'(fechaNotificacion, titulo,descripcion,expiracion) {
+  'notificaciones.insert'(userId, titulo, descripcion, lobby, sesionAprendizaje, expiracion) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     
     Notificaciones.insert({
       _id: shortid.generate(),
-      fechaNotificacion,
+      userId, 
       titulo,
       descripcion,
-      expiracion,
-      idUsuario: this.userId
+      lobby, 
+      sesionAprendizaje,
+      timestamp: Date.now(),
+      expiracion
     });
   },
 

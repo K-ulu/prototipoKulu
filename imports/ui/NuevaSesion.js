@@ -27,6 +27,8 @@ export default class NuevaSesion extends React.Component {
 
 	componentDidMount(){
 		//console.log('state nueva sesion ', this.state);
+		//podriar mandar props con los datos de la sesion y en el
+		//meteodo render hacer una condicion para mostrar el lobby 
 	}
 
 	completarConfiguracion(){

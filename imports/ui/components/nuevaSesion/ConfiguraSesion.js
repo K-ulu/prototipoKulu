@@ -289,6 +289,25 @@ class ConfiguraSesion extends React.Component {
             this.props.setSesionObjeto(sesion);
             this.props.completarConfiguracion(); 
 
+            //enviando invitacionnes a participantes
+            for(let i = 0; i < participantes.length; i++){
+              //omitimos al anfitrion
+              if(participantes[i]._id != Meteor.userId()){
+                //
+                Meteor.call('notificaciones.insert', participantes[i]._id, Meteor.user().profile.nickname + ' te ha invitado a una sesion!', 'Haz clic en el apartado para unirte a esta divertida sesión. ', lobby, sesion, false, (err, res) => {
+                  if(!err){
+                    console.log('invitacion enviada');
+                  } else {
+                    console.log(err.reason);
+                  }
+
+                });
+              } else {
+                console.log('meteor ', Meteor.user());
+              }
+            }
+          
+
           } else {
             console.log(err.reason);
           }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 
 export default class MensajesListItem extends React.Component {
 
@@ -10,14 +9,9 @@ export default class MensajesListItem extends React.Component {
 		};
 	}
 
-	componentDidMount(){
-		//console.log('props list item' , this.props);
-	}
-
 	//actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
-    if(nextProps.allUsers != prevState.allUsers){
-        console.log('nuevos props de listitem: ', nextProps);
+    if(nextProps.allUsers != prevState.allUsers){        
         return {
 					allUsers: nextProps.allUsers,
         };
