@@ -151,6 +151,7 @@ export default class Timelime extends Component {
     }
 
     onDrop = (e,props, cat)=>{
+        console.log(props);
         var {id} = props.event;
         id ="idO"+id;
         console.log(id);
@@ -158,7 +159,7 @@ export default class Timelime extends Component {
        if (id == "idO"+ this.idOriginal){
             Meteor.call('elemento.usado', this.idOriginal,  (err, res) => {
                 if (!err) {
-                  console.log("editado en elementos");
+                  console.log(cat);
                 } else {
                   console.log(err.reason);
                 }
@@ -216,7 +217,7 @@ export default class Timelime extends Component {
             </div>
             <div className='rt-image-container' 
                 onDragOver={(e)=>this.onDragOver(e)}
-                onDrop={(e) => this.onDrop(e,{event},"complete")}
+                onDrop={(e) => this.onDrop(e, event,"complete")}
             >
             {usado == "true" ? <img id={id} src= {link} className='rt-image'/> : <img id={id} src="" className='rt-image'/> }
                 <TextBodyClass event={event}/>
