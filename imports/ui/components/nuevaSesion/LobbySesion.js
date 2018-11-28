@@ -13,21 +13,24 @@ class LobbySesion extends React.Component {
 			mensajes: [], //almacena todos los mensajes
       usuarios: [], //alamcena todos los usuarios
       lobby: '',  //almacena la clave de el lobby que se creo
+      lobbyObjeto: { },
+      sesionObjeto: { },
     };
 
   }
 
   //actulaizamos nuestro state al montar el componente
   componentDidMount(){
-    this.setState({ lobby: this.props.lobby });
+    this.setState({ lobby: this.props.lobby, lobbyObjeto: this.props.lobbyObjeto,  sesionObjeto: this.props.sesionObjeto });
 
     console.log('lobby props', this.props);
+    console.log('lobby state at lobby sesion did mount', this.state);
   }
 
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.isReadyM && nextProps.isReadyU){
-      //console.log("updated props from lobbysesion", nextProps);
+      console.log("updated props from lobbysesion", nextProps);      
       return {
         mensajes: nextProps.mensajes,
         usuarios: nextProps.usuarios,
@@ -48,7 +51,7 @@ class LobbySesion extends React.Component {
     const { valor, claveLobby } = this.props;    
     let chat = null;
     if(valor){
-      chat = <Chat lobby={ this.state.lobby } mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>;
+      chat = <Chat lobby={ this.state.lobby } mensajes={ this.state.mensajes } allUsers={ this.state.sesionObjeto.participantes }/>;
     }
 
     return (      
@@ -82,12 +85,7 @@ class LobbySesion extends React.Component {
                 </div>
               </div>
 
-              
-
             </div>
-            
-            										
-            
             
           </div>
         </div>
@@ -108,8 +106,6 @@ export default withTracker((props) => {
   let handleU = Meteor.subscribe('allUsers');	
   let isReadyU = handleU.ready();
   let usuarios = Meteor.users.find().fetch();
-
-  console.log('mensajes desde lobbySesion', mensajes);
 
   return {
     mensajes,
