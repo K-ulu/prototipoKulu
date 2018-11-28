@@ -12,6 +12,9 @@ import Whirligig from 'react-whirligig'; //Para que se desplace la linea del tie
 import ElementosObjetosAprendizaje from '../api/elementosObjetosAprendizaje.js';
 import { DH_UNABLE_TO_CHECK_GENERATOR } from 'constants';
 
+import 'react-modal-video/scss/modal-video.scss';
+import ModalVideo from 'react-modal-video';
+
 propTypes = {
     dateIF: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
@@ -44,15 +47,6 @@ const DefaultHeader = (props) => {
         <h2 className='rt-title'>{title}</h2>
         <p className='rt-date'>{fecha}</p>
     </div>;
-};
-
-const DefaultFooter = (props) => {
-    const {buttonText, onClick} = props.event;
-    const handleClick = (e) => {
-        e.preventDefault();
-        (onClick || function () {})(e);
-    };
-    return <a className='rt-btn' href='#' onClick={handleClick}>{buttonText || 'Default Text'}</a>
 };
 
 const DefaultImageBody = (props) =>{
@@ -103,7 +97,6 @@ export default class Timelime extends Component {
     static idOriginal="";
     static urlOriginal="";
 
-    // static boolActivado = false;
     static propTypes = {
         reverseOrder: PropTypes.bool
     };
@@ -118,7 +111,9 @@ export default class Timelime extends Component {
             showAlert: false,
             typeAlert: 'success',
             titleAlert: 'Felicidades',
-            messageAlert: 'Victoria!!!!!'
+            messageAlert: 'Victoria!!!!!',
+
+            isOpen: false
         };
     }
 
@@ -199,7 +194,16 @@ export default class Timelime extends Component {
        }
     }
 
-    contentForEvent(event, index, HeaderClass, TextBodyClass, FooterClass) {
+    DefaultFooter = (props) => {
+        const {buttonText} = props.event;
+        const handleClick = (e) => {
+            e.preventDefault();
+            this.setState({isOpen: true});
+        };
+        return <a className='rt-btn' href='#' onClick={handleClick}>{buttonText || 'Default Text'}</a>
+    };
+
+    contentForEvent(event, index, HeaderClass, TextBodyClass) {
         var {usado} = event;
         var {id} = event;
         let link = ElementosObjetosAprendizaje.findOne({_id: id}).link();  //The "view/download" link
@@ -217,7 +221,7 @@ export default class Timelime extends Component {
                 <TextBodyClass event={event}/>
             </div>
             <div className='rt-footer-container'>
-                <FooterClass event={event}/>
+                {this.DefaultFooter(event={event})}
             </div>
         </div>;
         if (index % 2 === 1){
@@ -263,7 +267,7 @@ export default class Timelime extends Component {
         // Compose labels and events together
         return R.pipe(
             R.addIndex(R.reduce)((accum, event, index) => {
-                const content = this.contentForEvent(event, index, DefaultHeader,  DefaultTextBody, DefaultFooter);
+                const content = this.contentForEvent(event, index, DefaultHeader,  DefaultTextBody);
                 return R.append(content, accum);
             },  [clear])
         )(events);
@@ -360,6 +364,13 @@ export default class Timelime extends Component {
                 type={typeAlert}
                 title={titleAlert}
                 message={messageAlert}
+            />
+
+            <ModalVideo 
+                channel='youtube' 
+                isOpen={this.state.isOpen} 
+                videoId='VAh41sM8ijU' 
+                onClose={() => this.setState({isOpen: false})} 
             />
         </div>
         );
