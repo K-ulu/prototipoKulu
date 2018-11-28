@@ -153,7 +153,8 @@ export default class Timelime extends Component {
     onDrop = (e,props, cat)=>{
         var {id} = props.event;
         id ="idO"+id;
-
+        console.log(id);
+        console.log("idO"+ this.idOriginal);
        if (id == "idO"+ this.idOriginal){
             Meteor.call('elemento.usado', this.idOriginal,  (err, res) => {
                 if (!err) {
