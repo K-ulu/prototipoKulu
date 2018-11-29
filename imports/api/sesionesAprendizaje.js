@@ -13,19 +13,20 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'sesionesAprendizaje.insert'( tipoSesion, NoParticipanteSesion, horaInicio, horaFinal, temaSesion, idLobby ) {
+  'sesionesAprendizaje.insert'(_id,  materia, bloque, tema, tipo, objeto, idLobby, participantes ) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
   
-    SesionesAprendizaje.insert({
-      _id: shortid.generate(),
-      tipoSesion,
-      NoParticipanteSesion,
-      horaInicio,
-      horaFinal,
-      temaSesion,
-      idLobby
+    SesionesAprendizaje.insert({   
+      _id,    
+      materia, 
+      bloque,
+      tema, 
+      tipo, 
+      objeto, 
+      idLobby, 
+      participantes
     });
   },
 

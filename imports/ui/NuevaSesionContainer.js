@@ -17,7 +17,7 @@ export default NuevaSesionContainer = withTracker(() => {
     Meteor.subscribe('temas');
     Meteor.subscribe('grupos');
     Meteor.subscribe('alumnos');
-		let materias = Materias.find().fetch();
+    let materias = Materias.find().fetch();
     let bloques = Bloques.find().fetch();
     let temas = Temas.find().fetch();
     let grupos = Grupos.find().fetch();

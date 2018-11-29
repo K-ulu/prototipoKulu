@@ -19,6 +19,7 @@ export default class MensajesList extends React.Component {
 	//actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.mensajes != prevState.mensajes){
+        console.log('nuevos props de mensajes list: ', nextProps);
         return {
 					mensajes: nextProps.mensajes,
 					allUsers: nextProps.allUsers,

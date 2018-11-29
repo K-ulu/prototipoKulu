@@ -51,7 +51,7 @@
             offset += Math.random() * 100;
             return R.merge({
                 dateIF: moment('2018-10-19').add(offset, 'days'),
-                buttonText: 'Read More',
+                buttonText: 'Play Video',
                 onClick: () => {}
             }, city);
         }, (data));

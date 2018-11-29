@@ -35,7 +35,6 @@ class TimeLinePrincipal extends React.Component {
             nuevo: null,
         };
         this.datos = this.datos.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
     }
 
     	//actualizamos props
@@ -90,16 +89,9 @@ class TimeLinePrincipal extends React.Component {
         }
     }
 
-    // handleChange(event){
-    //     console.log(event);
-    //     this.edit = true;
-    //     this.setState({imagenes:""});
-    // }
-
     render() {   
         let {events} = this.state;
         let {imagenes} = this.state;
-        // let timeline = <Timeline events={events} imagenes={imagenes}/>;
         return (
             <div className="linea-Tiempo">
                 <h1>Linea del Tiempo</h1>
