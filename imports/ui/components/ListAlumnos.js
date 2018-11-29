@@ -248,7 +248,9 @@ class ListAlumnos extends Component {
         this.claveEs = claveEscuela;
         this.miId = id;
         if (idGrupo != null){
+            console.log(idGrupo);
             const grupo = Grupos.findOne( { _id: idGrupo});
+            console.log(grupo);
             this.setState(
                 {
                     selectedOption: {

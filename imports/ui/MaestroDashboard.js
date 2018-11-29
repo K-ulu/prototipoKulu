@@ -57,7 +57,7 @@ class MaestroDashboard extends React.Component {
     } else if(pathname == '/dashboard/grupos' || pathname == '/dashboard/grupos/'){
       contenido = <MaestroGrupos/>;
     } else if(pathname == '/dashboard/nueva-sesion' || pathname == '/dashboard/nueva-sesion/'){
-      contenido = <NuevaSesion/>;
+      contenido = <NuevaSesionContainer/>;
       //contenido = <ConfiguraSesion/>;
     } else if(pathname == '/dashboard/perfil' || pathname == '/dashboard/perfil/'){
       contenido = <Perfil/>

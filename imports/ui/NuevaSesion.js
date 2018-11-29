@@ -8,6 +8,7 @@ import LobbySesion from '../ui/components/nuevaSesion/LobbySesion';
 export default class NuevaSesion extends React.Component {
 
 	constructor(props){
+		console.log(props);
 		super(props);
 		this.state = {
 			configuracion: false,

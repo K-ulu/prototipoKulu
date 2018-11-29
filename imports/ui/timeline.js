@@ -54,7 +54,7 @@ const DefaultImageBody = (props) =>{
     const {id} = props.imagen; 
 
     return <div>         
-        <img id={id} src={imageUrl} className='rt-image'/>
+        <img id={id} src={imageUrl} className='rt-image2'/>
     </div>;
 };
 
@@ -344,7 +344,7 @@ export default class Timelime extends Component {
                     {this.topLabel}
                 </div>
                 <Whirligig className='rt-timeline'
-                    visibleSlides={5}
+                    visibleSlides={6}
                     gutter="0.5em"
                     ref={(_whirligigInstance) => { whirligig = _whirligigInstance}}
                 >
