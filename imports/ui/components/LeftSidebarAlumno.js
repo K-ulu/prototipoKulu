@@ -15,7 +15,7 @@ export default class LeftSidebarAlumno extends React.Component {
           </li>
 
           <li className="submenu">
-            <a className="nuevaSesion" href="#">
+            <a className="nuevaSesion" href="/dashboard/sesion">
               <i className="fa fa-fw fa-play"></i>
               <span> Nueva Mini Sesión </span>
             </a>

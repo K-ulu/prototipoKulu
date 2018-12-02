@@ -13,24 +13,29 @@ class LobbySesion extends React.Component {
 			mensajes: [], //almacena todos los mensajes
       usuarios: [], //alamcena todos los usuarios
       lobby: '',  //almacena la clave de el lobby que se creo
-      lobbyObjeto: { },
+      //lobbyObjeto: { },
       sesionObjeto: { },
     };
+
+    this.onClickAbandonarSesion = this.onClickAbandonarSesion.bind(this);
+    this.onClickIniciarSesion = this.onClickIniciarSesion.bind(this);
+    this.esAnfitrion = this.esAnfitrion.bind(this);
 
   }
 
   //actulaizamos nuestro state al montar el componente
   componentDidMount(){
-    this.setState({ lobby: this.props.lobby, lobbyObjeto: this.props.lobbyObjeto,  sesionObjeto: this.props.sesionObjeto });
+    //this.setState({ lobby: this.props.lobby, lobbyObjeto: this.props.lobbyObjeto,  sesionObjeto: this.props.sesionObjeto });
+    this.setState({ lobby: this.props.lobby, sesionObjeto: this.props.sesionObjeto });
 
-    console.log('lobby props', this.props);
-    console.log('lobby state at lobby sesion did mount', this.state);
+    // console.log('lobby props', this.props);
+    // console.log('lobby state at lobby sesion did mount', this.state);
   }
 
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.isReadyM && nextProps.isReadyU){
-      console.log("updated props from lobbysesion", nextProps);      
+      //console.log("updated props from lobbysesion", nextProps);      
       return {
         mensajes: nextProps.mensajes,
         usuarios: nextProps.usuarios,
@@ -38,6 +43,35 @@ class LobbySesion extends React.Component {
     }
     //retornamos null cuando no sea necesario actualizar state
     return null;
+  }
+
+  //funcion que nos permite saber si el usuario que participa 
+  //en la sesion es el anfitrion (solo el anfitrion puede iniciar la sesion)
+  esAnfitrion(){
+    if(!_.isEmpty(this.state.sesionObjeto) ){
+      let participantes = this.state.sesionObjeto.participantes;  
+      for(let i = 0; i < participantes.length; i++){
+        if(participantes[i].esAnfitrion && participantes[i]._id == Meteor.userId()){
+          return true;
+        } else {
+          return false;
+        }
+      }   
+    }
+  }
+
+  onClickAbandonarSesion(e){
+    e.preventDefault();
+    //resetamos valores en el objeto sesion
+    Session.setPersistent('idSesion', null);
+    Session.setPersistent('sesion', null);
+    //guardamos el id del lobby en la sesion del navegador
+    Session.setPersistent('idLobby', null);
+    Session.setPersistent('lobby', null);
+    //ponemos en modo sesion
+    Session.setPersistent('enSesion', false);
+    //redireccionamos al dashboard
+    location.href = '/dashboard';
   }
 
   onClickIniciarSesion(e){
@@ -50,8 +84,20 @@ class LobbySesion extends React.Component {
   render () {
     const { valor, claveLobby } = this.props;    
     let chat = null;
+    let botonIniciarSesion = null;
     if(valor){
       chat = <Chat lobby={ this.state.lobby } mensajes={ this.state.mensajes } allUsers={ this.state.sesionObjeto.participantes }/>;
+    }
+
+    //verificamos si el usuario es el anfitrion
+    if(this.esAnfitrion()){
+      botonIniciarSesion = (
+        <div className="row justify-content-center">
+          <div className="col-10 col-lg-6">
+            <button onClick={ this.onClickIniciarSesion } className="btn btn-primary btn-block">Iniciar Sesión</button>
+          </div>
+        </div>
+      );
     }
 
     return (      
@@ -61,7 +107,12 @@ class LobbySesion extends React.Component {
             <div className="card noborder mb-3">
 
               <div className="card-header">
-                <h3>Lobby</h3>		
+                <div className="row">
+                  <div className="col-6 col-lg-3">
+                  <button onClick={ this.onClickAbandonarSesion } className="btn btn-danger btn-block">Abandonar Sesión</button>
+                  </div>
+                </div>
+                
               </div>
 
               <div className="card-body">
@@ -78,13 +129,8 @@ class LobbySesion extends React.Component {
                   </div>
 
                 </div>
-                <div className="row justify-content-center">
-                  <div className="col-10">
-                    <button onClick={ this.onClickIniciarSesion } className="btn btn-primary btn-block">Iniciar Sesión</button>
-                  </div>
-                </div>
+                { botonIniciarSesion }
               </div>
-
             </div>
             
           </div>

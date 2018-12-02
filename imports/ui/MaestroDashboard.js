@@ -67,7 +67,7 @@ class MaestroDashboard extends React.Component {
       <div id="main" className="enlarged">  
 
         {/*<!-- top bar navigation -->*/}
-        <HeaderBar/>
+        <HeaderBar history={ this.props.history }/>
 
         {/*Wrapper*/}
         <div id="wrapper">

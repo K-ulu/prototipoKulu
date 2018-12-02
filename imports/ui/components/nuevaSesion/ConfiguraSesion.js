@@ -277,24 +277,27 @@ class ConfiguraSesion extends React.Component {
             }
 
             //guardamos el id de la sesion en la Sesion del navegador  
-            Session.set('idSesion', idSesion);
-            Session.set('sesion', sesion);
+            Session.setPersistent('idSesion', idSesion);
+            Session.setPersistent('sesion', sesion);
             //guardamos el id del lobby en la sesion del navegador
-            Session.set('idLobby', idLobby);
-            Session.set('lobby', lobby);
+            Session.setPersistent('idLobby', idLobby);
+            Session.setPersistent('lobby', lobby);
+            //ponemos en modo sesion
+            Session.setPersistent('enSesion', true);
             //actualizamos state a componente Padre (Nueva Sesion)
             this.props.setLobby(_id);   
             this.props.setLobbyObjeto(lobby);
             this.props.setSesion(idSesion);
             this.props.setSesionObjeto(sesion);
             this.props.completarConfiguracion(); 
+            this.props.enSesion();
 
             //enviando invitacionnes a participantes
             for(let i = 0; i < participantes.length; i++){
               //omitimos al anfitrion
               if(participantes[i]._id != Meteor.userId()){
                 //
-                Meteor.call('notificaciones.insert', participantes[i]._id, Meteor.user().profile.nickname + ' te ha invitado a una sesion!', 'Haz clic en el apartado para unirte a esta divertida sesión. ', lobby, sesion, false, (err, res) => {
+                Meteor.call('notificaciones.insert', participantes[i]._id,  '¡Nueva invitación!', Meteor.user().profile.nickname + ' te ha invitado a una sesion! Haz clic en el apartado para unirte a esta divertida sesión. ', lobby, sesion, false, (err, res) => {
                   if(!err){
                     console.log('invitacion enviada');
                   } else {
