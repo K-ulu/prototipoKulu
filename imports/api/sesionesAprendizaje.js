@@ -7,13 +7,13 @@ import { check } from 'meteor/check';
 export const SesionesAprendizaje = new Mongo.Collection('sesionesAprendizaje');
 
 if (Meteor.isServer) {
-  Meteor.publish('sesionesAprendizaje', function () {
-    return SesionesAprendizaje.find({ userId: this.userId });
+  Meteor.publish('sesionesAprendizaje', function (_id) {
+    return SesionesAprendizaje.find({ _id });
   });
 }
 
 Meteor.methods({
-  'sesionesAprendizaje.insert'(_id,  materia, bloque, tema, tipo, objeto, idLobby, participantes ) {
+  'sesionesAprendizaje.insert'(_id,  materia, bloque, tema, tipo, objeto, idLobby, participantes, activos ) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -26,7 +26,19 @@ Meteor.methods({
       tipo, 
       objeto, 
       idLobby, 
-      participantes
+      participantes,
+      activos
+    });
+  },
+
+  'sesionesAprendizaje.updateActivos'(id, activos){
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+    SesionesAprendizaje.update({
+      _id: id
+    }, {
+      $set: { activos }
     });
   },
 

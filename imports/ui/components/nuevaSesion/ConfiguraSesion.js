@@ -45,7 +45,7 @@ class ConfiguraSesion extends React.Component {
     this.onAgregar = this.onAgregar.bind(this);
     this.onQuitar = this.onQuitar.bind(this);
     this.obtenerListaParticipantes = this.obtenerListaParticipantes.bind(this);
-    
+    this.obtenerUsuarioActivo = this.obtenerUsuarioActivo.bind(this);
   }
   
   //habilitamos el primer tab cuando se carga el componente
@@ -248,6 +248,7 @@ class ConfiguraSesion extends React.Component {
     let tipo = this.state.valueTipo;
     let objeto = this.state.valueObjeto;
     let participantes = this.obtenerListaParticipantes();
+    let activos = this.obtenerUsuarioActivo();
 
     //creamos el nuevo lobby
     const _id = shortid.generate();
@@ -258,7 +259,7 @@ class ConfiguraSesion extends React.Component {
         let idLobby = _id;
         let idSesion = shortid.generate();
         //creamos objeto sesion
-        Meteor.call('sesionesAprendizaje.insert', idSesion,  materia[0], bloque[0], tema[0], tipo, objeto, idLobby, participantes, (err, res) => {
+        Meteor.call('sesionesAprendizaje.insert', idSesion,  materia[0], bloque[0], tema[0], tipo, objeto, idLobby, participantes, activos, (err, res) => {
           if(!err){
             let sesion = {
               _id: idSesion,
@@ -268,12 +269,14 @@ class ConfiguraSesion extends React.Component {
               tipo,
               objeto,
               idLobby,
-              participantes
+              participantes,
+              activos
             }
 
             let lobby = {
               _id: idLobby,
-              participantes
+              participantes,
+              activos
             }
 
             //guardamos el id de la sesion en la Sesion del navegador  
@@ -305,9 +308,7 @@ class ConfiguraSesion extends React.Component {
                   }
 
                 });
-              } else {
-                console.log('meteor ', Meteor.user());
-              }
+              } 
             }
           
 
@@ -357,6 +358,19 @@ class ConfiguraSesion extends React.Component {
 
     return participantes;
   } 
+
+  obtenerUsuarioActivo(){
+    //lista donde se almacenaran todos los usuarios activos
+    let usuarios = [];
+
+    //obtenemos el usuario anfitrion
+    let usuario = Meteor.user();
+    usuario.esAnfitrion = true;
+    //anexamos al usuario a la lista
+    usuarios.push(usuario);     
+
+    return usuarios;
+  }
 
   //cuando le damos clic al boton de agregar para agregar alumno
   onAgregar(e){

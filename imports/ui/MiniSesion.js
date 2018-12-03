@@ -1,9 +1,13 @@
 import React from 'react'
+import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 
 import ConfiguraSesion from '../ui/components/nuevaSesion/ConfiguraSesion';
 import LobbySesion from '../ui/components/nuevaSesion/LobbySesion';
 
-export default class MiniSesion extends React.Component {
+import { SesionesAprendizaje } from '../api/sesionesAprendizaje';
+
+class MiniSesion extends React.Component {
 
   constructor(props){
     super(props);
@@ -20,15 +24,16 @@ export default class MiniSesion extends React.Component {
 		this.setLobby = this.setLobby.bind(this);
 		this.setLobbyObjeto = this.setLobbyObjeto.bind(this);
 		this.setSesion = this.setSesion.bind(this);
-		this.setSesionObjeto = this.setSesionObjeto.bind(this);
+    this.setSesionObjeto = this.setSesionObjeto.bind(this);
+    this.enSesion = this.enSesion.bind(this);
   }
   
   componentDidMount() {
     //preguntamos si accedio por medio de invitacion
     //de ser así redirigimos al lobby de lo contrario mostramos
     // panel de configuracion
-    console.log('valor de seison', Session.get('sesion'));
-    console.log('en sesion', Session.get('enSesion'));
+    // console.log('valor de seison', Session.get('sesion'));
+    // console.log('en sesion', Session.get('enSesion'));
     if(Session.get('enSesion')){
       //actualizamos datos
       this.setState({ enSesion: true, sesionObjeto: Session.get('sesion')});      
@@ -36,8 +41,24 @@ export default class MiniSesion extends React.Component {
     
   }
 
+  //actualizamos props
+	static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.isReadyS){    
+      return {
+        sesionObjeto: nextProps.sesion,
+      };
+    }
+    //retornamos null cuando no sea necesario actualizar state
+    return null;
+  }
+
   completarConfiguracion(){
 		this.setState({ configuracion: true })
+  }
+  
+  //habilitamos que esta en una sesion
+	enSesion(){
+		this.setState({ enSesion: true })
 	}
 
 	setLobby(claveLobby){		
@@ -75,3 +96,18 @@ export default class MiniSesion extends React.Component {
     );
   }
 }
+
+export default withTracker(() => {
+	//obteniendo informacion actualizada del objeto sesion
+  let handleS = Meteor.subscribe('sesionesAprendizaje', Session.get('sesion')._id);
+  let isReadyS = handleS.ready();
+	let sesion = SesionesAprendizaje.find().fetch();		
+	sesion = sesion[0];
+	//console.log('mi sesion actualizada', sesion);
+
+	return {
+		isReadyS,
+		sesion
+	};
+
+})(MiniSesion);

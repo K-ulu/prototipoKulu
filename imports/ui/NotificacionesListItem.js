@@ -16,6 +16,7 @@ class NotificacionesListItem extends React.Component {
 
     this.removeNotification = this.removeNotification.bind(this);
     this.joinSession = this.joinSession.bind(this);
+    this.prepararUsuario = this.prepararUsuario.bind(this);
   }
 
   joinSession(e){
@@ -23,11 +24,29 @@ class NotificacionesListItem extends React.Component {
     //seteamos en la sesion los valores de la sesion a la que se unira
     //redireccionamos a donde estara el lobby
     //guardamos el objeto sesionAprendizaje en Sesion    
+    this.prepararUsuario(); //anexamos al usuario
     Session.setPersistent('sesion', this.props.sesionAprendizaje);
     Session.setPersistent('enSesion', true);
     //redireccionamos
-    location.href='/dashboard/sesion';
-    //alert("te estas uniendo a la sesion");    
+    location.href='/dashboard/sesion'; 
+  }
+
+  prepararUsuario(){
+    let usuario = Meteor.user();
+    usuario.esAnfitrion = false;
+    //anexamos el usuario a la lista de activos en la sesion
+    this.props.sesionAprendizaje.activos.push(usuario);
+
+    console.log('lista preprarar usuario: ', this.props.sesionAprendizaje.activos);
+    //actualizamos en la base de datos
+    Meteor.call('sesionesAprendizaje.updateActivos', this.props.sesionAprendizaje._id, this.props.sesionAprendizaje.activos, (err, res) => {
+      if(!err){
+        console.log('actualizando activos');
+      } else {
+        console.log(err.reason);
+      }
+    });
+
   }
 
   removeNotification() {

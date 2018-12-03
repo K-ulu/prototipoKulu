@@ -63,6 +63,31 @@ class LobbySesion extends React.Component {
   onClickAbandonarSesion(e){
     e.preventDefault();
     //resetamos valores en el objeto sesion
+    let user;
+    let index;
+    let sesion = Session.get('sesion');
+
+    //obtenemos index del usuario que abandonara la sala
+    for(let i = 0; i < sesion.activos.length; i++){
+      if(sesion.activos[i]._id == Meteor.userId()){
+        index = i; 
+      }
+    }
+
+    //removemos de la lista
+    let eliminado = sesion.activos.splice(index, 1);
+    console.log('elminado', eliminado);
+    console.log('nueva lista: ', sesion.activos);
+    //actualizamos la lista de la bd
+    Meteor.call('sesionesAprendizaje.updateActivos', sesion._id, sesion.activos, (err, res) => {
+      if(!err){
+        console.log('lista actualizada de usuarios');
+      } else {
+        console.log(err.reason);
+      }
+    });
+    
+    //borramos datos de la sesion
     Session.setPersistent('idSesion', null);
     Session.setPersistent('sesion', null);
     //guardamos el id del lobby en la sesion del navegador

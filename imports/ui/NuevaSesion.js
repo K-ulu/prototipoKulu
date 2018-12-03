@@ -1,10 +1,13 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 
 import ConfiguraSesion from '../ui/components/nuevaSesion/ConfiguraSesion';
 import LobbySesion from '../ui/components/nuevaSesion/LobbySesion';
 
-export default class NuevaSesion extends React.Component {
+import { SesionesAprendizaje } from '../api/sesionesAprendizaje';
+
+class NuevaSesion extends React.Component {
 
 	constructor(props){
 		super(props);
@@ -15,7 +18,6 @@ export default class NuevaSesion extends React.Component {
 			claveSesion: '',
 			sesionObjeto: { },
 			enSesion: false,
-
 		};
 		
 		this.completarConfiguracion = this.completarConfiguracion.bind(this);
@@ -30,13 +32,24 @@ export default class NuevaSesion extends React.Component {
 		//preguntamos si accedio por medio de invitacion o ya se había unido a la sesion
     //de ser así redirigimos al lobby de lo contrario mostramos
     // panel de configuracion
-    console.log('valor de seison', Session.get('sesion'));
-    console.log('en sesion', Session.get('enSesion'));
+    // console.log('valor de seison', Session.get('sesion'));
+    // console.log('en sesion', Session.get('enSesion'));
     if(Session.get('enSesion')){
       //actualizamos datos
       this.setState({ enSesion: true, sesionObjeto: Session.get('sesion')});      
     } 
 	}
+
+	//actualizamos props
+	static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.isReadyS){    
+      return {
+        sesionObjeto: nextProps.sesion,
+      };
+    }
+    //retornamos null cuando no sea necesario actualizar state
+    return null;
+  }
 
 	//se ha completado la configuracion de la sesion
 	completarConfiguracion(){
@@ -87,3 +100,18 @@ export default class NuevaSesion extends React.Component {
 		);
 	}
 }
+
+export default withTracker(() => {
+	//obteniendo informacion actualizada del objeto sesion
+  let handleS = Meteor.subscribe('sesionesAprendizaje', Session.get('sesion')._id);
+  let isReadyS = handleS.ready();
+	let sesion = SesionesAprendizaje.find().fetch();		
+	sesion = sesion[0];
+	//console.log('mi sesion actualizada', sesion);
+
+	return {
+		isReadyS,
+		sesion
+	};
+
+})(NuevaSesion);
