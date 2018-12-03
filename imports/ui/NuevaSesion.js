@@ -103,10 +103,16 @@ class NuevaSesion extends React.Component {
 
 export default withTracker(() => {
 	//obteniendo informacion actualizada del objeto sesion
-  let handleS = Meteor.subscribe('sesionesAprendizaje', Session.get('sesion')._id);
-  let isReadyS = handleS.ready();
-	let sesion = SesionesAprendizaje.find().fetch();		
-	sesion = sesion[0];
+	let handleS = undefined;
+	let isReadyS = false;
+	let sesion;
+	if(Session.get('sesion') != undefined){
+		handleS = Meteor.subscribe('sesionesAprendizaje', Session.get('sesion')._id);
+		isReadyS = handleS.ready();
+		sesion = SesionesAprendizaje.find().fetch();		
+		sesion = sesion[0];
+	}
+  
 	//console.log('mi sesion actualizada', sesion);
 
 	return {
