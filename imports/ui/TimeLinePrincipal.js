@@ -45,12 +45,14 @@ class TimeLinePrincipal extends React.Component {
     //this.setState({ lobby: this.props.lobby, lobbyObjeto: this.props.lobbyObjeto,  sesionObjeto: this.props.sesionObjeto });
         this.setState({ lobby: this.props.lobby, sesionObjeto: this.props.sesionObjeto });
 
-    // console.log('lobby props', this.props);
+        console.log('lobby props', this.props);
+        console.log(Session.get('sesion'));
     // console.log('lobby state at lobby sesion did mount', this.state);
     }
 
     	//actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
+        console.log(nextProps);
         if(true){
             if (prevState.nuevo == null || prevState.nuevo == true){
                 return {
@@ -101,7 +103,7 @@ class TimeLinePrincipal extends React.Component {
                 <hr/>
                 <div className = "rt-menu">
                     <ul>
-                        <li className="green"><div>Limpiar</div></li>
+                        {/* <li className="green"><div>Limpiar</div></li> */}
                         <li className="yellow activa" onClick={(e) => this.datos(e, "all")}><div>Mostrar todo</div></li>
                         <li className="red" onClick={(e) => this.datos(e,"artefacto")}><div>Artefacto</div></li>
                         <li className="blue" onClick={(e) => this.datos(e,"personaje")}><div>Personaje</div></li>
