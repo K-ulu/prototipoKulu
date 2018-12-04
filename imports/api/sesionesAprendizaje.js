@@ -19,7 +19,8 @@ Meteor.methods({
     }
   
     SesionesAprendizaje.insert({   
-      _id,    
+      _id, 
+      timelineS: false,   
       materia, 
       bloque,
       tema, 
@@ -39,6 +40,17 @@ Meteor.methods({
       _id: id
     }, {
       $set: { activos }
+    });
+  },
+
+  'sesionesAprendizaje.timeLine'(id){
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+    SesionesAprendizaje.update({
+      _id: id
+    }, {
+      $set: { timelineS: true }
     });
   },
 

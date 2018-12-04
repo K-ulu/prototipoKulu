@@ -15,6 +15,7 @@ class LobbySesion extends React.Component {
       lobby: '',  //almacena la clave de el lobby que se creo
       //lobbyObjeto: { },
       sesionObjeto: { },
+      timelineS: false,
     };
 
     this.onClickAbandonarSesion = this.onClickAbandonarSesion.bind(this);
@@ -35,11 +36,20 @@ class LobbySesion extends React.Component {
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.isReadyM && nextProps.isReadyU){
-      //console.log("updated props from lobbysesion", nextProps);      
-      return {
-        mensajes: nextProps.mensajes,
-        usuarios: nextProps.usuarios,
-      };
+      //console.log("updated props from lobbysesion", nextProps);  
+      if (nextProps.sesionObjeto.timelineS == true){
+        console.log("ya se activo");
+        location.href = '/timeLine';
+      }
+      else{
+        // if (nextProps.sesionObjeto.timelineS == undefined){
+          return {
+            mensajes: nextProps.mensajes,
+            usuarios: nextProps.usuarios,
+            timelineS: false,
+          };
+        // }
+      }
     }
     //retornamos null cuando no sea necesario actualizar state
     return null;
@@ -100,9 +110,24 @@ class LobbySesion extends React.Component {
   }
 
   onClickIniciarSesion(e){
-    e.preventDefault();
+    // e.preventDefault();
 
-    alert("hacer algo aquí");
+    // alert("hacer algo aquí");
+
+    let sesion = Session.get('sesion');
+
+    e.preventDefault();
+    console.log(this.state);
+
+    Meteor.call('sesionesAprendizaje.timeLine', sesion._id, (err, res) => {
+      if(!err){
+        console.log('Sesion activada');
+      } else {
+        console.log(err.reason);
+      }
+    });
+
+    location.href = '/timeLine';
   }
  
 

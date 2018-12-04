@@ -33,14 +33,24 @@ class TimeLinePrincipal extends React.Component {
             mensajes: null,
             allUsers: null,
             nuevo: null,
+
+            lobby: '',  //almacena la clave de el lobby que se creo
+            //lobbyObjeto: { },
+            sesionObjeto: { },
         };
         this.datos = this.datos.bind(this);
     }
 
+    componentDidMount(){
+    //this.setState({ lobby: this.props.lobby, lobbyObjeto: this.props.lobbyObjeto,  sesionObjeto: this.props.sesionObjeto });
+        this.setState({ lobby: this.props.lobby, sesionObjeto: this.props.sesionObjeto });
+
+    // console.log('lobby props', this.props);
+    // console.log('lobby state at lobby sesion did mount', this.state);
+    }
+
     	//actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
-        console.log(nextProps);
-        console.log(prevState);
         if(true){
             if (prevState.nuevo == null || prevState.nuevo == true){
                 return {
@@ -54,7 +64,6 @@ class TimeLinePrincipal extends React.Component {
                 };
             }
             else{
-                console.log(prevState);
                 return{
                     nuevo: false,
                 }
@@ -66,22 +75,16 @@ class TimeLinePrincipal extends React.Component {
     }
       
     datos (event, dataType){
-        console.log(event);
         let newImages = "";
-        console.log(this.state.imagenes);
 
         if (dataType == "all"){
             newImages = ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch();
         }
         else{
             newImages = ElementosObjetosAprendizaje.find({"meta.categoriaElemento": dataType, "meta.usado":"false"}).fetch();
-            console.log(newImages);
         }
 
         if (newImages.length > 0 ){
-            // this.setState = {
-            //     imagenes: getImages(false, newImages)
-            // }
             this.setState({ imagenes: getImages(false, newImages ), nuevo: false })
         }
         else{
@@ -119,15 +122,19 @@ class TimeLinePrincipal extends React.Component {
 //export default withRouter(TimeLinePrincipal);
 
 export default withTracker(() => {
+    console.log(Session.get('lobby'));
     Meteor.subscribe("elementos.all");//suscripcion a files
     Meteor.subscribe('lobbies');
-    Meteor.subscribe('mensajes', Session.get('lobby'));
+    // var idLobby= Session.get('lobby')._id;
+    Meteor.subscribe('mensajesAll');
 
     users = Meteor.subscribe('allUsers');
     let todos;
     if (users.ready()) {
         todos = Meteor.users.find().fetch(); // will return all users
     }
+
+    // console.log(Mensajes.find({/*lobby: idLobby*/}).fetch());
         
     return {
         // files: ElementosObjetosAprendizaje.find({}, {sort:{name:1}}).fetch());
@@ -135,7 +142,7 @@ export default withTracker(() => {
         data: ElementosObjetosAprendizaje.find({}).fetch(),
 
         lobbies: Lobbies.find().fetch(),
-        mensajes: Mensajes.find().fetch(),
+        mensajes: Mensajes.find({/*lobby: idLobby*/}).fetch(),
         allUsers: todos,
 
         nuevo: true,
