@@ -54,7 +54,7 @@ export default class Chat extends React.Component {
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.mensajes.length > 0){
-        console.log('nuevos props de chat: ', nextProps);
+        //console.log('nuevos props de chat: ', nextProps);
         return {
           mensajes: nextProps.mensajes,
           allUsers: nextProps.allUsers,
@@ -66,7 +66,7 @@ export default class Chat extends React.Component {
 
   componentDidMount() {
     //console.log('status: ', Meteor.status());
-    console.log('props chat', this.props);
+    //console.log('props chat', this.props);
   }
 
   render () {      

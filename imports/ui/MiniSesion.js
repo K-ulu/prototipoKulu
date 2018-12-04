@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
@@ -7,30 +7,29 @@ import LobbySesion from '../ui/components/nuevaSesion/LobbySesion';
 
 import { SesionesAprendizaje } from '../api/sesionesAprendizaje';
 
-class NuevaSesion extends React.Component {
+class MiniSesion extends React.Component {
 
-	constructor(props){
-		console.log(props);
-		super(props);
-		this.state = {
-			configuracion: false,
-			claveLobby: '',
-			lobbyObjeto: { },
-			claveSesion: '',
-			sesionObjeto: { },
-			enSesion: false,
-		};
-		
-		this.completarConfiguracion = this.completarConfiguracion.bind(this);
+  constructor(props){
+    super(props);
+    this.state = {
+      configuracion: false,
+      claveLobby: '', 
+      lobbyObjeto: { },
+      claveSesion: '',
+      sesionObjeto: { },
+      enSesion: false,
+    };
+
+    this.completarConfiguracion = this.completarConfiguracion.bind(this);
 		this.setLobby = this.setLobby.bind(this);
 		this.setLobbyObjeto = this.setLobbyObjeto.bind(this);
 		this.setSesion = this.setSesion.bind(this);
-		this.setSesionObjeto = this.setSesionObjeto.bind(this);
-		this.enSesion = this.enSesion.bind(this);
-	}
-
-	componentDidMount(){
-		//preguntamos si accedio por medio de invitacion o ya se había unido a la sesion
+    this.setSesionObjeto = this.setSesionObjeto.bind(this);
+    this.enSesion = this.enSesion.bind(this);
+  }
+  
+  componentDidMount() {
+    //preguntamos si accedio por medio de invitacion
     //de ser así redirigimos al lobby de lo contrario mostramos
     // panel de configuracion
     // console.log('valor de seison', Session.get('sesion'));
@@ -39,9 +38,10 @@ class NuevaSesion extends React.Component {
       //actualizamos datos
       this.setState({ enSesion: true, sesionObjeto: Session.get('sesion')});      
     } 
-	}
+    
+  }
 
-	//actualizamos props
+  //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.isReadyS){    
       return {
@@ -52,38 +52,33 @@ class NuevaSesion extends React.Component {
     return null;
   }
 
-	//se ha completado la configuracion de la sesion
-	completarConfiguracion(){
-		this.setState({ configuracion: true });
-	}
-
-	//habilitamos que esta en una sesion
+  completarConfiguracion(){
+		this.setState({ configuracion: true })
+  }
+  
+  //habilitamos que esta en una sesion
 	enSesion(){
 		this.setState({ enSesion: true })
 	}
 
-	//seteamos valor de la clave lobby
 	setLobby(claveLobby){		
 		this.setState({ claveLobby });
 	}
 
-	//seteamos el valor del objeto completo lobby
 	setLobbyObjeto(lobbyObjeto){
 		this.setState({ lobbyObjeto });
 	}
 
-	//seteamos valor de clave sesion
 	setSesion(claveSesion){
 		this.setState({ claveSesion });
 	}
 
-	//seteamos valor del objeto completo de la sesionAprendizaje
 	setSesionObjeto(sesionObjeto){
 		this.setState({ sesionObjeto });
 	}
-
-	render(){
-		let configuracion = <ConfiguraSesion valor={ this.state.configuracion } completarConfiguracion={ this.completarConfiguracion } setLobby={ this.setLobby } setSesion={ this.setSesion } setLobbyObjeto={ this.setLobbyObjeto } setSesionObjeto={ this.setSesionObjeto } enSesion={ this.enSesion }/>;
+  
+  render () {
+    let configuracion = <ConfiguraSesion valor={ this.state.configuracion } completarConfiguracion={ this.completarConfiguracion } setLobby={ this.setLobby } setSesion={ this.setSesion } setLobbyObjeto={ this.setLobbyObjeto } setSesionObjeto={ this.setSesionObjeto } enSesion={ this.enSesion }/>;
     let lobby = null;
     //caso cuando configura la sesion
     if(this.state.configuracion){
@@ -93,27 +88,21 @@ class NuevaSesion extends React.Component {
       configuracion = null;
       lobby = <LobbySesion valor={ this.state.enSesion } lobby={ this.state.sesionObjeto.idLobby } sesionObjeto={ this.state.sesionObjeto }/>;
     }
-		return (
-			<div>	
-				{ configuracion }
+    return (
+      <div>
+        { configuracion }
 				{ lobby }
-			</div>			
-		);
-	}
+      </div>
+    );
+  }
 }
 
 export default withTracker(() => {
 	//obteniendo informacion actualizada del objeto sesion
-	let handleS = undefined;
-	let isReadyS = false;
-	let sesion;
-	if(Session.get('sesion') != undefined){
-		handleS = Meteor.subscribe('sesionesAprendizaje', Session.get('sesion')._id);
-		isReadyS = handleS.ready();
-		sesion = SesionesAprendizaje.find().fetch();		
-		sesion = sesion[0];
-	}
-  
+  let handleS = Meteor.subscribe('sesionesAprendizaje', Session.get('sesion')._id);
+  let isReadyS = handleS.ready();
+	let sesion = SesionesAprendizaje.find().fetch();		
+	sesion = sesion[0];
 	//console.log('mi sesion actualizada', sesion);
 
 	return {
@@ -121,4 +110,4 @@ export default withTracker(() => {
 		sesion
 	};
 
-})(NuevaSesion);
+})(MiniSesion);

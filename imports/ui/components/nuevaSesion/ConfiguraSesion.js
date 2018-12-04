@@ -45,7 +45,7 @@ class ConfiguraSesion extends React.Component {
     this.onAgregar = this.onAgregar.bind(this);
     this.onQuitar = this.onQuitar.bind(this);
     this.obtenerListaParticipantes = this.obtenerListaParticipantes.bind(this);
-    
+    this.obtenerUsuarioActivo = this.obtenerUsuarioActivo.bind(this);
   }
   
   //habilitamos el primer tab cuando se carga el componente
@@ -248,6 +248,7 @@ class ConfiguraSesion extends React.Component {
     let tipo = this.state.valueTipo;
     let objeto = this.state.valueObjeto;
     let participantes = this.obtenerListaParticipantes();
+    let activos = this.obtenerUsuarioActivo();
 
     //creamos el nuevo lobby
     const _id = shortid.generate();
@@ -258,7 +259,7 @@ class ConfiguraSesion extends React.Component {
         let idLobby = _id;
         let idSesion = shortid.generate();
         //creamos objeto sesion
-        Meteor.call('sesionesAprendizaje.insert', idSesion,  materia[0], bloque[0], tema[0], tipo, objeto, idLobby, participantes, (err, res) => {
+        Meteor.call('sesionesAprendizaje.insert', idSesion,  materia[0], bloque[0], tema[0], tipo, objeto, idLobby, participantes, activos, (err, res) => {
           if(!err){
             let sesion = {
               _id: idSesion,
@@ -268,26 +269,48 @@ class ConfiguraSesion extends React.Component {
               tipo,
               objeto,
               idLobby,
-              participantes
+              participantes,
+              activos
             }
 
             let lobby = {
               _id: idLobby,
-              participantes
+              participantes,
+              activos
             }
 
             //guardamos el id de la sesion en la Sesion del navegador  
-            Session.set('idSesion', idSesion);
-            Session.set('sesion', sesion);
+            Session.setPersistent('idSesion', idSesion);
+            Session.setPersistent('sesion', sesion);
             //guardamos el id del lobby en la sesion del navegador
-            Session.set('idLobby', idLobby);
-            Session.set('lobby', lobby);
+            Session.setPersistent('idLobby', idLobby);
+            Session.setPersistent('lobby', lobby);
+            //ponemos en modo sesion
+            Session.setPersistent('enSesion', true);
             //actualizamos state a componente Padre (Nueva Sesion)
             this.props.setLobby(_id);   
             this.props.setLobbyObjeto(lobby);
             this.props.setSesion(idSesion);
             this.props.setSesionObjeto(sesion);
             this.props.completarConfiguracion(); 
+            this.props.enSesion();
+
+            //enviando invitacionnes a participantes
+            for(let i = 0; i < participantes.length; i++){
+              //omitimos al anfitrion
+              if(participantes[i]._id != Meteor.userId()){
+                //
+                Meteor.call('notificaciones.insert', participantes[i]._id,  '¡Nueva invitación!', Meteor.user().profile.nickname + ' te ha invitado a una sesion! Haz clic en el apartado para unirte a esta divertida sesión. ', lobby, sesion, false, (err, res) => {
+                  if(!err){
+                    console.log('invitacion enviada');
+                  } else {
+                    console.log(err.reason);
+                  }
+
+                });
+              } 
+            }
+          
 
           } else {
             console.log(err.reason);
@@ -335,6 +358,19 @@ class ConfiguraSesion extends React.Component {
 
     return participantes;
   } 
+
+  obtenerUsuarioActivo(){
+    //lista donde se almacenaran todos los usuarios activos
+    let usuarios = [];
+
+    //obtenemos el usuario anfitrion
+    let usuario = Meteor.user();
+    usuario.esAnfitrion = true;
+    //anexamos al usuario a la lista
+    usuarios.push(usuario);     
+
+    return usuarios;
+  }
 
   //cuando le damos clic al boton de agregar para agregar alumno
   onAgregar(e){

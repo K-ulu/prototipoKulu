@@ -6,6 +6,8 @@ import HeaderBar from './components/HeaderBar';
 import LeftSidebar from './components/LeftSidebar';
 //importando contenido principal
 import ContenidoPrincipalUser from './components/ContenidoPrincipalUser';
+//importando compoente sesion para alumnos
+import MiniSesion from './MiniSesion';
 //importando componente explora
 import Explora from './Explora';
 //importando componentes de la biblioteca
@@ -16,6 +18,8 @@ import BibliotecaMultimedia from './BibliotecaMultimedia';
 import BibliotecaObjetos from './BibliotecaObjetos';
 //importando pagina perfil
 import Perfil from './Perfil';
+//importando panel de notificaciones 
+import PanelNotificaciones from './PanelNotificaciones';
 
 class UsuarioDashboard extends React.Component {  
 
@@ -26,6 +30,8 @@ class UsuarioDashboard extends React.Component {
 
     if(pathname == '/dashboard' || pathname == '/dashboard/'){
       contenido = <ContenidoPrincipalUser/>
+    } else if(pathname == '/dashboard/sesion' || pathname == '/dashboard/sesion/'){
+      contenido = <MiniSesion/>
     } else if(pathname == '/dashboard/explora' || pathname == '/dashboard/explora/'){
       contenido = <Explora/>
     } else if(pathname == '/dashboard/biblioteca/libros' || pathname == '/dashboard/biblioteca/libros/'){
@@ -40,6 +46,8 @@ class UsuarioDashboard extends React.Component {
       contenido = <BibliotecaElementos/>
     } else if(pathname == '/dashboard/perfil' || pathname == '/dashboard/perfil/'){
       contenido = <Perfil/>
+    } else if(pathname == '/dashboard/perfil/notificaciones' || pathname == '/dashboard/perfil/notificaciones/'){
+      contenido = <PanelNotificaciones/>
     }
 
 
@@ -48,7 +56,7 @@ class UsuarioDashboard extends React.Component {
       <div id="main" className="enlarged">  
 
         {/*<!-- top bar navigation -->*/}
-        <HeaderBar/>
+        <HeaderBar history={ this.props.history }/>
 
         {/*Wrapper*/}
         <div id="wrapper">

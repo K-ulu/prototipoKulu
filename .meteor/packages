@@ -23,7 +23,7 @@ fortawesome:fontawesome
 accounts-password@1.5.1
 react-meteor-data
 session@1.1.7
-underscore@1.0.10
+underscore
 cfs:standard-packages
 cfs:gridfs
 ostrio:files
@@ -32,3 +32,4 @@ ultimatejs:tracker-react
 matb33:collection-hooks
 juliancwirko:s-alert
 cfs:ui
+cultofcoders:persistent-session
