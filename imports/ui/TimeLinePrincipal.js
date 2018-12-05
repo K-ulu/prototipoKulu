@@ -125,6 +125,7 @@ export default withTracker(() => {
     // Meteor.subscribe('lobbies');
 
     var idLobby= Session.get('sesion').idLobby;
+    console.log(Session.get('sesion'))
     Meteor.subscribe('mensajes', idLobby);
 
     users = Meteor.subscribe('allUsers');

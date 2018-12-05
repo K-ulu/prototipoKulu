@@ -119,7 +119,7 @@ class LobbySesion extends React.Component {
     e.preventDefault();
     console.log(this.state);
 
-    Meteor.call('sesionesAprendizaje.timeLine', sesion._id, (err, res) => {
+    Meteor.call('sesionesAprendizaje.timeLine', sesion._id, "true", (err, res) => {
       if(!err){
         console.log('Sesion activada');
       } else {

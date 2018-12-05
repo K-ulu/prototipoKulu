@@ -43,14 +43,14 @@ Meteor.methods({
     });
   },
 
-  'sesionesAprendizaje.timeLine'(id){
+  'sesionesAprendizaje.timeLine'(id, estado){
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     SesionesAprendizaje.update({
       _id: id
     }, {
-      $set: { timelineS: true }
+      $set: { timelineS: estado }
     });
   },
 

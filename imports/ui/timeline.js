@@ -115,7 +115,9 @@ export default class Timelime extends Component {
             titleAlert: 'Felicidades',
             messageAlert: 'Victoria!!!!!',
 
-            isOpen: false
+            isOpen: false,
+
+            salir: false,
         };
     }
 
@@ -125,8 +127,12 @@ export default class Timelime extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps);
         if (newProps.events != null && newProps.imagenes != null){
+            console.log(newProps.imagenes.length);
+            // if (newProps.imagenes.length == 0 && newProps.events.length >0){
+            //     console.log("Es uno mismo");
+            //     //location.href = '/dashboard';
+            // }
             this.setState ({
                 events: newProps.events,
                 imagenes: newProps.imagenes
@@ -314,6 +320,21 @@ export default class Timelime extends Component {
         )(imagenes); 
     }
 
+    salir(){
+        Meteor.call('sesionesAprendizaje.timeLine', sesion._id, "false", (err, res) => {
+            if(!err){
+              console.log('Sesion desactivada');
+            } else {
+              console.log(err.reason);
+            }
+        });
+        this.setState ({
+            salir:true
+        });
+
+        location.href = '/dashboard/nueva-sesion#';
+    }
+
     render() {
         const {events, imagenes, showAlert, typeAlert, titleAlert, messageAlert } = this.state;
         let contentInfo = [];
@@ -372,7 +393,7 @@ export default class Timelime extends Component {
                 type={typeAlert}
                 title={titleAlert}
                 message={messageAlert}
-                onClose = {()=> alert("hola")}
+                onClose = {()=> this.salir()}
             />
 
             <ModalVideo 
