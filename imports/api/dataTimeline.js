@@ -51,7 +51,7 @@
             offset += Math.random() * 100;
             return R.merge({
                 dateI: '3.5 M.a.C.',
-                dateF: '1 D.C.',
+                dateF: '1D.C.',
                 buttonText: 'Play Video',
                 onClick: () => {}
             }, city);

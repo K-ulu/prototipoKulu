@@ -148,13 +148,13 @@
   align-items: center;
   color: white;
   border-radius: 50%;
-  background: #4a5c7b;
+  // background: #4a5c7b;
+  background: darkorange;
   font-size: 1.7em;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
   width: 3em;
   height: 3em; 
   margin-top: -70px;
-  padding-left: 1em;
 }
 
 .rt-clear {
@@ -164,7 +164,8 @@
 .rt-backing {
   border-radius: 0.35em;
   background: #F0F0F0;
-  color: #313740;
+  // color: #313740;
+  color: red;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4); 
   // margin-left: -10em;
 }
@@ -214,7 +215,8 @@
     margin-left: 7.2%;
     margin-top: 1.5em;
     fill: currentcolor;
-    color: #6b81a6;
+    // color: #6b81a6;
+    color:darkslategray;
     width: 2%;
     z-index: 100; 
   }
@@ -224,7 +226,8 @@
     margin-left: 7.5%;
     margin-top: -2.5em;
     fill: currentcolor;
-    color: #6b81a6;
+    // color: #6b81a6;
+    color:darkslategray;
     width: 2%;
     z-index: 100; 
   }
@@ -235,7 +238,8 @@
       padding:0;
       fill: currentcolor;
       width: 3%;
-      color: #6b81a6; 
+      // color: #6b81a6;
+      color:darkslategray; 
     }
 
     .rt-event .rt-svg-container .rt-arrow{//Sirve para que el triangulito quede abajo de mi contenedor event
@@ -260,7 +264,8 @@
 .rt-header-container {
   color: white;
   padding: 0.25em;
-  background-color: #6b81a6;
+  // background-color: #6b81a6;
+  background-color: coral;
   border-radius: 0.35em 0.35em 0 0;
   overflow: hidden; 
   height: 64px;
@@ -271,7 +276,8 @@
   padding: 0;
   overflow: hidden; 
   height: 9em;
-  background-color: #6b81a6;
+  // background-color: #6b81a6;
+  background-color: papayawhip;
 
   position: relative; //Para que aparezca el texto de forma dinamica
 }
@@ -316,7 +322,8 @@
 
 .rt-btn {
   text-align: center;
-  background-color: #313740;
+  //background-color: #313740;
+  background-color: darkslategray;
   font-size: 1em;
   font-weight: bold;
   white-space: nowrap;

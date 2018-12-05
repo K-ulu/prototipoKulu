@@ -29,16 +29,17 @@ propTypes = {
 };
 
 const DefaultStartLabel = (event) => {
-    console.log(event[0]);
-    console.log(event.dateI);
+    //console.log(event.event[0]);
     return <div className="rt-label">
-        {'3.5 M.a.C.'}
+        {/* {'3.5 M.a.C.'} */}
+       {event.event[0].dateI}
     </div>;
 };
 
 const DefaultEndLabel = (event) => {
     return <div className="rt-label">
-        {'1 D.C.'}
+        {/* {'1 D.C.'} */}
+        {event.event[0].dateF}
     </div>;
 };
 
@@ -124,6 +125,7 @@ export default class Timelime extends Component {
     }
 
     componentWillReceiveProps(newProps) {
+        console.log(newProps);
         if (newProps.events != null && newProps.imagenes != null){
             this.setState ({
                 events: newProps.events,
@@ -370,6 +372,7 @@ export default class Timelime extends Component {
                 type={typeAlert}
                 title={titleAlert}
                 message={messageAlert}
+                onClose = {()=> alert("hola")}
             />
 
             <ModalVideo 
