@@ -9,9 +9,9 @@ if(Meteor.isServer){
 		return Mensajes.find({ lobby: lobby});
 	});
 
-	Meteor.publish('mensajesAll', function () {
-		return Mensajes.find({});
-	});
+	// Meteor.publish('mensajesAll', function () {
+	// 	return Mensajes.find({});
+	// });
 
 	/*Mensajes.before.insert(function (userId, doc) {
 		Test.insert({

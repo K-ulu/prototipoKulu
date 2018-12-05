@@ -29,24 +29,24 @@ class TimeLinePrincipal extends React.Component {
             events: null,
             imagenes: null,
 
-            lobbies: null,
+            lobbies: '',
             mensajes: null,
             allUsers: null,
             nuevo: null,
 
-            lobby: '',  //almacena la clave de el lobby que se creo
+            // lobby: '',  //almacena la clave de el lobby que se creo
             //lobbyObjeto: { },
-            sesionObjeto: { },
+            // sesionObjeto: { },
         };
         this.datos = this.datos.bind(this);
     }
 
     componentDidMount(){
     //this.setState({ lobby: this.props.lobby, lobbyObjeto: this.props.lobbyObjeto,  sesionObjeto: this.props.sesionObjeto });
-        this.setState({ lobby: this.props.lobby, sesionObjeto: this.props.sesionObjeto });
+        console.log(Session.get('sesion').idLobby);
+        this.setState({ lobbies: Session.get('sesion').idLobby});
 
         console.log('lobby props', this.props);
-        console.log(Session.get('sesion'));
     // console.log('lobby state at lobby sesion did mount', this.state);
     }
 
@@ -59,7 +59,7 @@ class TimeLinePrincipal extends React.Component {
                     events:getSampleData(nextProps.data),
                     imagenes: getImages(false, nextProps.images),
 
-                    lobbies: nextProps.lobbies,
+                    // lobbies: nextProps.lobbies,
                     mensajes: nextProps.mensajes,
                     allUsers: nextProps.allUsers,
                     nuevo: true,
@@ -97,6 +97,8 @@ class TimeLinePrincipal extends React.Component {
     render() {   
         let {events} = this.state;
         let {imagenes} = this.state;
+
+        console.log(this.state.lobbies);
         return (
             <div className="linea-Tiempo">
                 <h1>Linea del Tiempo</h1>
@@ -114,7 +116,7 @@ class TimeLinePrincipal extends React.Component {
 
                 <div>
                     <h3>Chat</h3>
-                    <Chat lobbies={this.state.lobbies} mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>
+                    <Chat lobby={this.state.lobbies} mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>
                 </div>
             </div>
         );
@@ -124,11 +126,13 @@ class TimeLinePrincipal extends React.Component {
 //export default withRouter(TimeLinePrincipal);
 
 export default withTracker(() => {
-    console.log(Session.get('lobby'));
+    console.log(Session.get('sesion'));
     Meteor.subscribe("elementos.all");//suscripcion a files
-    Meteor.subscribe('lobbies');
-    // var idLobby= Session.get('lobby')._id;
-    Meteor.subscribe('mensajesAll');
+    // Meteor.subscribe('lobbies');
+
+    var idLobby= Session.get('sesion').idLobby;
+    console.log(idLobby);
+    Meteor.subscribe('mensajes', idLobby);
 
     users = Meteor.subscribe('allUsers');
     let todos;
@@ -136,15 +140,15 @@ export default withTracker(() => {
         todos = Meteor.users.find().fetch(); // will return all users
     }
 
-    // console.log(Mensajes.find({/*lobby: idLobby*/}).fetch());
+    console.log(Mensajes.find().fetch());
         
     return {
         // files: ElementosObjetosAprendizaje.find({}, {sort:{name:1}}).fetch());
         images: ElementosObjetosAprendizaje.find({"meta.usado":"false"}).fetch(),
         data: ElementosObjetosAprendizaje.find({}).fetch(),
 
-        lobbies: Lobbies.find().fetch(),
-        mensajes: Mensajes.find({/*lobby: idLobby*/}).fetch(),
+        // lobbies: idLobby,//Lobbies.find().fetch(),
+        mensajes: Mensajes.find().fetch(),
         allUsers: todos,
 
         nuevo: true,

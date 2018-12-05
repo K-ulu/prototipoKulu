@@ -98,8 +98,12 @@ class MiniSesion extends React.Component {
 }
 
 export default withTracker(() => {
-	//obteniendo informacion actualizada del objeto sesion
-  let handleS = Meteor.subscribe('sesionesAprendizaje', Session.get('sesion')._id);
+  //obteniendo informacion actualizada del objeto sesion
+  let handleS = null;
+  if (Session.get('sesion') != null){
+    handleS = Meteor.subscribe('sesionesAprendizaje', Session.get('sesion')._id);
+  }
+
   let isReadyS = handleS.ready();
 	let sesion = SesionesAprendizaje.find().fetch();		
 	sesion = sesion[0];

@@ -21,6 +21,7 @@ export default class Chat extends React.Component {
     //prevenimos el comportamiento por defautl
     e.preventDefault();    
     //verificamos si existe el mensaje
+    console.log(this.props.lobby);
     if(msj){
       Meteor.call('mensajes.insert', msj, this.props.lobby, (err, res) => {
         if (!err) { //mensaje enviado
@@ -53,8 +54,9 @@ export default class Chat extends React.Component {
 
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('nextProps', nextProps);
     if(nextProps.mensajes.length > 0){
-        //console.log('nuevos props de chat: ', nextProps);
+        console.log('nuevos props if: ', nextProps);
         return {
           mensajes: nextProps.mensajes,
           allUsers: nextProps.allUsers,
@@ -65,6 +67,7 @@ export default class Chat extends React.Component {
     }
 
   componentDidMount() {
+    console.log('DidMount', this.props);
     //console.log('status: ', Meteor.status());
     //console.log('props chat', this.props);
   }

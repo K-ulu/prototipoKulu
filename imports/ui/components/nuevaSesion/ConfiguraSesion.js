@@ -594,13 +594,6 @@ class ConfiguraSesion extends React.Component {
                                             
                         </div>                       
                       </div>
-
-                      {/*<div id="lobby" className="row tab-content">
-											<div className="col-6">  												
-												<Chat lobbies={this.state.lobbies} mensajes={this.state.mensajes} allUsers={this.state.allUsers}/>
-											</div>
-										</div>*/}
-
                     </form>
 
 
