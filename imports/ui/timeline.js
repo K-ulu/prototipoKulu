@@ -16,7 +16,8 @@ import 'react-modal-video/scss/modal-video.scss';
 import ModalVideo from 'react-modal-video';
 
 propTypes = {
-    dateIF: PropTypes.object.isRequired,
+    dateI: PropTypes.object.isRequired,
+    dateF: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
     descripcion: PropTypes.string.isRequired,
@@ -27,17 +28,17 @@ propTypes = {
     usado: PropTypes.string.isRequired
 };
 
-const DefaultStartLabel = (props) => {
-    const {event} = props;
+const DefaultStartLabel = (event) => {
+    console.log(event[0]);
+    console.log(event.dateI);
     return <div className="rt-label">
-        {moment(event.date).year()}
+        {'3.5 M.a.C.'}
     </div>;
 };
 
-const DefaultEndLabel = (props) => {
-    const {event} = props;
+const DefaultEndLabel = (event) => {
     return <div className="rt-label">
-        {moment(event.date).year()}
+        {'1 D.C.'}
     </div>;
 };
 
@@ -151,11 +152,9 @@ export default class Timelime extends Component {
     }
 
     onDrop = (e,props, cat)=>{
-        console.log(props);
         var {id} = props.event;
         id ="idO"+id;
-        console.log(id);
-        console.log("idO"+ this.idOriginal);
+        // console.log("idO"+ this.idOriginal);
        if (id == "idO"+ this.idOriginal){
             Meteor.call('elemento.usado', this.idOriginal,  (err, res) => {
                 if (!err) {
@@ -254,16 +253,21 @@ export default class Timelime extends Component {
         } = this.props;
         const {events} = this.state;
 
+        console.log(events);
         // Build start & end labels
-        const startEvent = (reverseOrder ? R.last : R.head)(events);
-        const endEvent = (!reverseOrder ? R.last : R.head)(events);
+        // const startEvent = events.dateI;
+        // const endEvent = events.dateF;
 
-        const startLabel = <DefaultStartLabel event={startEvent}/>;
-        const endLabel = <DefaultEndLabel event={endEvent}/>;
+        // const startLabel = <DefaultStartLabel {events}/>;
+        // const endLabel = <DefaultEndLabel {events}/>;
 
-        this.topLabel = reverseOrder ? endLabel : startLabel;
-        this.bottomLabel = !reverseOrder ? endLabel : startLabel;
+        // this.topLabel = reverseOrder ? endLabel : startLabel;
+        // this.bottomLabel = !reverseOrder ? endLabel : startLabel;
         
+        this.topLabel = <DefaultStartLabel event= {events}/>;
+        this.bottomLabel = <DefaultEndLabel event= {events}/>;
+
+
         const clear = <li key='clear' className='rt-clear'>{}</li>;
 
         // Compose labels and events together

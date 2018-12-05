@@ -42,17 +42,13 @@ class TimeLinePrincipal extends React.Component {
     }
 
     componentDidMount(){
-    //this.setState({ lobby: this.props.lobby, lobbyObjeto: this.props.lobbyObjeto,  sesionObjeto: this.props.sesionObjeto });
-        console.log(Session.get('sesion').idLobby);
+        // console.log(Session.get('sesion').idLobby);
         this.setState({ lobbies: Session.get('sesion').idLobby});
-
-        console.log('lobby props', this.props);
-    // console.log('lobby state at lobby sesion did mount', this.state);
+        //console.log('lobby props', this.props);
     }
 
     	//actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
-        console.log(nextProps);
         if(true){
             if (prevState.nuevo == null || prevState.nuevo == true){
                 return {
@@ -98,7 +94,6 @@ class TimeLinePrincipal extends React.Component {
         let {events} = this.state;
         let {imagenes} = this.state;
 
-        console.log(this.state.lobbies);
         return (
             <div className="linea-Tiempo">
                 <h1>Linea del Tiempo</h1>
@@ -126,12 +121,10 @@ class TimeLinePrincipal extends React.Component {
 //export default withRouter(TimeLinePrincipal);
 
 export default withTracker(() => {
-    console.log(Session.get('sesion'));
     Meteor.subscribe("elementos.all");//suscripcion a files
     // Meteor.subscribe('lobbies');
 
     var idLobby= Session.get('sesion').idLobby;
-    console.log(idLobby);
     Meteor.subscribe('mensajes', idLobby);
 
     users = Meteor.subscribe('allUsers');
@@ -139,8 +132,6 @@ export default withTracker(() => {
     if (users.ready()) {
         todos = Meteor.users.find().fetch(); // will return all users
     }
-
-    console.log(Mensajes.find().fetch());
         
     return {
         // files: ElementosObjetosAprendizaje.find({}, {sort:{name:1}}).fetch());

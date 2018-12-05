@@ -50,7 +50,8 @@
         let orderedCities = R.map(city => {
             offset += Math.random() * 100;
             return R.merge({
-                dateIF: moment('2018-10-19').add(offset, 'days'),
+                dateI: '3.5 M.a.C.',
+                dateF: '1 D.C.',
                 buttonText: 'Play Video',
                 onClick: () => {}
             }, city);
