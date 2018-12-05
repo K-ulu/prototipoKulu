@@ -320,20 +320,20 @@ export default class Timelime extends Component {
         )(imagenes); 
     }
 
-    salir(){
-        Meteor.call('sesionesAprendizaje.timeLine', sesion._id, "false", (err, res) => {
-            if(!err){
-              console.log('Sesion desactivada');
-            } else {
-              console.log(err.reason);
-            }
-        });
-        this.setState ({
-            salir:true
-        });
+    // salir(){
+    //     Meteor.call('sesionesAprendizaje.timeLine', sesion._id, "false", (err, res) => {
+    //         if(!err){
+    //           console.log('Sesion desactivada');
+    //         } else {
+    //           console.log(err.reason);
+    //         }
+    //     });
+    //     this.setState ({
+    //         salir:true
+    //     });
 
-        location.href = '/dashboard/nueva-sesion#';
-    }
+    //     location.href = '/dashboard/nueva-sesion#';
+    // }
 
     render() {
         const {events, imagenes, showAlert, typeAlert, titleAlert, messageAlert } = this.state;
@@ -393,7 +393,9 @@ export default class Timelime extends Component {
                 type={typeAlert}
                 title={titleAlert}
                 message={messageAlert}
-                onClose = {()=> this.salir()}
+                onClose = {()=> location.href = '/dashboard'}
+                // onClose = {this.salir()}
+     
             />
 
             <ModalVideo 
