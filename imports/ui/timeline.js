@@ -176,7 +176,8 @@ export default class Timelime extends Component {
             let newImages = this.state.imagenes;
             
             const result = newImages.filter(word => word.id != this.idOriginal);
-            
+            console.log(result);
+            console.log(result.length)
             if (result.length == 0){
                 this.openAlert(
                     'VICTORIA!!!',

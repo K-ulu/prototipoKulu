@@ -35,7 +35,9 @@ class LobbySesion extends React.Component {
 
   //actualizamos props
 	static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(nextProps.sesionObjeto.timelineS);
     if(nextProps.isReadyM && nextProps.isReadyU){
+      console.log("hola");
       //console.log("updated props from lobbysesion", nextProps);  
       if (nextProps.sesionObjeto.timelineS == true){
         console.log("ya se activo");
@@ -119,7 +121,7 @@ class LobbySesion extends React.Component {
     e.preventDefault();
     console.log(this.state);
 
-    Meteor.call('sesionesAprendizaje.timeLine', sesion._id, "true", (err, res) => {
+    Meteor.call('sesionesAprendizaje.timeLine', sesion._id, true, (err, res) => {
       if(!err){
         console.log('Sesion activada');
       } else {
